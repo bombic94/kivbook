@@ -1,0 +1,37 @@
+/* CSS Document */        
+
+/* setting footer to bottom*/
+html, body {
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  flex: 1 0 auto;
+}
+
+/* footer styling*/
+.footer {
+      background-color: white;
+      color: grey;
+      margin-bottom: 0 !important;
+      width: 100%;
+      height: 20px;
+}
+    
+/* max width*/
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1200px;
+}
+
+.block {
+  text-align: justify;
+}
+
+[hidden] {
+  display: none !important;
+}
