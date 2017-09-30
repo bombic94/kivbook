@@ -1,32 +1,77 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation=
-           "http://www.springframework.org/schema/beans
-     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
-     http://www.springframework.org/schema/context
-     http://www.springframework.org/schema/context/spring-context-4.0.xsd
-     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
-       >
+<?xml version = "1.0" encoding = "UTF-8"?>
+<beans xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" 
+   xsi:schemaLocation = "http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd ">
 
-    <context:annotation-config/>
-    <context:component-scan base-package="org.danekja.edu.pia.**.*"/>
-    <tx:annotation-driven transaction-manager="transactionManager" />
+   <!-- Initialization for data source -->
+   <bean id = "dataSource" class = "org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name = "driverClassName" value = "com.mysql.jdbc.Driver"/>
+      <property name = "url" value = "jdbc:mysql://localhost:3306/kivbook"/>
+      <property name = "username" value = "root"/>
+      <property name = "password" value = "1k2n3o4o"/>
+   </bean>
 
-
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" destroy-method="destroy">
-        <property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml"/>
-        <property name="jpaVendorAdapter" ref="hibernateVendorAdapter"/>
-        <property name="packagesToScan" value="org.danekja.edu.pia.**.domain"/>
-        <property name="persistenceUnitName" value="org.danekja.edu.pia"/>
-    </bean>
-
-    <bean id="hibernateVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
-
-    <!-- Transaction manager for a single EntityManagerFactory (alternative to JTA) -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
-    </bean>
+   <!-- Definition for userJdbcTemplate bean -->
+   <bean id = "userJdbcTemplate" class = "zcu.pia.bohmannd.dao.UserJdbcTemplate">
+      <property name = "dataSource" ref = "dataSource" />    
+   </bean>
+   
+   <bean id = "statusJdbcTemplate" class = "zcu.pia.bohmannd.dao.StatusJdbcTemplate">
+      <property name = "dataSource" ref = "dataSource" />    
+   </bean>
+   
+   <bean id = "friendshipJdbcTemplate" class = "zcu.pia.bohmannd.dao.FriendshipJdbcTemplate">
+      <property name = "dataSource" ref = "dataSource" />    
+   </bean>
+   
+   <bean id = "chatJdbcTemplate" class = "zcu.pia.bohmannd.dao.ChatJdbcTemplate">
+      <property name = "dataSource" ref = "dataSource" />    
+   </bean>
+   
+   <bean id = "chat_LineJdbcTemplate" class = "zcu.pia.bohmannd.dao.Chat_LineJdbcTemplate">
+      <property name = "dataSource" ref = "dataSource" />    
+   </bean>
+   
+   <bean id = "commentJdbcTemplate" class = "zcu.pia.bohmannd.dao.CommentJdbcTemplate">
+      <property name = "dataSource" ref = "dataSource" />    
+   </bean>
+   
+   <bean id = "likeJdbcTemplate" class = "zcu.pia.bohmannd.dao.LikeJdbcTemplate">
+      <property name = "dataSource" ref = "dataSource" />    
+   </bean>
+      
 </beans>
+
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<!-- <beans xmlns="http://www.springframework.org/schema/beans" -->
+<!--        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" -->
+<!--        xmlns:tx="http://www.springframework.org/schema/tx" -->
+<!--        xmlns:context="http://www.springframework.org/schema/context" -->
+<!--        xsi:schemaLocation= -->
+<!--            "http://www.springframework.org/schema/beans" -->
+<!--      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd -->
+<!--      http://www.springframework.org/schema/context -->
+<!--      http://www.springframework.org/schema/context/spring-context-4.0.xsd -->
+<!--      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd" -->
+<!--        > -->
+
+<!--     <context:annotation-config/> -->
+<!--     <context:component-scan base-package="org.danekja.edu.pia.**.*"/> -->
+<!--     <tx:annotation-driven transaction-manager="transactionManager" /> -->
+
+
+<!--     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" destroy-method="destroy"> -->
+<!--         <property name="persistenceXmlLocation" value="classpath:/META-INF/persistence.xml"/> -->
+<!--         <property name="jpaVendorAdapter" ref="hibernateVendorAdapter"/> -->
+<!--         <property name="packagesToScan" value="org.danekja.edu.pia.**.domain"/> -->
+<!--         <property name="persistenceUnitName" value="org.danekja.edu.pia"/> -->
+<!--     </bean> -->
+
+<!--     <bean id="hibernateVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/> -->
+
+<!--     Transaction manager for a single EntityManagerFactory (alternative to JTA) -->
+<!--     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"> -->
+<!--         <property name="entityManagerFactory" ref="entityManagerFactory"/> -->
+<!--     </bean> -->
+<!-- </beans> -->
