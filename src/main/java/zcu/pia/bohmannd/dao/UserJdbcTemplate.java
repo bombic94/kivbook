@@ -30,11 +30,9 @@ public class UserJdbcTemplate implements UserDAO {
 
 	    String SQL = "insert into bohmannd_user ( `email`, `username`, `password`, `dateofbirth`, `gender`, `firstname`, `lastname`, `photo`)" + 
 	    		" values (?, ?, ?, ?, ?, ?, ?, ?)";
-	    System.out.println(SQL);
 	    jdbcTemplateObject.update( SQL, email, username, password, dateofbirth, string, firstname, lastname, photo);
-	    
-	    return;
 	}
+	
 	@Override
 	public User getUser(Integer id) {
 		SqlParameterSource in = new MapSqlParameterSource().addValue("in_id", id);
@@ -51,14 +49,18 @@ public class UserJdbcTemplate implements UserDAO {
 		user.setPassword(out.get("out_password").toString());
 		user.setPhoto(out.get("out_photo").toString());
 		user.setUsername(out.get("out_username").toString());
+		
 		return user;
 	}
+	
 	@Override
 	public List<User> listUsers() {
 		String SQL = "select * from bohmannd_user";
 	    List <User> users = jdbcTemplateObject.query(SQL, new UserMapper());
+	    
 	    return users;
 	}
+	
 	@Override
 	public int getUserCount() {
 		String SQL = "select count(*) from bohmannd_user";

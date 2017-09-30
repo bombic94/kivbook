@@ -25,22 +25,16 @@ public class FriendshipJdbcTemplate implements FriendshipDAO {
 	}
 
 	@Override
-	public void create(int user1_id, int user2_id, boolean accepted) {
-		
+	public void create(int user1_id, int user2_id, boolean accepted) {		
 		String SQL = "insert into bohmannd_friendship ( `user1_id`, `user2_id`, `accepted`)" + 
 	    		" values (?, ?, ?)";
-	    System.out.println(SQL);
 	    jdbcTemplateObject.update( SQL, user1_id, user2_id, accepted);
-	    
-	    return;
-		
 	}
 
 	@Override
 	public Friendship getFriendship(Integer id) {
 		SqlParameterSource in = new MapSqlParameterSource().addValue("in_id", id);
 	    Map<String, Object> out = jdbcCall.execute(in);
-
 		
 		Friendship friendship = new Friendship();
 	    friendship.setCreated_at((Timestamp) out.get("out_created_at"));
@@ -56,6 +50,7 @@ public class FriendshipJdbcTemplate implements FriendshipDAO {
 	public List<Friendship> listFriendships() {
 		String SQL = "select * from bohmannd_friendship";
 	    List <Friendship> friendships = jdbcTemplateObject.query(SQL, new FriendshipMapper());
+	    
 	    return friendships;
 	}
 
@@ -64,14 +59,15 @@ public class FriendshipJdbcTemplate implements FriendshipDAO {
 		String SQL = "select * from bohmannd_friendship where user1_id = ? or user2_id = ?";
 		Object[] args = {user_id, user_id};
 	    List <Friendship> friendships = jdbcTemplateObject.query(SQL, args, new FriendshipMapper());
+	    
 	    return friendships;
 	}
 
 	@Override
 	public void acceptFriendship(int id) {
-		String SQL = "update bohmannd_friendship set accepted=1 where id = " + id;
-		System.out.println(SQL);
-		jdbcTemplateObject.execute(SQL);
+		String SQL = "update bohmannd_friendship set accepted=1 where id = ?";
+		Object[] args = {id};
+		jdbcTemplateObject.update(SQL, args);
 	}
 
 }

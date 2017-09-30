@@ -28,10 +28,7 @@ public class Chat_LineJdbcTemplate implements Chat_LineDAO {
 	public void create(int chat_id, int sender_id, String line_text) {
 		String SQL = "insert into bohmannd_chat_line ( `chat_id`, `sender_id`, `line_text`)" + 
 	    		" values (?, ?, ?)";
-	    System.out.println(SQL);
 	    jdbcTemplateObject.update( SQL, chat_id, sender_id, line_text);
-	    
-	    return;	
 	}
 
 	@Override
@@ -39,7 +36,6 @@ public class Chat_LineJdbcTemplate implements Chat_LineDAO {
 		SqlParameterSource in = new MapSqlParameterSource().addValue("in_id", id);
 	    Map<String, Object> out = jdbcCall.execute(in);
 
-		
 		Chat_Line chat_line = new Chat_Line();
 	    chat_line.setCreated_at((Timestamp) out.get("out_created_at"));
 		chat_line.setId((Integer) out.get("out_id"));
@@ -54,6 +50,7 @@ public class Chat_LineJdbcTemplate implements Chat_LineDAO {
 	public List<Chat_Line> listChat_Lines() {
 		String SQL = "select * from bohmannd_chat_line";
 	    List <Chat_Line> chat_lines = jdbcTemplateObject.query(SQL, new Chat_LineMapper());
+	    
 	    return chat_lines;
 	}
 
@@ -62,6 +59,7 @@ public class Chat_LineJdbcTemplate implements Chat_LineDAO {
 		String SQL = "select * from bohmannd_chat_line where chat_id = ?";
 		Object[] args = {chat_id};
 	    List <Chat_Line> chat_lines = jdbcTemplateObject.query(SQL, args, new Chat_LineMapper());
+	    
 	    return chat_lines;
 	}
 

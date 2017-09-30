@@ -29,11 +29,7 @@ public class StatusJdbcTemplate implements StatusDAO {
 	public void create(int user_id, String status_text, String photo) {
 		String SQL = "insert into bohmannd_status ( `user_id`, `status_text`, `photo`)" + 
 	    		" values (?, ?, ?)";
-	    System.out.println(SQL);
 	    jdbcTemplateObject.update( SQL, user_id, status_text, photo);
-	    
-	    return;
-		
 	}
 
 	@Override
@@ -55,6 +51,7 @@ public class StatusJdbcTemplate implements StatusDAO {
 	public List<Status> listStatuses() {
 		String SQL = "select * from bohmannd_status";
 	    List <Status> statuses = jdbcTemplateObject.query(SQL, new StatusMapper());
+	    
 	    return statuses;
 	}
 	

@@ -28,10 +28,7 @@ public class CommentJdbcTemplate implements CommentDAO {
 	public void create(int status_id, int user_id, String comment_text) {
 		String SQL = "insert into bohmannd_comment ( `status_id`, `user_id`, `comment_text`)" + 
 	    		" values (?, ?, ?)";
-	    System.out.println(SQL);
 	    jdbcTemplateObject.update( SQL, status_id, user_id, comment_text);
-	    
-	    return;
 	}
 
 	@Override
@@ -53,6 +50,7 @@ public class CommentJdbcTemplate implements CommentDAO {
 	public List<Comment> listComments() {
 		String SQL = "select * from bohmannd_comment";
 	    List <Comment> comments = jdbcTemplateObject.query(SQL, new CommentMapper());
+	    
 	    return comments;
 	}
 
@@ -61,6 +59,7 @@ public class CommentJdbcTemplate implements CommentDAO {
 		String SQL = "select * from bohmannd_comment where status_id = ?";
 		Object[] args = {status_id};
 	    List <Comment> comments = jdbcTemplateObject.query(SQL, args, new CommentMapper());
+	    
 	    return comments;
 	}
 

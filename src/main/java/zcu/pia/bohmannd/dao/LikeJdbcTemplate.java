@@ -28,10 +28,7 @@ public class LikeJdbcTemplate implements LikeDAO {
 	public void create(int status_id, int user_id) {
 		String SQL = "insert into bohmannd_like ( `status_id`, `user_id`)" + 
 	    		" values (?, ?)";
-	    System.out.println(SQL);
 	    jdbcTemplateObject.update( SQL, status_id, user_id);
-	    
-	    return;
 	}
 
 	@Override
@@ -52,6 +49,7 @@ public class LikeJdbcTemplate implements LikeDAO {
 	public List<Like> listLikes() {
 		String SQL = "select * from bohmannd_like";
 	    List <Like> like = jdbcTemplateObject.query(SQL, new LikeMapper());
+	    
 	    return like;
 	}
 
@@ -60,6 +58,7 @@ public class LikeJdbcTemplate implements LikeDAO {
 		String SQL = "select * from bohmannd_like where status_id = ?";
 		Object[] args = {status_id};
 	    List <Like> like = jdbcTemplateObject.query(SQL, args, new LikeMapper());
+	    
 	    return like;
 	}
 

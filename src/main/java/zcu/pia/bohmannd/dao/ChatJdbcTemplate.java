@@ -28,18 +28,14 @@ public class ChatJdbcTemplate implements ChatDAO {
 	public void create(int user1_id, int user2_id, boolean seen) {
 		String SQL = "insert into bohmannd_chat ( `user1_id`, `user2_id`, `seen`)" + 
 	    		" values (?, ?, ?)";
-	    System.out.println(SQL);
 	    jdbcTemplateObject.update( SQL, user1_id, user2_id, seen);
-	    
-	    return;
 	}
 
 	@Override
 	public Chat getChat(Integer id) {
 		SqlParameterSource in = new MapSqlParameterSource().addValue("in_id", id);
 	    Map<String, Object> out = jdbcCall.execute(in);
-
-		
+	
 		Chat chat = new Chat();
 	    chat.setCreated_at((Timestamp) out.get("out_created_at"));
 		chat.setId((Integer) out.get("out_id"));
@@ -54,6 +50,7 @@ public class ChatJdbcTemplate implements ChatDAO {
 	public List<Chat> listChats() {
 		String SQL = "select * from bohmannd_chat";
 	    List <Chat> chats = jdbcTemplateObject.query(SQL, new ChatMapper());
+	    
 	    return chats;
 	}
 
@@ -62,14 +59,15 @@ public class ChatJdbcTemplate implements ChatDAO {
 		String SQL = "select * from bohmannd_chat where user1_id = ? or user2_id = ?";
 		Object[] args = {user_id, user_id};
 	    List <Chat> chats = jdbcTemplateObject.query(SQL, args, new ChatMapper());
+	    
 	    return chats;
 	}
 
 	@Override
 	public void seeChat(int id) {
-		String SQL = "update bohmannd_chat set seen=1 where id = " + id;
-		System.out.println(SQL);
-		jdbcTemplateObject.execute(SQL);		
+		String SQL = "update bohmannd_chat set seen=1 where id = ?";
+		Object[] args = {id};
+		jdbcTemplateObject.update(SQL, args);		
 	}
 
 }
