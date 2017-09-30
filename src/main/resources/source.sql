@@ -29,8 +29,8 @@ CREATE TABLE `bohmannd_chat` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user1_id` int(11) NOT NULL,
   `user2_id` int(11) NOT NULL,
-  `read` bit NOT NULL DEFAULT 0,
-  `read_at` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `seen` bit NOT NULL DEFAULT 0,
+  `created_at` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
