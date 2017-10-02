@@ -35,3 +35,28 @@ body {
 [hidden] {
   display: none !important;
 }
+
+.black {
+  color: black;
+  margin: 0 0 0 0 !important; 
+}
+
+.friendicon-plus {
+    font-size: 25px;
+    padding-top: 8px;
+    color: #5cb85c;
+}
+
+.friendicon-plus:hover {
+    color: #449d44;
+}
+
+.friendicon-minus {
+    font-size: 25px;
+    padding-top: 8px;
+    color: #d9534f;
+}
+
+.friendicon-minus:hover {
+    color: #c9302c;
+}

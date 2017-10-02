@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Kivbook timeline</title>
+  <title>Kivbook settings</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="kivbook.css">
+  <link rel="stylesheet" type="text/css" href="kivbook.css">   
+  <link rel="stylesheet" type="text/css" href="kivbook-navbar.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -30,10 +31,10 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="./timeline.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>  
+        <li><a href="./timeline.html"><span class="glyphicon glyphicon-home"></span> Home <span class="badge">7</span></a></li>  
         <li><a href="./profile.html"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
-        <li><a href="./messages.html"><span class="glyphicon glyphicon-envelope"></span> Messages</a></li> 
-        <li><a href="./users.html"><span class="glyphicon glyphicon-list-alt"></span> Find friends</a></li>            	
+        <li><a href="./messages.html"><span class="glyphicon glyphicon-envelope"></span> Messages <span class="badge">0</span></a></li> 
+        <li><a href="./users.html"><span class="glyphicon glyphicon-list-alt"></span> Find friends <span class="badge">2</span></a></li>            	
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
@@ -74,7 +75,7 @@
             <div class="help-block with-errors"></div>
           </div>
           <div class="form-group">
-                <label for="birth">Date of birth</label>
+                <label for="datetimepicker">Date of birth</label>
                 <input type='text' class="form-control" id='datetimepicker' placeholder="Please enter your date of birth"/>
                 <script type="text/javascript">
                     $(function () {
@@ -86,11 +87,11 @@
                 </script>
               </div>
           <div class="form-group">
-            <label for="gender">Gender</label>
+            <label>Gender</label>
             <br>
-            <label class="radio-inline"><input type="radio" required="required" name="gender" checked="checked">Male</label>
-            <label class="radio-inline"><input type="radio" required="required" name="gender">Female</label>
-          </div>           
+            <label class="radio-inline"><input type="radio" required="required" id="gender1" name="gender">Male</label>
+            <label class="radio-inline"><input type="radio" required="required" id="gender2" name="gender">Female</label>
+          </div>         
           <button type="submit" class="btn btn-primary">Save changes</button>
         </form> 
       </div>     

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Kivbook timeline</title>
+  <title>Kivbook users</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="kivbook.css">
+  <link rel="stylesheet" type="text/css" href="kivbook.css">    
+  <link rel="stylesheet" type="text/css" href="kivbook-navbar.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -23,10 +24,10 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="./timeline.html"><span class="glyphicon glyphicon-home"></span> Home</a></li>  
+        <li><a href="./timeline.html"><span class="glyphicon glyphicon-home"></span> Home <span class="badge badge-info">7</span></a></li>  
         <li><a href="./profile.html"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
-        <li><a href="./messages.html"><span class="glyphicon glyphicon-envelope"></span> Messages</a></li>   
-        <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span> Find friends</a></li>          	
+        <li><a href="./messages.html"><span class="glyphicon glyphicon-envelope"></span> Messages <span class="badge">0</span></a></li>   
+        <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span> Find friends <span class="badge">2</span></a></li>          	
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="./settings.html"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
@@ -48,34 +49,43 @@
             <li class="list-group-item">
               <div class="media">
                 <div class="media-left">
-                  <img src="img/05-chef-a.png" class="media-object" style="width:55px">
+                  <img src="img/05-chef-a.png" class="media-object" style="width:55px" alt="photo">
                 </div>
                 <div class="media-body">
                   <h4 class="media-heading">Chef</h4>
-                  <p>Friends since June 13, 2015</p>
+                  <p class="media-heading">Friends since June 13, 2015</p>
                 </div> 
+                <div class="media-right">
+                  <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-minus-sign friendicon-minus"></span></button>
+                </div>
               </div>
             </li>
             <li class="list-group-item">
               <div class="media">
                 <div class="media-left">
-                  <img src="img/06-mackey-a.png" class="media-object" style="width:55px">
+                  <img src="img/06-mackey-a.png" class="media-object" style="width:55px" alt="photo">
                 </div>
                 <div class="media-body">
                   <h4 class="media-heading">Mackey</h4>
-                  <p>Friends since June 13, 2015</p>
+                  <p class="media-heading">Friends since June 13, 2015</p>
                 </div> 
+                <div class="media-right">
+                  <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-minus-sign friendicon-minus"></span></button>
+                </div>
               </div>
             </li>
             <li class="list-group-item">
               <div class="media">
                 <div class="media-left">
-                  <img src="img/03-eric-cartman-a.png" class="media-object" style="width:55px">
+                  <img src="img/03-eric-cartman-a.png" class="media-object" style="width:55px" alt="photo">
                 </div>
                 <div class="media-body">
                   <h4 class="media-heading">Eric Cartman</h4>
-                  <p>Friends since July 27, 2016</p>
+                  <p class="media-heading">Friends since July 27, 2016</p>
                 </div> 
+                <div class="media-right">
+                  <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-minus-sign friendicon-minus"></span></button>
+                </div>
               </div>
             </li>
           </ul>
@@ -89,23 +99,29 @@
             <li class="list-group-item">
               <div class="media">
                 <div class="media-left">
-                  <img src="img/02-kyle-broflovski-a.png" class="media-object" style="width:55px">
+                  <img src="img/02-kyle-broflovski-a.png" class="media-object" style="width:55px" alt="photo">
                 </div>
                 <div class="media-body">
                   <h4 class="media-heading">Kyle Broflovski</h4>
-                  <p>On Kivbook since January 1, 2017</p>
+                  <p class="media-heading">On Kivbook since January 1, 2017</p>
                 </div> 
+                <div class="media-right">
+                  <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
+                </div>
               </div>
             </li>
             <li class="list-group-item">
               <div class="media">
                 <div class="media-left">
-                  <img src="img/01-stan-marsh-a.png" class="media-object" style="width:55px">
+                  <img src="img/01-stan-marsh-a.png" class="media-object" style="width:55px" alt="photo">
                 </div>
                 <div class="media-body">
                   <h4 class="media-heading">Stan Marsh</h4>
-                  <p>On Kivbook since January 1, 2017</p>
+                  <p class="media-heading">On Kivbook since January 1, 2017</p>
                 </div> 
+                <div class="media-right">
+                  <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
+                </div>
               </div>
             </li>
           </ul>
