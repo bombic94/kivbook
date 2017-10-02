@@ -9,6 +9,8 @@
   <link rel="stylesheet" type="text/css" href="kivbook-navbar.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- validator for inputs-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 </head>
 <body>
 
@@ -46,27 +48,27 @@
         <div class="well">
           <ul class="list-group">
             <li class="list-group-item">
-              <div class="media">
-                <div class="media-left">
-                  <img src="img/05-chef-a.png" class="media-object" style="width:40px" alt="photo">
+                <div class="media">
+                  <div class="media-left">
+                    <a href="./profile.html"><img src="img/05-chef-a.png" class="media-object" style="width:40px" alt="photo"></a> 
+                  </div>
+                  <div class="media-body">
+                    <a href="./profile.html"><h4 class="media-heading black">Chef</h4></a> 
+                    <p class="media-heading black">Hi, whats new?</p> 
+                  </div> 
                 </div>
-                <div class="media-body">
-                  <h4 class="media-heading">Chef</h4>
-                  <p>Hi, whats new?</p>
-                </div> 
-              </div>
             </li>
             <li class="list-group-item">
-              <div class="media">
-                <div class="media-left">
-                  <img src="img/06-mackey-a.png" class="media-object" style="width:40px" alt="photo">
+                <div class="media">
+                  <div class="media-left">
+                    <a href="./profile.html"><img src="img/06-mackey-a.png" class="media-object" style="width:40px" alt="photo"></a>
+                  </div>
+                  <div class="media-body">
+                    <a href="./profile.html"><h4 class="media-heading black">Mackey</h4></a>
+                    <p class="media-heading black">Drugs are bad, mkay?</p>
+                  </div> 
                 </div>
-                <div class="media-body">
-                  <h4 class="media-heading">Mackey</h4>
-                  <p class="media-heading">Drugs are bad, mkay?</p>
-                </div> 
-              </div>
-            </li>
+            </li>   
           </ul>
         </div>
         
@@ -77,10 +79,10 @@
         <li class="list-group-item">
             <div class="media">
               <div class="media-left">
-                <img src="img/04-kenny-mccormick-a.png" class="media-object" style="width:55px" alt="photo">
+                <a href="./profile.html"><img src="img/04-kenny-mccormick-a.png" class="media-object" style="width:55px" alt="photo"></a>
               </div>
               <div class="media-body">
-                <h4 class="media-heading">Kenny <small><i>January 19, 2017, 20:58</i></small></h4>
+                <h4 class="media-heading"><a href="./profile.html">Kenny</a> <small><i>January 19, 2017, 20:58</i></small></h4>
                 <p>Hey Chef, what's for lunch</p>
               </div> 
             </div>
@@ -88,10 +90,10 @@
           <li class="list-group-item">
             <div class="media">
               <div class="media-left">
-                <img src="img/05-chef-a.png" class="media-object" style="width:55px" alt="photo">
+                <a href="./profile.html"><img src="img/05-chef-a.png" class="media-object" style="width:55px" alt="photo"></a>
               </div>
               <div class="media-body">
-                <h4 class="media-heading">Chef <small><i>January 19, 2017, 20:59</i></small></h4>
+                <h4 class="media-heading"><a href="./profile.html">Chef</a> <small><i>January 19, 2017, 20:59</i></small></h4>
                 <p>Hi Kenny, today we serve our favourite meatballs</p>
               </div> 
             </div>
@@ -99,10 +101,10 @@
           <li class="list-group-item">
             <div class="media">
               <div class="media-left">
-                <img src="img/04-kenny-mccormick-a.png" class="media-object" style="width:55px" alt="photo">
+                <a href="./profile.html"><img src="img/04-kenny-mccormick-a.png" class="media-object" style="width:55px" alt="photo"></a>
               </div>
               <div class="media-body">
-                <h4 class="media-heading">Kenny <small><i>January 19, 2017, 21:00</i></small></h4>
+                <h4 class="media-heading"><a href="./profile.html">Kenny</a> <small><i>January 19, 2017, 21:00</i></small></h4>
                 <p>Thanks Chef!</p>
               </div> 
             </div>
@@ -110,10 +112,10 @@
           <li class="list-group-item">
             <div class="media">
               <div class="media-left">
-                <img src="img/05-chef-a.png" class="media-object" style="width:55px" alt="photo">
+                <a href="./profile.html"><img src="img/05-chef-a.png" class="media-object" style="width:55px" alt="photo"></a>
               </div>
               <div class="media-body">
-                <h4 class="media-heading">Chef <small><i>January 21, 2017, 21:58</i></small></h4>
+                <h4 class="media-heading"><a href="./profile.html">Chef</a> <small><i>January 21, 2017, 21:58</i></small></h4>
                 <p>Hi, whats new?</p>
               </div> 
             </div>
@@ -126,13 +128,15 @@
               <img src="img/04-kenny-mccormick-a.png" class="media-object" style="width:60px" alt="photo">
             </div>
             <div class="media-body">
-              <div class="form-group">
-                <textarea placeholder="Write a message" class="form-control" rows="2" id="comment"></textarea>
-              </div>
-              <label class="btn btn-default">
-                Upload a picture <input type="file" accept="image/*" hidden>
-              </label>
-              <button type="submit" class="btn btn-primary">Send</button>
+              <form data-toggle="validator">
+                <div class="form-group">
+                  <textarea placeholder="Write a message" required="required" class="form-control" rows="2" id="message"></textarea>
+                </div>
+                <label class="btn btn-default">
+                  Upload a picture <input type="file" accept="image/*" hidden>
+                </label>
+                <button type="submit" class="btn btn-primary">Send</button>
+              </form>
             </div> 
           </div>
         </div>

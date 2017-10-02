@@ -9,6 +9,8 @@
   <link rel="stylesheet" type="text/css" href="kivbook-navbar.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- validator for inputs-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 </head>
 <body>
 
@@ -123,13 +125,15 @@
               <img src="img/04-kenny-mccormick-a.png" class="media-object" style="width:60px" alt="photo">
             </div>
             <div class="media-body">
-              <div class="form-group">
-                <textarea placeholder="Tell us what's new" class="form-control" rows="3" id="comment"></textarea>
-              </div>
-              <label class="btn btn-default">
-                Upload a picture <input type="file" accept="image/*" hidden>
-              </label>
-              <button type="submit" class="btn btn-primary">Post</button>
+              <form data-toggle="validator">
+                <div class="form-group">
+                  <textarea placeholder="Tell us what's new" required="required" class="form-control" rows="3" id="status"></textarea>
+                </div>
+                <label class="btn btn-default">
+                  Upload a picture <input type="file" accept="image/*" hidden>
+                </label>
+                <button type="submit" class="btn btn-primary">Post</button>
+              </form>
             </div> 
           </div>
           </div>
@@ -183,12 +187,14 @@
                     <img src="img/04-kenny-mccormick-a.png" class="media-object" style="width:30px" alt="photo">
                   </div>
                   <div class="media-body">
-                    <div class="form-group">
-                      <textarea placeholder="Write a comment" class="form-control" rows="1" id="comment1"></textarea>
-                    </div>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <span class="	glyphicon glyphicon-comment"></span> Comment
-                    </button>
+                    <form data-toggle="validator">
+                      <div class="form-group">
+                        <textarea placeholder="Write a comment" required="required" class="form-control" rows="1" id="comment1"></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-default btn-sm">
+                        <span class="	glyphicon glyphicon-comment"></span> Comment
+                      </button>
+                    </form>
                   </div>
                 </div>       
               </div>
@@ -242,12 +248,14 @@
                     <img src="img/04-kenny-mccormick-a.png" class="media-object" style="width:30px" alt="photo">
                   </div>
                   <div class="media-body">
-                    <div class="form-group">
-                      <textarea placeholder="Write a comment" class="form-control" rows="1" id="comment2"></textarea>
-                    </div>
-                    <button type="button" class="btn btn-default btn-sm">
-                      <span class="	glyphicon glyphicon-comment"></span> Comment
-                    </button>
+                    <form data-toggle="validator">
+                      <div class="form-group">
+                        <textarea placeholder="Write a comment" required="required" class="form-control" rows="1" id="comment2"></textarea>
+                      </div>
+                      <button type="submit" class="btn btn-default btn-sm">
+                        <span class="	glyphicon glyphicon-comment"></span> Comment
+                      </button>
+                    </form>
                   </div>
                 </div>       
               </div>
