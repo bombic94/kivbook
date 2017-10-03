@@ -39,3 +39,9 @@
 .friendicon-minus:hover {
     color: #c9302c;
 }
+
+.invisible-button {
+
+    background: transparent;
+    border: none !important;
+}?
