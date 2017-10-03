@@ -22,7 +22,7 @@
 
 .friendicon-plus {
     font-size: 25px;
-    padding-top: 2px;
+    padding-top: 12px;
     color: #5cb85c;
 }
 
@@ -32,7 +32,7 @@
 
 .friendicon-minus {
     font-size: 25px;
-    padding-top: 2px;
+    padding-top: 12px;
     color: #d9534f;
 }
 
@@ -44,4 +44,29 @@
 
     background: transparent;
     border: none !important;
-}?
+}
+
+.img-30 {
+  width: 30px;
+  height: 30px;
+}
+
+.img-40 {
+  width: 40px;
+  height: 40px;
+}
+
+.img-60 {
+  width: 60px;
+  height: 60px;
+}
+
+.img-120 {
+  width: 120px;
+  height: 120px;
+}
+
+.img-250 {
+  width: 250px;
+  height: 250px;
+}
