@@ -21,7 +21,7 @@ public class UserController {
 		
 		System.out.println("in UserController");
 		ModelAndView mv = new ModelAndView("userList");		
-		mv.addObject("userList", userService.list());
+		mv.addObject("userList", userService.listUsers());
 		
 		return mv;
 	}

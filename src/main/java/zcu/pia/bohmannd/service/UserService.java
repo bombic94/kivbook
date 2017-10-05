@@ -8,6 +8,9 @@ public interface UserService {
 
     public void insertUser(User user);
 
-    public List<User> list();
+    public List<User> listUsers();
 
+    public User getUser(Integer id);
+    
+    public void deleteUser(User user);
 }
