@@ -2,30 +2,54 @@ package zcu.pia.bohmannd.model;
 
 import java.sql.Timestamp;
 
-public class Chat_Line {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="bohmannd_chat_line")
+public class Chat_Line extends AbstractObject {
+	
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
-	private int chat_id;
-	private int sender_id;
+	
+	@ManyToOne
+	@Column(name="chat_id")
+	private Chat chat;
+	
+	@ManyToOne
+	@Column(name="sender_id")
+	private User sender;
+	
+	@Column(name="line_text")
 	private String line_text;
+	
+	@Column(name="created_at")
 	private Timestamp created_at;
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getChat_id() {
-		return chat_id;
+	public Chat getChat() {
+		return chat;
 	}
-	public void setChat_id(int chat_id) {
-		this.chat_id = chat_id;
+	public void setChat(Chat chat) {
+		this.chat = chat;
 	}
-	public int getSender_id() {
-		return sender_id;
+	public User getSender() {
+		return sender;
 	}
-	public void setSender_id(int sender_id) {
-		this.sender_id = sender_id;
+	public void setSender(User sender) {
+		this.sender = sender;
 	}
 	public String getLine_text() {
 		return line_text;

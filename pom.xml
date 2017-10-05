@@ -14,6 +14,10 @@
 		<javax.jstl.version>1.2</javax.jstl.version>
         <javax.servlet.version>3.1.0</javax.servlet.version>        
         <mysql.connector.version>5.1.34</mysql.connector.version>
+        <jpa.version>1.0.0.Final</jpa.version>
+        <hibernate.version>4.3.8.Final</hibernate.version>
+        <commons.lang3.version>3.3.2</commons.lang3.version>        
+        <junit.version>3.8.1</junit.version>
 	</properties>
 	
   <dependencies>
@@ -49,6 +53,12 @@
 		    <version>${spring.version}</version>
 		</dependency>
 		
+		 <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        
 		<!-- Servlet Stuff -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -69,11 +79,55 @@
 			<version>1.2</version>
 		</dependency>
         
+        <!-- Persistence -->
+
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>${jpa.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-c3p0</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        
+        <dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+        
          <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql.connector.version}</version>
         </dependency>
+        
+        <!-- Utils -->
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.lang3.version}</version>
+        </dependency>
+        
+        <!-- Testing -->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        
   </dependencies>
   
           

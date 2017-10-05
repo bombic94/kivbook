@@ -2,30 +2,55 @@ package zcu.pia.bohmannd.model;
 
 import java.sql.Timestamp;
 
-public class Friendship {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="bohmannd_friendship")
+public class Friendship extends AbstractObject {
+	
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
-	private int user1_id;
-	private int user2_id;
+	
+	@ManyToOne
+	@JoinColumn(name="user1_id")
+	private User user1;
+	
+	@ManyToOne
+	@JoinColumn(name="user2_id")
+	private User user2;
+	
+	@Column(name="accepted")
 	private boolean accepted;
+	
+	@Column(name="created_at")
 	private Timestamp created_at;
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getUser1_id() {
-		return user1_id;
+	public User getUser1() {
+		return user1;
 	}
-	public void setUser1_id(int user1_id) {
-		this.user1_id = user1_id;
+	public void setUser1(User user1) {
+		this.user1 = user1;
 	}
-	public int getUser2_id() {
-		return user2_id;
+	public User getUser2() {
+		return user2;
 	}
-	public void setUser2_id(int user2_id) {
-		this.user2_id = user2_id;
+	public void setUser2(User user2) {
+		this.user2 = user2;
 	}
 	public boolean isAccepted() {
 		return accepted;

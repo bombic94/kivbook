@@ -2,29 +2,52 @@ package zcu.pia.bohmannd.model;
 
 import java.sql.Timestamp;
 
-public class Like {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="bohmannd_like")
+public class Like extends AbstractObject {
+	
+	@Id
+	@Column(name="id")
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
-	private int status_id;
-	private int user_id;
+	
+	@ManyToOne
+	@JoinColumn(name="status_id")
+	private Status status;
+	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
+	
+	@Column(name="created_at")
 	private Timestamp created_at;
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getStatus_id() {
-		return status_id;
+	public Status getStatus() {
+		return status;
 	}
-	public void setStatus_id(int status_id) {
-		this.status_id = status_id;
+	public void setStatus(Status status) {
+		this.status = status;
 	}
-	public int getUser_id() {
-		return user_id;
+	public User getUser() {
+		return user;
 	}
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public Timestamp getCreated_at() {
 		return created_at;
