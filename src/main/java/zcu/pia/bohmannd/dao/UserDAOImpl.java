@@ -28,16 +28,18 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<User> list() {
-		List<User> list = this.entityManager.createQuery("SELECT u FROM User u", User.class)
-											.getResultList();
+		List<User> list = this.entityManager
+				.createQuery("SELECT u FROM User u", User.class)
+				.getResultList();
 		return list;
 	}
 
 	@Override
 	public User getById(Integer id) {
-		User u = this.entityManager.createQuery("SELECT u FROM User u WHERE u.id = :id", User.class)
-									.setParameter("id", id)
-									.getSingleResult();
+		User u = this.entityManager
+				.createQuery("SELECT u FROM User u WHERE u.id = :id", User.class)
+				.setParameter("id", id)
+				.getSingleResult();
 		return u;
 	}
 
