@@ -37,4 +37,10 @@ public class UserServiceImpl implements UserService {
 		userDAO.delete(user);
 	}
 
+	//to be implemented
+	@Override
+	public boolean validateUser(User user) {
+		return (user.getUsername().equals("David") && user.getPassword().equals("123456"));
+	}
+
 }

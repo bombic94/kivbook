@@ -13,4 +13,6 @@ public interface UserService {
     public User getUser(Integer id);
     
     public void deleteUser(User user);
+
+	public boolean validateUser(User user);
 }

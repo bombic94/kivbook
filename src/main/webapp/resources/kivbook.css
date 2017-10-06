@@ -1,0 +1,72 @@
+/* CSS Document */        
+    
+/* max width*/
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1200px;
+}
+
+.block {
+  text-align: justify;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.black {
+  color: black;
+  margin: 0px; 
+}
+
+.friendicon-plus {
+    font-size: 25px;
+    padding-top: 12px;
+    color: #5cb85c;
+}
+
+.friendicon-plus:hover {
+    color: #449d44;
+}
+
+.friendicon-minus {
+    font-size: 25px;
+    padding-top: 12px;
+    color: #d9534f;
+}
+
+.friendicon-minus:hover {
+    color: #c9302c;
+}
+
+.invisible-button {
+
+    background: transparent;
+    border: none !important;
+}
+
+.img-30 {
+  width: 30px;
+  height: 30px;
+}
+
+.img-40 {
+  width: 40px;
+  height: 40px;
+}
+
+.img-60 {
+  width: 60px;
+  height: 60px;
+}
+
+.img-120 {
+  width: 120px;
+  height: 120px;
+}
+
+.img-250 {
+  width: 250px;
+  height: 250px;
+}

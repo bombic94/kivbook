@@ -1,0 +1,151 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+ 
+pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+  <head>
+    <title>Kivbook homepage</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <c:url value="resources/kivbook.css" var="css1"/>
+    <c:url value="resources/kivbook-navbar.css" var="css2"/>
+    <link rel="stylesheet" type="text/css" href="${css1}">
+    <link rel="stylesheet" type="text/css" href="${css2}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- validator for inputs-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+    <!-- captcha-->
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <!-- datepicker-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="#">Kivbook</a>
+        </div>
+      </div>
+    </nav>
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-8">
+            <p>Kivbook is a simple social network developed for needs of Department of Informatics and Computer Science</p>
+            <h3 class="text-center">There are <strong>${userCount}</strong> users of Kivbook at this moment</h3>
+          </div>
+          <div class="col-sm-4 well">
+            <ul class="nav nav-pills">
+              <li class="active"><a data-toggle="pill" href="#login">Login</a></li>
+              <li><a data-toggle="pill" href="#signup">Sign up</a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="login" class="tab-pane fade in active">
+                <h3>Login</h3>
+                <form data-toggle="validator"/>
+                  <div class="form-group">
+                    <label for="login-username">Username</label>
+                    <input type="text" class="form-control" id="login-username"
+                      placeholder="Please enter your username" required="required" data-error="Username is required"/>
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" class="form-control" id="login-password"
+                      placeholder="Please enter your password" required="required" data-minlength="6" data-error="Password is required (Minimum of 6 characters)"/>
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox">Remember me</label>
+                  </div>
+                  <button type="submit" class="btn btn-default">Log in</button>
+                </form>
+              </div>
+              <div id="signup" class="tab-pane fade">
+                <h3>Sign up</h3>
+                <form data-toggle="validator" action="homepage/register" method="post">
+                  <div class="form-group">
+                    <label for="name">First name *</label>
+                    <input type="text" class="form-control" id="name"
+                      placeholder="Please enter your first name" required="required" data-error="First name is required">
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="surname">Last name *</label>
+                    <input type="text" class="form-control" id="surname"
+                      placeholder="Please enter your last name" required="required" data-error="Last name is required">
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="username">Username *</label>
+                    <input type="text" class="form-control" id="username"
+                      placeholder="Please enter your username" required="required" data-error="Username is required">
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="datetimepicker">Date of birth</label>
+                    <input type='text' class="form-control" id='datetimepicker' placeholder="Please enter your date of birth"/>
+                    <script type="text/javascript">
+                      $(function () {
+                          $('#datetimepicker').datetimepicker({
+                              format: "MM/DD/YYYY",
+                              defaultDate: "",
+                          });
+                      });
+                    </script>
+                  </div>
+                  <div class="form-group">
+                    <label>Gender *</label>
+                    <br>
+                    <label class="radio-inline"><input type="radio" required="required" id="gender1" name="gender">Male</label>
+                    <label class="radio-inline"><input type="radio" required="required" id="gender2" name="gender">Female</label>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email address *</label>
+                    <input type="email" class="form-control" id="email"
+                      placeholder="Please enter your email" required="required" data-error="Valid email is required">
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Password *</label>
+                    <input type="password" class="form-control" id="password"
+                      placeholder="Please enter your password" required="required" data-minlength="6" data-error="Password is required (Minimum of 6 characters)">
+                    <div class="help-block with-errors">Minimum of 6 characters</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="password2">Confirm password *</label>
+                    <input type="password" class="form-control" id="password2"
+                      placeholder="Please confirm your password" required="required" data-match="#password" data-match-error="Password does not match">
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" required="required" data-error="You must agree">I agree with conditions *</label>
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="g-recaptcha" data-sitekey="6LcTzjEUAAAAAN5D7WuKyKYP6yf4t0GCGoP5edFr"></div>
+                  <button type="submit" class="btn btn-default">Sign up</button>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p class="text-muted"><strong>*</strong> These fields are required.</p>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
