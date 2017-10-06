@@ -1,5 +1,49 @@
 package zcu.pia.bohmannd.service;
 
-public class LikeServiceImpl {
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import zcu.pia.bohmannd.dao.LikeDAO;
+import zcu.pia.bohmannd.model.Like;
+import zcu.pia.bohmannd.model.Status;
+
+@Service
+public class LikeServiceImpl implements LikeService {
+
+	@Autowired
+	private LikeDAO likeDAO;
+	
+	@Transactional
+	@Override
+	public void insertLike(Like like) {
+		likeDAO.save(like);
+	}
+
+	@Transactional
+	@Override
+	public List<Like> listLikes() {
+		return likeDAO.list();
+	}
+
+	@Transactional
+	@Override
+	public Like getLike(Integer id) {
+		return likeDAO.getById(id);
+	}
+
+	@Transactional
+	@Override
+	public void deleteLike(Like like) {
+		likeDAO.delete(like);
+	}
+
+	@Transactional
+	@Override
+	public List<Like> listLikesByStatus(Status status) {
+		return likeDAO.listByStatus(status);
+	}
 
 }
