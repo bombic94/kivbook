@@ -13,6 +13,30 @@
 		<c:forEach items="${userList}" var="user">
 			${user.id}: ${user.lastname}, ${user.firstname}<br>
 		</c:forEach>
+		
+		<c:forEach items="${statusList}" var="status">
+			${status.id}: ${status.user.firstname}, ${status.status_text}<br>
+		</c:forEach>
+		
+		<c:forEach items="${commentList}" var="comment">
+			${comment.id}: ${comment.user.firstname}, ${comment.comment_text}<br>
+		</c:forEach>
+		
+		<c:forEach items="${likeList}" var="like">
+			${like.id}: ${like.user.firstname}, ${like.status.status_text}<br>
+		</c:forEach>
+		
+<%-- 		<c:forEach items="${friendshipList}" var="friendship"> --%>
+<%-- 			${user.id}: ${user.lastname}, ${user.firstname}<br> --%>
+<%-- 		</c:forEach> --%>
+		
+<%-- 		<c:forEach items="${chatList}" var="chat"> --%>
+<%-- 			${user.id}: ${user.lastname}, ${user.firstname}<br> --%>
+<%-- 		</c:forEach> --%>
+		
+<%-- 		<c:forEach items="${chat_LineList}" var="chat_Line"> --%>
+<%-- 			${user.id}: ${user.lastname}, ${user.firstname}<br> --%>
+<%-- 		</c:forEach> --%>
  
 	</center>
 </body>

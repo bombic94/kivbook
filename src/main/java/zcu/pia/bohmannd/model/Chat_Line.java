@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -20,11 +21,11 @@ public class Chat_Line extends AbstractObject {
 	private int id;
 	
 	@ManyToOne
-	@Column(name="chat_id")
+	@JoinColumn(name="chat_id")
 	private Chat chat;
 	
 	@ManyToOne
-	@Column(name="sender_id")
+	@JoinColumn(name="sender_id")
 	private User sender;
 	
 	@Column(name="line_text")
