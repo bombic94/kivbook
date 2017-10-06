@@ -61,7 +61,7 @@ public class User extends AbstractObject {
 	
 	@OneToMany(mappedBy = "user1")
 	private List<Friendship> friendships1 = new ArrayList<Friendship>();
-	
+
 	@OneToMany(mappedBy = "user2")
 	private List<Friendship> friendships2 = new ArrayList<Friendship>();
 	
@@ -79,7 +79,7 @@ public class User extends AbstractObject {
 	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getEmail() {
@@ -135,6 +135,74 @@ public class User extends AbstractObject {
 	}
 	public void setCreated_at(Timestamp created) {
 		this.created_at = created;
+	}	
+	public List<Like> getLikes() {
+		return likes;
+	}
+
+	public void setLikes(List<Like> likes) {
+		this.likes = likes;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public List<Status> getStatuses() {
+		return statuses;
+	}
+
+	public void setStatuses(List<Status> statuses) {
+		this.statuses = statuses;
+	}
+
+	public List<Friendship> getFriendships1() {
+		return friendships1;
+	}
+
+	public void setFriendships1(List<Friendship> friendships1) {
+		this.friendships1 = friendships1;
+	}
+
+	public List<Friendship> getFriendships2() {
+		return friendships2;
+	}
+
+	public void setFriendships2(List<Friendship> friendships2) {
+		this.friendships2 = friendships2;
+	}
+
+	public List<Chat> getChats1() {
+		return chats1;
+	}
+
+	public void setChats1(List<Chat> chats1) {
+		this.chats1 = chats1;
+	}
+
+	public List<Chat> getChats2() {
+		return chats2;
+	}
+
+	public void setChats2(List<Chat> chats2) {
+		this.chats2 = chats2;
 	}
 	
+	@Override
+    public String toString() {
+        return "User - ID: " + getId() + 
+        		", Email: " + getEmail() + 
+        		", Username: " + getUsername() + 
+        		", Password: " + getPassword() + 
+        		", Date of birth: " + getDateofbirth().toString() + 
+        		", Gender: " + getGender() + 
+        		", First name: " + getFirstname() + 
+        		", Last name: " + getLastname() + 
+        		", Photo: " + getPhoto() +
+        		", Created at: " + getCreated_at().toString();
+    }
 }

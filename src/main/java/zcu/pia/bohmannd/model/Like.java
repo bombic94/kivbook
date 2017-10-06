@@ -55,4 +55,12 @@ public class Like extends AbstractObject {
 	public void setCreated_at(Timestamp created_at) {
 		this.created_at = created_at;
 	}
+	
+	@Override
+    public String toString() {
+        return "Comment - ID: " + getId() + 
+        		", Status: " + getStatus().toString() + 
+        		", User: " + getUser().toString() + 
+        		", Created at: " + getCreated_at().toString();
+    }
 }

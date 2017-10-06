@@ -72,4 +72,27 @@ public class Status extends AbstractObject {
 	public void setCreated_at(Timestamp created_at) {
 		this.created_at = created_at;
 	}
+	public List<Like> getLikes() {
+		return likes;
+	}
+	public void setLikes(List<Like> likes) {
+		this.likes = likes;
+	}
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+	
+	@Override
+    public String toString() {
+        return "Status - ID: " + getId() + 
+        		", User: " + getUser().toString() + 
+        		", Status text: " + getStatus_text() + 
+        		", Photo: " + getPhoto() + 
+        		", Created at: " + getCreated_at().toString() +
+        		", Likes: " + getLikes().size() + 
+        		", Comments: " + getComments().size();
+    }
 }

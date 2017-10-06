@@ -63,4 +63,13 @@ public class Chat_Line extends AbstractObject {
 	public void setCreated_at(Timestamp created_at) {
 		this.created_at = created_at;
 	}
+	
+	@Override
+    public String toString() {
+        return "Chat_Line - ID: " + getId() + 
+        		", Chat: " + getChat().toString() +
+        		", Sender: " + getSender().toString() + 
+        		", Line text: " + getLine_text() + 
+        		", Created at: " + getCreated_at().toString();
+    }
 }

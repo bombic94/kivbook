@@ -64,4 +64,14 @@ public class Comment extends AbstractObject {
 	public void setCreated_at(Timestamp created_at) {
 		this.created_at = created_at;
 	}
+	
+	@Override
+    public String toString() {
+        return "Comment - ID: " + getId() + 
+        		", Status: " + getStatus().toString() + 
+        		", User: " + getUser().toString() + 
+        		", Comment text: " + getComment_text() + 
+        		", Created at: " + getCreated_at().toString();
+    }
+
 }
