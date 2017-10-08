@@ -3,6 +3,7 @@ package zcu.pia.bohmannd.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
@@ -29,18 +30,28 @@ public class Chat_LineDAOImpl implements Chat_LineDAO {
 
 	@Override
 	public List<Chat_Line> list() {
-		List<Chat_Line> list = this.entityManager
-				.createQuery("SELECT ch FROM Chat_Line ch", Chat_Line.class)
-				.getResultList();
+		List<Chat_Line> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT ch FROM Chat_Line ch", Chat_Line.class)
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = null;
+		}
 		return list;
 	}
 
 	@Override
 	public Chat_Line getById(Integer id) {
-		Chat_Line ch = this.entityManager
-				.createQuery("SELECT ch FROM Chat_Line ch WHERE ch.id = :id", Chat_Line.class)
-				.setParameter("id", id)
-				.getSingleResult();
+		Chat_Line ch;
+		try {
+			ch = this.entityManager
+					.createQuery("SELECT ch FROM Chat_Line ch WHERE ch.id = :id", Chat_Line.class)
+					.setParameter("id", id)
+					.getSingleResult();
+		} catch (NoResultException nre) {
+			ch = null;
+		}
 		return ch;
 	}
 
@@ -51,10 +62,15 @@ public class Chat_LineDAOImpl implements Chat_LineDAO {
 
 	@Override
 	public List<Chat_Line> listByChat(Chat chat) {
-		List<Chat_Line> list = this.entityManager
-				.createQuery("SELECT ch FROM Chat_Line ch WHERE ch.chat_id = :id", Chat_Line.class)
-				.setParameter("id", chat.getId())
-				.getResultList();
+		List<Chat_Line> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT ch FROM Chat_Line ch WHERE ch.chat_id = :id", Chat_Line.class)
+					.setParameter("id", chat.getId())
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = null;
+		}
 		return list;
 	}
 

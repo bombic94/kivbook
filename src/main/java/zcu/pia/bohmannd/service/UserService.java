@@ -15,4 +15,6 @@ public interface UserService {
     public void deleteUser(User user);
 
 	public boolean validateUser(User user);
+
+	public String register(User user);
 }

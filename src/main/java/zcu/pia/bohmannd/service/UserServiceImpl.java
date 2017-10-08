@@ -2,19 +2,25 @@ package zcu.pia.bohmannd.service;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import zcu.pia.bohmannd.dao.UserDAO;
 import zcu.pia.bohmannd.model.User;
+import zcu.pia.bohmannd.utils.Encoder;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+	final Logger logger = Logger.getLogger(UserServiceImpl.class);
+	
 	@Autowired
     private UserDAO userDAO;
-
+	@Autowired
+	private Encoder encoder;
+	
 	@Transactional
 	@Override
 	public void insertUser(User user) {
@@ -27,20 +33,46 @@ public class UserServiceImpl implements UserService {
 		return userDAO.list();
 	}
 
+	@Transactional
 	@Override
 	public User getUser(Integer id) {
 		return userDAO.getById(id);
 	}
 
+	@Transactional
 	@Override
 	public void deleteUser(User user) {
 		userDAO.delete(user);
 	}
 
-	//to be implemented
+	@Transactional
 	@Override
 	public boolean validateUser(User user) {
-		return (user.getUsername().equals("David") && user.getPassword().equals("123456"));
+		
+		User u = userDAO.getByUsername(user.getUsername());
+        
+        return (u != null && encoder.validate(user.getPassword(), u.getPassword()));
+	}
+
+	@Transactional
+	@Override
+	public String register(User user) {
+		String s;
+		if(!user.isNew()) {
+            throw new RuntimeException("User already exists, use save method for updates!");
+        }
+		User u = userDAO.getByUsername(user.getUsername());
+        
+        if(u != null) {
+        	s = "Username already taken!";
+        	return s;
+        }
+
+        user.setPassword(encoder.encode(user.getPassword()));
+        userDAO.save(user);
+        
+        s = "User registered, now you can log in";
+        return s;
 	}
 
 }

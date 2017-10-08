@@ -3,6 +3,7 @@ package zcu.pia.bohmannd.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
@@ -28,18 +29,28 @@ public class StatusDAOImpl implements StatusDAO {
 
 	@Override
 	public List<Status> list() {
-		List<Status> list = this.entityManager
-				.createQuery("SELECT s FROM Status s", Status.class)
-				.getResultList();
+		List<Status> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT s FROM Status s", Status.class)
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = null;
+		}
 		return list;
 	}
 
 	@Override
 	public Status getById(Integer id) {
-		Status s = this.entityManager
-				.createQuery("SELECT s FROM Status s WHERE s.id = :id", Status.class)
-				.setParameter("id", id)
-				.getSingleResult();
+		Status s;
+		try {
+			s = this.entityManager
+					.createQuery("SELECT s FROM Status s WHERE s.id = :id", Status.class)
+					.setParameter("id", id)
+					.getSingleResult();
+		} catch (NoResultException nre) {
+			s = null;
+		}
 		return s;
 	}
 

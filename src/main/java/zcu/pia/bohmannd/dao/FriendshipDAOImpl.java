@@ -3,6 +3,7 @@ package zcu.pia.bohmannd.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
@@ -29,18 +30,28 @@ public class FriendshipDAOImpl implements FriendshipDAO {
 
 	@Override
 	public List<Friendship> list() {
-		List<Friendship> list = this.entityManager
-				.createQuery("SELECT f FROM Friendship f", Friendship.class)
-				.getResultList();
+		List<Friendship> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT f FROM Friendship f", Friendship.class)
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = null;
+		}
 		return list;
 	}
 
 	@Override
 	public Friendship getById(Integer id) {
-		Friendship f = this.entityManager
-				.createQuery("SELECT f FROM Friendship f WHERE f.id = :id", Friendship.class)
-				.setParameter("id", id)
-				.getSingleResult();
+		Friendship f;
+		try {
+			f = this.entityManager
+					.createQuery("SELECT f FROM Friendship f WHERE f.id = :id", Friendship.class)
+					.setParameter("id", id)
+					.getSingleResult();
+		} catch (NoResultException nre) {
+			f = null;
+		}
 		return f;
 	}
 
@@ -51,10 +62,15 @@ public class FriendshipDAOImpl implements FriendshipDAO {
 
 	@Override
 	public List<Friendship> listByUser(User user) {
-		List<Friendship> list = this.entityManager
-				.createQuery("SELECT f FROM Friendship f WHERE f.user1_id = :id OR f.user2_id = :id", Friendship.class)
-				.setParameter("id", user.getId())
-				.getResultList();
+		List<Friendship> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT f FROM Friendship f WHERE f.user1_id = :id OR f.user2_id = :id", Friendship.class)
+					.setParameter("id", user.getId())
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = null;
+		}
 		return list;
 	}
 

@@ -3,6 +3,7 @@ package zcu.pia.bohmannd.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
@@ -29,18 +30,28 @@ public class LikeDAOImpl implements LikeDAO {
 
 	@Override
 	public List<Like> list() {
-		List<Like> list = this.entityManager
-				.createQuery("SELECT l FROM Like l", Like.class)
-				.getResultList();
+		List<Like> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT l FROM Like l", Like.class)
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = null;
+		}
 		return list;
 	}
 
 	@Override
 	public Like getById(Integer id) {
-		Like l = this.entityManager
-				.createQuery("SELECT l FROM Like l WHERE l.id = :id", Like.class)
-				.setParameter("id", id)
-				.getSingleResult();
+		Like l;
+		try {
+			l = this.entityManager
+					.createQuery("SELECT l FROM Like l WHERE l.id = :id", Like.class)
+					.setParameter("id", id)
+					.getSingleResult();
+		} catch (NoResultException nre) {
+			l = null;
+		}
 		return l;
 	}
 
@@ -51,10 +62,15 @@ public class LikeDAOImpl implements LikeDAO {
 
 	@Override
 	public List<Like> listByStatus(Status status) {
-		List<Like> list = this.entityManager
-				.createQuery("SELECT l FROM Like l WHERE l.status_id = :status_id ORDER BY l.created_at", Like.class)
-				.setParameter("status_id", status.getId())
-				.getResultList();
+		List<Like> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT l FROM Like l WHERE l.status_id = :status_id ORDER BY l.created_at", Like.class)
+					.setParameter("status_id", status.getId())
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = null;
+		}
 		return list;
 	}
 

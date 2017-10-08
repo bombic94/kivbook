@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
  
 pageEncoding="ISO-8859-1"%>
@@ -41,10 +42,40 @@ pageEncoding="ISO-8859-1"%>
     <div class="content">
       <div class="container-fluid">
         <div class="row">
+        
+          <!-- Modal -->
+		  <div class="modal fade" id="myModal" role="dialog">
+		    <div class="modal-dialog modal-sm">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		          <h4 class="modal-title">Kivbook info</h4>
+		        </div>
+		        <div class="modal-body">
+		          <p>${message}</p>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		  <script type="text/javascript">
+           	$('#myModal').modal({ show: false})
+          </script> 
+				  
           <div class="col-sm-8">
             <p>Kivbook is a simple social network developed for needs of Department of Informatics and Computer Science</p>
             <h3 class="text-center">There are <strong>${userCount}</strong> users of Kivbook at this moment</h3>
-          </div>
+            
+            <c:if test="${not empty message}">
+			    
+			    <script type="text/javascript">
+                 	$('#myModal').modal('show');
+                </script> 
+			    
+			</c:if>
+		  </div>			
           <div class="col-sm-4 well">
             <ul class="nav nav-pills">
               <li class="active"><a data-toggle="pill" href="#login">Login</a></li>
@@ -53,16 +84,16 @@ pageEncoding="ISO-8859-1"%>
             <div class="tab-content">
               <div id="login" class="tab-pane fade in active">
                 <h3>Login</h3>
-                <form data-toggle="validator"/>
+                <form:form data-toggle="validator" modelAttribute="user" method="post" action="homepage/login">
                   <div class="form-group">
                     <label for="login-username">Username</label>
-                    <input type="text" class="form-control" id="login-username"
+                    <form:input path="username" type="text" class="form-control" id="login-username"
                       placeholder="Please enter your username" required="required" data-error="Username is required"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="login-password">Password</label>
-                    <input type="password" class="form-control" id="login-password"
+                    <form:input path="password" type="password" class="form-control" id="login-password"
                       placeholder="Please enter your password" required="required" data-minlength="6" data-error="Password is required (Minimum of 6 characters)"/>
                     <div class="help-block with-errors"></div>
                   </div>
@@ -70,57 +101,57 @@ pageEncoding="ISO-8859-1"%>
                     <label><input type="checkbox">Remember me</label>
                   </div>
                   <button type="submit" class="btn btn-default">Log in</button>
-                </form>
+                </form:form>
               </div>
               <div id="signup" class="tab-pane fade">
                 <h3>Sign up</h3>
-                <form data-toggle="validator" action="homepage/register" method="post">
+                 <form:form data-toggle="validator" modelAttribute="user" method="post" action="homepage/register">
                   <div class="form-group">
                     <label for="name">First name *</label>
-                    <input type="text" class="form-control" id="name"
-                      placeholder="Please enter your first name" required="required" data-error="First name is required">
+                    <form:input path="firstname" type="text" class="form-control" id="name"
+                      placeholder="Please enter your first name" required="required" data-error="First name is required"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="surname">Last name *</label>
-                    <input type="text" class="form-control" id="surname"
-                      placeholder="Please enter your last name" required="required" data-error="Last name is required">
+                    <form:input path="lastname" type="text" class="form-control" id="surname"
+                      placeholder="Please enter your last name" required="required" data-error="Last name is required"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="username">Username *</label>
-                    <input type="text" class="form-control" id="username"
-                      placeholder="Please enter your username" required="required" data-error="Username is required">
+                    <form:input path="username" type="text" class="form-control" id="username"
+                      placeholder="Please enter your username" required="required" data-error="Username is required"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="datetimepicker">Date of birth</label>
-                    <input type='text' class="form-control" id='datetimepicker' placeholder="Please enter your date of birth"/>
+                    <form:input path="dateofbirth" type="date" class="form-control" id='datetimepicker' placeholder="Please enter your date of birth"/>
                     <script type="text/javascript">
                       $(function () {
                           $('#datetimepicker').datetimepicker({
-                              format: "MM/DD/YYYY",
+                              format: "YYYY-MM-DD",
                               defaultDate: "",
                           });
                       });
-                    </script>
+                     </script> 
                   </div>
                   <div class="form-group">
                     <label>Gender *</label>
                     <br>
-                    <label class="radio-inline"><input type="radio" required="required" id="gender1" name="gender">Male</label>
-                    <label class="radio-inline"><input type="radio" required="required" id="gender2" name="gender">Female</label>
+                    <label class="radio-inline"><form:radiobutton path="gender" required="required" id="gender1" name="gender" value="m"/>Male</label>
+                    <label class="radio-inline"><form:radiobutton path="gender" required="required" id="gender2" name="gender" value="f"/>Female</label>
                   </div>
                   <div class="form-group">
                     <label for="email">Email address *</label>
-                    <input type="email" class="form-control" id="email"
-                      placeholder="Please enter your email" required="required" data-error="Valid email is required">
+                    <form:input path="email" type="email" class="form-control" id="email"
+                      placeholder="Please enter your email" required="required" data-error="Valid email is required"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="password">Password *</label>
-                    <input type="password" class="form-control" id="password"
-                      placeholder="Please enter your password" required="required" data-minlength="6" data-error="Password is required (Minimum of 6 characters)">
+                    <form:input path="password" type="password" class="form-control" id="password"
+                      placeholder="Please enter your password" required="required" data-minlength="6" data-error="Password is required (Minimum of 6 characters)"/>
                     <div class="help-block with-errors">Minimum of 6 characters</div>
                   </div>
                   <div class="form-group">
@@ -140,7 +171,7 @@ pageEncoding="ISO-8859-1"%>
                       <p class="text-muted"><strong>*</strong> These fields are required.</p>
                     </div>
                   </div>
-                </form>
+                </form:form>
               </div>
             </div>
           </div>

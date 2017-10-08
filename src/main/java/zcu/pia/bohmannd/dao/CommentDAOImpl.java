@@ -3,6 +3,7 @@ package zcu.pia.bohmannd.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
@@ -29,18 +30,28 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public List<Comment> list() {
-		List<Comment> list = this.entityManager
-				.createQuery("SELECT c FROM Comment c", Comment.class)
-				.getResultList();
+		List<Comment> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT c FROM Comment c", Comment.class)
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = null;
+		}
 		return list;
 	}
 
 	@Override
 	public Comment getById(Integer id) {
-		Comment c = this.entityManager
-				.createQuery("SELECT c FROM Comment c WHERE c.id = :id", Comment.class)
-				.setParameter("id", id)
-				.getSingleResult();
+		Comment c;
+		try {
+			c = this.entityManager
+					.createQuery("SELECT c FROM Comment c WHERE c.id = :id", Comment.class)
+					.setParameter("id", id)
+					.getSingleResult();
+		} catch (NoResultException nre) {
+			c = null;
+		}
 		return c;
 	}
 
@@ -51,10 +62,15 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public List<Comment> listByStatus(Status status) {
-		List<Comment> list = this.entityManager
-				.createQuery("SELECT l FROM Comment c WHERE c.status_id = :status_id ORDER BY c.created_at", Comment.class)
-				.setParameter("status_id", status.getId())
-				.getResultList();
+		List<Comment> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT l FROM Comment c WHERE c.status_id = :status_id ORDER BY c.created_at", Comment.class)
+					.setParameter("status_id", status.getId())
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = null;
+		}
 		return list;
 	}
 
