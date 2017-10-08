@@ -58,9 +58,28 @@ public class Like extends AbstractObject {
 	
 	@Override
     public String toString() {
-        return "Comment - ID: " + getId() + 
-        		", Status: " + getStatus().toString() + 
-        		", User: " + getUser().toString() + 
-        		", Created at: " + getCreated_at().toString();
+        StringBuilder sb = new StringBuilder();
+		
+		sb.append("Like - ID: ").append(getId());		
+		sb.append(", Status: ");
+		if (getStatus() != null) {
+			sb.append(getStatus().toString());
+		} else {
+			sb.append("null");
+		}
+		sb.append(", User: ");
+		if (getUser() != null) {
+			sb.append(getUser().toString());
+		} else {
+			sb.append("null");
+		}
+		sb.append(", Created at: ");
+		if (getCreated_at() != null) {
+			sb.append(getCreated_at().toString());
+		} else {
+			sb.append("null");
+		}
+		
+        return sb.toString();
     }
 }

@@ -67,10 +67,29 @@ public class Friendship extends AbstractObject {
 	
 	@Override
     public String toString() {
-        return "Friendship - ID: " + getId() + 
-        		", User 1: " + getUser1().toString() + 
-        		", User 2: " + getUser2().toString() + 
-        		", Accepted: " + isAccepted() + 
-        		", Created at: " + getCreated_at().toString();
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("Friendship - ID: ").append(getId());		
+		sb.append(", User1: ");
+		if (getUser1() != null) {
+			sb.append(getUser1().toString());
+		} else {
+			sb.append("null");
+		}
+		sb.append(", User2: ");
+		if (getUser2() != null) {
+			sb.append(getUser2().toString());
+		} else {
+			sb.append("null");
+		}
+		sb.append(", Accepted ").append(isAccepted());
+		sb.append(", Created at: ");
+		if (getCreated_at() != null) {
+			sb.append(getCreated_at().toString());
+		} else {
+			sb.append("null");
+		}
+		
+		return sb.toString();
     }
 }

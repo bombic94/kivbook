@@ -56,23 +56,24 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional
 	@Override
-	public String register(User user) {
-		String s;
-		if(!user.isNew()) {
-            throw new RuntimeException("User already exists, use save method for updates!");
-        }
+	public boolean register(User user) {
+		boolean success;
+		
+//		if(!user.isNew()) {
+//            throw new RuntimeException("User already exists, use save method for updates!");
+//        }
 		User u = userDAO.getByUsername(user.getUsername());
         
         if(u != null) {
-        	s = "Username already taken!";
-        	return s;
+        	success = false;
+        } else {
+	        user.setPassword(encoder.encode(user.getPassword()));
+	        userDAO.save(user);
+	        
+	        success = true;
         }
-
-        user.setPassword(encoder.encode(user.getPassword()));
-        userDAO.save(user);
         
-        s = "User registered, now you can log in";
-        return s;
+        return success;
 	}
 
 }

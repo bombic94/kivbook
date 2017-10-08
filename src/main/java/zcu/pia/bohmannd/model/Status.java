@@ -87,12 +87,36 @@ public class Status extends AbstractObject {
 	
 	@Override
     public String toString() {
-        return "Status - ID: " + getId() + 
-        		", User: " + getUser().toString() + 
-        		", Status text: " + getStatus_text() + 
-        		", Photo: " + getPhoto() + 
-        		", Created at: " + getCreated_at().toString() +
-        		", Likes: " + getLikes().size() + 
-        		", Comments: " + getComments().size();
+        StringBuilder sb = new StringBuilder();
+		
+		sb.append("Status - ID: ").append(getId());		
+		sb.append(", User: ");
+		if (getUser() != null) {
+			sb.append(getUser().toString());
+		} else {
+			sb.append("null");
+		}
+		sb.append(", Status text: ").append(getStatus_text());
+		sb.append(", Photo: ").append(getPhoto());
+		sb.append(", Created at: ");
+		if (getCreated_at() != null) {
+			sb.append(getCreated_at().toString());
+		} else {
+			sb.append("null");
+		}
+		sb.append(", Likes: ");
+		if (getLikes() != null) {
+			sb.append(getLikes().size());
+		} else {
+			sb.append("null");
+		}
+		sb.append(", Comments: ");
+		if (getComments() != null) {
+			sb.append(getComments().size());
+		} else {
+			sb.append("null");
+		}
+		
+        return sb.toString();
     }
 }

@@ -194,15 +194,29 @@ public class User extends AbstractObject {
 	
 	@Override
     public String toString() {
-        return "User - ID: " + getId() + 
-        		", Email: " + getEmail() + 
-        		", Username: " + getUsername() + 
-        		", Password: " + getPassword() + 
-        		", Date of birth: " + getDateofbirth().toString() + 
-        		", Gender: " + getGender() + 
-        		", First name: " + getFirstname() + 
-        		", Last name: " + getLastname() + 
-        		", Photo: " + getPhoto() +
-        		", Created at: " + getCreated_at().toString();
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("User - ID: ").append(getId());		
+		sb.append(", Email: ").append(getEmail());
+		sb.append(", Username: ").append(getUsername());
+		sb.append(", Password: ").append(getPassword());
+		sb.append(", Date of birth: ");
+		if (getDateofbirth() != null) {
+			sb.append(getDateofbirth().toString());
+		} else {
+			sb.append("null");
+		}
+		sb.append(", Gender: ").append(getGender());
+		sb.append(", First name: ").append(getFirstname());
+		sb.append(", Last name: ").append(getLastname());
+		sb.append(", Photo: ").append(getPhoto());
+		sb.append(", Created at: ");
+		if (getCreated_at() != null) {
+			sb.append(getCreated_at().toString());
+		} else {
+			sb.append("null");
+		}
+
+        return sb.toString();
     }
 }

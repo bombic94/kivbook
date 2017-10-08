@@ -67,10 +67,29 @@ public class Chat_Line extends AbstractObject {
 	
 	@Override
     public String toString() {
-        return "Chat_Line - ID: " + getId() + 
-        		", Chat: " + getChat().toString() +
-        		", Sender: " + getSender().toString() + 
-        		", Line text: " + getLine_text() + 
-        		", Created at: " + getCreated_at().toString();
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("Chat_Line - ID: ").append(getId());		
+		sb.append(", Chat ");
+		if (getChat() != null) {
+			sb.append(getChat().toString());
+		} else {
+			sb.append("null");
+		}
+		sb.append(", Sender: ");
+		if (getSender() != null) {
+			sb.append(getSender().toString());
+		} else {
+			sb.append("null");
+		}
+		sb.append(", Line text: ").append(getLine_text());
+		sb.append(", Created at: ");
+		if (getCreated_at() != null) {
+			sb.append(getCreated_at().toString());
+		} else {
+			sb.append("null");
+		}
+		
+		return sb.toString();
     }
 }

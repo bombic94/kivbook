@@ -16,5 +16,5 @@ public interface UserService {
 
 	public boolean validateUser(User user);
 
-	public String register(User user);
+	public boolean register(User user);
 }

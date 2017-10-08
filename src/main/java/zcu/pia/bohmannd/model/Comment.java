@@ -66,12 +66,31 @@ public class Comment extends AbstractObject {
 	}
 	
 	@Override
-    public String toString() {
-        return "Comment - ID: " + getId() + 
-        		", Status: " + getStatus().toString() + 
-        		", User: " + getUser().toString() + 
-        		", Comment text: " + getComment_text() + 
-        		", Created at: " + getCreated_at().toString();
+    public String toString() {      
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("Comment - ID: ").append(getId());		
+		sb.append(", Status: ");
+		if (getStatus() != null) {
+			sb.append(getStatus().toString());
+		} else {
+			sb.append("null");
+		}
+		sb.append(", User: ");
+		if (getUser() != null) {
+			sb.append(getUser().toString());
+		} else {
+			sb.append("null");
+		}
+		sb.append(", Comment text: ").append(getComment_text());
+		sb.append(", Created at: ");
+		if (getCreated_at() != null) {
+			sb.append(getCreated_at().toString());
+		} else {
+			sb.append("null");
+		}
+		
+		return sb.toString();
     }
 
 }
