@@ -1,13 +1,13 @@
 --user table
 CREATE TABLE `bohmannd_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(45) NOT NULL COLLATE utf8_czech_ci,
-  `username` varchar(45) NOT NULL COLLATE utf8_czech_ci,
-  `password` varchar(45) NOT NULL COLLATE utf8_czech_ci,
+  `email` varchar(255) NOT NULL COLLATE utf8_czech_ci,
+  `username` varchar(255) NOT NULL COLLATE utf8_czech_ci,
+  `password` varchar(255) NOT NULL COLLATE utf8_czech_ci,
   `dateofbirth` date DEFAULT NULL,
   `gender` char(1) NOT NULL COLLATE utf8_unicode_ci,
-  `firstname` varchar(45) NOT NULL COLLATE utf8_czech_ci,
-  `lastname` varchar(45) NOT NULL COLLATE utf8_czech_ci,
+  `firstname` varchar(255) NOT NULL COLLATE utf8_czech_ci,
+  `lastname` varchar(255) NOT NULL COLLATE utf8_czech_ci,
   `photo` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
   `created_at` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   PRIMARY KEY (`id`)
@@ -39,7 +39,7 @@ CREATE TABLE `bohmannd_chat_line` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `chat_id` int(11) NOT NULL,
   `sender_id` int(11) NOT NULL,
-  `line_text` varchar(255) NOT NULL COLLATE utf8_czech_ci,
+  `line_text` varchar(2000) NOT NULL COLLATE utf8_czech_ci,
   `created_at` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
@@ -48,7 +48,7 @@ CREATE TABLE `bohmannd_chat_line` (
 CREATE TABLE `bohmannd_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `status_text` varchar(255) NOT NULL COLLATE utf8_czech_ci,
+  `status_text` varchar(2000) NOT NULL COLLATE utf8_czech_ci,
   `photo` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
   `created_at` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   PRIMARY KEY (`id`)
@@ -59,7 +59,7 @@ CREATE TABLE `bohmannd_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `comment_text` varchar(255) NOT NULL COLLATE utf8_czech_ci,
+  `comment_text` varchar(2000) NOT NULL COLLATE utf8_czech_ci,
   `created_at` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
