@@ -49,11 +49,11 @@
           </div>
           <div class="col-sm-8 well">
             <div class="text-center">
-              <h3>Kenny McCormick</h3>
+              <h3>${user.firstname} ${user.lastname} (${user.username})</h3>
               <img src="img/04-kenny-mccormick-a.png" class="img-circle img-250" alt="Avatar">
             </div>
             <div class="row">
-              <h4 class="text-center">About Kenny</h4>
+              <h4 class="text-center">About ${user.firstname}</h4>
               <div class="col-sm-4 col-xs-4">
                 <p>Email</p>
                 <p>Age</p>
@@ -61,10 +61,10 @@
                 <p>Number of friends</p>
               </div>
               <div class="col-sm-8 col-xs-8">
-                <p>kenny@southpark.us</p>
-                <p>8</p>
-                <p>Male</p>
-                <p>26</p>
+                <p>${user.email}</p>
+                <p>${userAge}</p>
+                <p>${userGender}</p>
+                <p>${userFriends}</p>
               </div>
             </div>
             <p class="text-center"><a href="./settings.html">Edit profile</a></p>
