@@ -1,5 +1,6 @@
 package zcu.pia.bohmannd.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -36,7 +37,7 @@ public class FriendshipDAOImpl implements FriendshipDAO {
 					.createQuery("SELECT f FROM Friendship f", Friendship.class)
 					.getResultList();
 		} catch (NoResultException nre) {
-			list = null;
+			list = Collections.emptyList();
 		}
 		return list;
 	}
@@ -65,11 +66,11 @@ public class FriendshipDAOImpl implements FriendshipDAO {
 		List<Friendship> list;
 		try {
 			list = this.entityManager
-					.createQuery("SELECT f FROM Friendship f WHERE f.user1_id = :id OR f.user2_id = :id", Friendship.class)
-					.setParameter("id", user.getId())
+					.createQuery("SELECT f FROM Friendship f WHERE f.user1 = :id OR f.user2 = :id", Friendship.class)
+					.setParameter("id", user)
 					.getResultList();
 		} catch (NoResultException nre) {
-			list = null;
+			list = Collections.emptyList();
 		}
 		return list;
 	}

@@ -1,5 +1,6 @@
 package zcu.pia.bohmannd.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -35,7 +36,7 @@ public class UserDAOImpl implements UserDAO {
 					.createQuery("SELECT u FROM User u", User.class)
 					.getResultList();
 		} catch (NoResultException nre) {
-			list = null;
+			list = Collections.emptyList();
 		}
 		return list;
 	}

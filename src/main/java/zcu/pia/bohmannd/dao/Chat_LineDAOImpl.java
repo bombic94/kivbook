@@ -1,5 +1,6 @@
 package zcu.pia.bohmannd.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -36,7 +37,7 @@ public class Chat_LineDAOImpl implements Chat_LineDAO {
 					.createQuery("SELECT ch FROM Chat_Line ch", Chat_Line.class)
 					.getResultList();
 		} catch (NoResultException nre) {
-			list = null;
+			list = Collections.emptyList();
 		}
 		return list;
 	}
@@ -65,11 +66,11 @@ public class Chat_LineDAOImpl implements Chat_LineDAO {
 		List<Chat_Line> list;
 		try {
 			list = this.entityManager
-					.createQuery("SELECT ch FROM Chat_Line ch WHERE ch.chat_id = :id", Chat_Line.class)
-					.setParameter("id", chat.getId())
+					.createQuery("SELECT ch FROM Chat_Line ch WHERE ch.chat = :id", Chat_Line.class)
+					.setParameter("id", chat)
 					.getResultList();
 		} catch (NoResultException nre) {
-			list = null;
+			list = Collections.emptyList();
 		}
 		return list;
 	}

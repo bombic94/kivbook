@@ -1,5 +1,6 @@
 package zcu.pia.bohmannd.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -35,7 +36,7 @@ public class StatusDAOImpl implements StatusDAO {
 					.createQuery("SELECT s FROM Status s", Status.class)
 					.getResultList();
 		} catch (NoResultException nre) {
-			list = null;
+			list = Collections.emptyList();
 		}
 		return list;
 	}

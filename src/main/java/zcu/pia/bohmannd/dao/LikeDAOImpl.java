@@ -1,5 +1,6 @@
 package zcu.pia.bohmannd.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -36,7 +37,7 @@ public class LikeDAOImpl implements LikeDAO {
 					.createQuery("SELECT l FROM Like l", Like.class)
 					.getResultList();
 		} catch (NoResultException nre) {
-			list = null;
+			list = Collections.emptyList();
 		}
 		return list;
 	}
@@ -65,11 +66,11 @@ public class LikeDAOImpl implements LikeDAO {
 		List<Like> list;
 		try {
 			list = this.entityManager
-					.createQuery("SELECT l FROM Like l WHERE l.status_id = :status_id ORDER BY l.created_at", Like.class)
-					.setParameter("status_id", status.getId())
+					.createQuery("SELECT l FROM Like l WHERE l.status = :status ORDER BY l.created_at", Like.class)
+					.setParameter("status", status)
 					.getResultList();
 		} catch (NoResultException nre) {
-			list = null;
+			list = Collections.emptyList();
 		}
 		return list;
 	}

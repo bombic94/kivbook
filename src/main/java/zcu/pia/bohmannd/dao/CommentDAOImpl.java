@@ -1,5 +1,6 @@
 package zcu.pia.bohmannd.dao;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -36,7 +37,7 @@ public class CommentDAOImpl implements CommentDAO {
 					.createQuery("SELECT c FROM Comment c", Comment.class)
 					.getResultList();
 		} catch (NoResultException nre) {
-			list = null;
+			list = Collections.emptyList();
 		}
 		return list;
 	}
@@ -65,11 +66,11 @@ public class CommentDAOImpl implements CommentDAO {
 		List<Comment> list;
 		try {
 			list = this.entityManager
-					.createQuery("SELECT l FROM Comment c WHERE c.status_id = :status_id ORDER BY c.created_at", Comment.class)
-					.setParameter("status_id", status.getId())
+					.createQuery("SELECT l FROM Comment c WHERE c.status = :status ORDER BY c.created_at", Comment.class)
+					.setParameter("status", status)
 					.getResultList();
 		} catch (NoResultException nre) {
-			list = null;
+			list = Collections.emptyList();
 		}
 		return list;
 	}
