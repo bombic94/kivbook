@@ -126,7 +126,7 @@ pageEncoding="ISO-8859-1"%>
                   </div>
                   <div class="form-group">
                     <label for="datetimepicker">Date of birth</label>
-                    <form:input path="dateofbirth" type="date" class="form-control" id='datetimepicker' placeholder="Please enter your date of birth"/>
+                    <input type="text" class="form-control" id='datetimepicker' placeholder="Please enter your date of birth"/>
                     <script type="text/javascript">
                       $(function () {
                           $('#datetimepicker').datetimepicker({
@@ -134,6 +134,16 @@ pageEncoding="ISO-8859-1"%>
                               defaultDate: "",
                           });
                       });
+                     </script> 
+                     <div hidden>
+	                     <form:input path="dateofbirth" type="date" id="dateofbirth"/>
+                     </div>
+                     <script type="text/javascript">
+                       $(function () {
+                         $("#datetimepicker").on("dp.change", function (e) {
+         					document.getElementById("dateofbirth").value = document.getElementById('datetimepicker').value;
+     					 });
+                       });
                      </script> 
                   </div>
                   <div class="form-group">
@@ -160,11 +170,22 @@ pageEncoding="ISO-8859-1"%>
                       placeholder="Please confirm your password" required="required" data-match="#password" data-match-error="Password does not match">
                     <div class="help-block with-errors"></div>
                   </div>
-                  <div class="checkbox">
-                    <label><input type="checkbox" required="required" data-error="You must agree">I agree with conditions *</label>
+                  <div class="g-recaptcha" data-callback="correctCaptcha" data-sitekey="6LcTzjEUAAAAAN5D7WuKyKYP6yf4t0GCGoP5edFr"></div>
+                  <div class="checkbox" hidden>
+                    <label><input type="checkbox" required="required" id="captchaOK"></label>
                     <div class="help-block with-errors"></div>
                   </div>
-                  <div class="g-recaptcha" data-sitekey="6LcTzjEUAAAAAN5D7WuKyKYP6yf4t0GCGoP5edFr"></div>
+                  <script type="text/javascript">
+                    var correctCaptcha = function(response) {
+			  	      if (response.length > 0) {
+			        	$("#captchaOK").prop("checked", true);
+		  	    	  }
+				    };
+                  </script>
+	              <div class="checkbox">
+                    <label><input type="checkbox" required="required" data-error="You must agree">I agree with conditions *</label>
+                    <div class="help-block with-errors"></div>
+                  </div>       
                   <button type="submit" class="btn btn-default">Sign up</button>
                   <div class="row">
                     <div class="col-md-12">
