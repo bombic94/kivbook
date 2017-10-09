@@ -1,5 +1,7 @@
 package zcu.pia.bohmannd.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +22,14 @@ public class HomepageController {
 	final Logger logger = Logger.getLogger(HomepageController.class);
 	
 	@RequestMapping(value = "/homepage")
-    public ModelAndView addItems(ModelAndView mv) {
+    public ModelAndView addItems(ModelAndView mv, HttpSession session) {
 		logger.info("Homepage Controller");
 		mv = new ModelAndView("homepage");
+		//after logout
+		if (session != null) {
+		    session.invalidate();
+		}
+		
 		
         mv.addObject("user", new User());
         int userCount = userService.listUsers().size();
@@ -54,7 +61,7 @@ public class HomepageController {
     }
 	
 	@RequestMapping(value = "/homepage/login", method = RequestMethod.POST)
-	public ModelAndView login(@ModelAttribute User user, ModelAndView mv, RedirectAttributes redirectAttributes) {
+	public ModelAndView login(@ModelAttribute User user, ModelAndView mv, HttpSession session, RedirectAttributes redirectAttributes) {
 		logger.info("Login Controller");
 		logger.info("Trying to login: " + user.toString());
 		
@@ -62,7 +69,9 @@ public class HomepageController {
 
         if (validated) {
         	logger.info("User validated: " + user.toString());
+        	session.setAttribute("USER", user.getUsername());
         	mv = new ModelAndView("timeline");
+        	redirectAttributes.addFlashAttribute("logged_user", userService.getUserByUsername(user.getUsername()));
         	mv.setViewName("redirect:/timeline");
         	logger.info("Redirecting to timeline");
         } else {

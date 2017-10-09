@@ -12,6 +12,8 @@ public interface UserService {
 
     public User getUser(Integer id);
     
+    public User getUserByUsername(String username);
+    
     public void deleteUser(User user);
 
 	public boolean validateUser(User user);

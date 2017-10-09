@@ -31,15 +31,15 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li><a href="#"><span class="glyphicon glyphicon-home"></span> Home <span class="badge">7</span></a></li>
-            <li><a href="./profile.html"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
-            <li><a href="./messages.html"><span class="glyphicon glyphicon-envelope"></span> Messages <span class="badge">0</span></a></li>
-            <li><a href="./users.html"><span class="glyphicon glyphicon-list-alt"></span> Find friends <span class="badge">2</span></a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-home"></span> Home <span class="badge">${newStatuses}</span></a></li>
+            <li><a href="profile"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
+            <li><a href="messages"><span class="glyphicon glyphicon-envelope"></span> Messages <span class="badge">${newMessages}</span></a></li>
+            <li><a href="users"><span class="glyphicon glyphicon-list-alt"></span> Find friends <span class="badge">${newFriendships}</span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="./settings.html"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-            <li><a href="./about.html"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
-            <li><a href="./homepage.html"><span class="glyphicon glyphicon-off"></span> Log out</a></li>
+            <li><a href="settings"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+            <li><a href="about"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
+            <li><a href="homepage"><span class="glyphicon glyphicon-off"></span> Log out</a></li>
           </ul>
         </div>
       </div>
