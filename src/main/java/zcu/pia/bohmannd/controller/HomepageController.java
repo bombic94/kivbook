@@ -71,7 +71,6 @@ public class HomepageController {
         	logger.info("User validated: " + user.toString());
         	session.setAttribute("USER", user.getUsername());
         	mv = new ModelAndView("timeline");
-        	redirectAttributes.addFlashAttribute("logged_user", userService.getUserByUsername(user.getUsername()));
         	mv.setViewName("redirect:/timeline");
         	logger.info("Redirecting to timeline");
         } else {

@@ -66,6 +66,7 @@ public class TimelineController {
 			mv.addObject("like", new Like());
 			mv.addObject("status", new Status());
 			mv.addObject("user", new User());
+			mv.addObject("loggedUser", userService.getUserByUsername(session.getAttribute("USER").toString()));
 			
 			mv.addObject("newFriendships", friendshipService.listFriendships().size());
 			mv.addObject("newMessages", chatService.listChats().size());
@@ -75,10 +76,7 @@ public class TimelineController {
 			mv.addObject("messages", chatService.listChats());
 			mv.addObject("statuses", statusService.listStatuss());
 		}
-		
-		
-		
-		
+	
         return mv;
     }
 }
