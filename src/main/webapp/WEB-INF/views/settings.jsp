@@ -78,20 +78,33 @@
             </script> 
 		  </c:if>	  
         <div class="col-sm-6">
-          <form:form class="well text-center" data-toggle="validator" modelAttribute="user" method="post" action="settings/changeSettings">
-          	<div hidden>
-            	<form:input path="id" value="${loggedUser.id}"></form:input>
-            </div>
+        
+          <div class="well text-center" data-toggle="validator">
             <div class="row">
-              <img src="img/04-kenny-mccormick-a.png" class="img-rounded" height="250" width="250" alt="Avatar">
+              <img src="<c:url value="/images/${loggedUser.photo}"/>" id="profilePicture" class="img-rounded" height="250" width="250" alt="<c:url value="/images/${loggedUser.photo}"/>">
             </div>
+            
             <div class="row">
-              <label class="btn btn-primary">
-              Change profile picture <input type="file" accept="image/*" hidden>
-              </label>
-              <button type="submit" class="btn btn-primary">Save new profile picture</button>
+            	<form method="POST" action="settings/changePicture" enctype="multipart/form-data">
+              		<label class="btn btn-default">
+              			Select picture <input type="file" id="file" name="file" accept="image/*" onchange="loadFile(event)" hidden>
+              		</label>
+              		<div hidden>
+            			<input type="text" name="id" value="${loggedUser.id}">
+            		</div>
+              		<button type="submit" class="btn btn-primary" id="savePicBtn" disabled>Save new profile picture</button>           		
+              	</form>
             </div>
-          </form:form>
+          </div>		  
+		  <script>
+			  var loadFile = function(event) {
+			    var pic = document.getElementById('profilePicture');
+			    pic.src = URL.createObjectURL(event.target.files[0]);
+			    var button = document.getElementById('savePicBtn');
+			    button.disabled = false;
+			  };
+		  </script>			  
+		  
           <form:form class="well" data-toggle="validator" modelAttribute="user" method="post" action="settings/changeSettings">
             <h3>Edit information</h3>
             <div hidden>
