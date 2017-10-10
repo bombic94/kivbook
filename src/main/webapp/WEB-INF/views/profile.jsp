@@ -50,8 +50,9 @@
           <div class="col-sm-8 well">
             <div class="text-center">
               <h3>${user.firstname} ${user.lastname} (${user.username})</h3>
-              <img src="<c:url value="../resources/img/${user.photo}"/>" class="img-circle img-250" alt="Avatar">
+              <img src="<c:url value="/images/${loggedUser.photo}"/>" id="profilePicture" class="img-circle" height="250" width="250" alt="<c:url value="/images/${loggedUser.photo}"/>">
             </div>
+            <span style="display:inline-block; width: 10em;height: 2em;"></span>
             <div class="row">
               <h4 class="text-center">About ${user.firstname}</h4>
               <div class="col-sm-4 col-xs-4">
@@ -66,7 +67,7 @@
                 <p>${userAge}</p>
                 <p>${userGender}</p>
                 <p>${userFriends}</p>
-                <p><fmt:formatDate value="${user.created_at}" pattern="yyyy/MM/dd/ HH:mm"/></p>
+                <p><fmt:formatDate value="${user.created_at}" pattern="yyyy/MM/dd HH:mm"/></p>
               </div>
             </div>
             <c:if test = "${loggedUser.id eq user.id}">

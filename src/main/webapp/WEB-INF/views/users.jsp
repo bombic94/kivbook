@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -49,58 +50,63 @@
             <div class="well">
               <h4 class="text-center">Your friends</h4>
               <ul class="list-group">
+              <c:forEach items="${friendships}" var="friendship">
+         		<c:if test="${friendship.user1.id == loggedUser.id}">
+         			<c:set var = "friend" scope = "session" value = "${friendship.user2}"/>
+         		</c:if> 
+         		<c:if test="${friendship.user2.id == loggedUser.id}">
+         			<c:set var = "friend" scope = "session" value = "${friendship.user1}"/>
+         		</c:if>    
                 <li class="list-group-item">
                   <div class="media">
                     <div class="media-left">
-                      <a href="./profile.html"><img src="img/05-chef-a.png" class="media-object img-60" alt="photo"></a>
+                      <a href="profile/${friend.id}"><img src="<c:url value="/images/${friend.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${friend.photo}"/>"></a>
                     </div>
                     <div class="media-body">
-                      <a href="./profile.html">
-                        <h4 class="media-heading black">Chef</h4>
+                      <a href="profile/${friend.id}">
+                        <h4 class="media-heading black">${friend.firstname}</h4>
                       </a>
-                      <p class="media-heading">Friends since June 13, 2015</p>
+                      <p class="media-heading">Friends since <fmt:formatDate value="${friendship.created_at}" pattern="yyyy/MM/dd HH:mm"/></p>
                     </div>
                     <div class="media-right">
                       <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-minus-sign friendicon-minus"></span></button>
                     </div>
                   </div>
                 </li>
-                <li class="list-group-item">
-                  <div class="media">
-                    <div class="media-left">
-                      <a href="./profile.html"><img src="img/06-mackey-a.png" class="media-object img-60" alt="photo"></a>
-                    </div>
-                    <div class="media-body">
-                      <a href="./profile.html">
-                        <h4 class="media-heading black">Mackey</h4>
-                      </a>
-                      <p class="media-heading">Friends since June 13, 2015</p>
-                    </div>
-                    <div class="media-right">
-                      <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-minus-sign friendicon-minus"></span></button>
-                    </div>
-                  </div>
-                </li>
-                <li class="list-group-item">
-                  <div class="media">
-                    <div class="media-left">
-                      <a href="./profile.html"><img src="img/03-eric-cartman-a.png" class="media-object img-60" alt="photo"></a>
-                    </div>
-                    <div class="media-body">
-                      <a href="./profile.html">
-                        <h4 class="media-heading black">Eric Cartman</h4>
-                      </a>
-                      <p class="media-heading">Friends since July 27, 2016</p>
-                    </div>
-                    <div class="media-right">
-                      <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-minus-sign friendicon-minus"></span></button>
-                    </div>
-                  </div>
-                </li>
+                </c:forEach>
               </ul>
             </div>
           </div>
           <div class="col-sm-6">
+            <div class="well">
+              <h4 class="text-center">Pending requests</h4>
+              <ul class="list-group">              
+                <c:forEach items="${pendingFriendships}" var="friendship">
+         		<c:if test="${friendship.user1.id == loggedUser.id}">
+         			<c:set var = "friend" scope = "session" value = "${friendship.user2}"/>
+         		</c:if> 
+         		<c:if test="${friendship.user2.id == loggedUser.id}">
+         			<c:set var = "friend" scope = "session" value = "${friendship.user1}"/>
+         		</c:if>    
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      <a href="profile/${friend.id}"><img src="<c:url value="/images/${friend.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${friend.photo}"/>"></a>
+                    </div>
+                    <div class="media-body">
+                      <a href="profile/${friend.id}">
+                        <h4 class="media-heading black">${friend.firstname}</h4>
+                      </a>
+                      <p class="media-heading">Requested friendship on: <fmt:formatDate value="${friendship.created_at}" pattern="yyyy/MM/dd HH:mm"/></p>
+                    </div>
+                    <div class="media-right">
+                      <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
+                    </div>
+                  </div>
+                </li>
+                </c:forEach>           
+              </ul>
+            </div>
             <div class="well">
               <h4 class="text-center">Find new friends</h4>
               <ul class="list-group">

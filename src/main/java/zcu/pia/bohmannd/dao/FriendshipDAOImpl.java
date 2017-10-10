@@ -62,11 +62,11 @@ public class FriendshipDAOImpl implements FriendshipDAO {
 	}
 
 	@Override
-	public List<Friendship> listByUser(User user) {
+	public List<Friendship> listFriendshipsByUser(User user) {
 		List<Friendship> list;
 		try {
 			list = this.entityManager
-					.createQuery("SELECT f FROM Friendship f WHERE f.user1 = :id OR f.user2 = :id", Friendship.class)
+					.createQuery("SELECT f FROM Friendship f WHERE (f.user1 = :id OR f.user2 = :id) AND f.accepted = 1", Friendship.class)
 					.setParameter("id", user)
 					.getResultList();
 		} catch (NoResultException nre) {
@@ -75,6 +75,34 @@ public class FriendshipDAOImpl implements FriendshipDAO {
 		return list;
 	}
 
+	@Override
+	public List<Friendship> listPendingFriendshipsByUser(User user) {
+		List<Friendship> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT f FROM Friendship f WHERE f.user2 = :id AND f.accepted = 0", Friendship.class)
+					.setParameter("id", user)
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = Collections.emptyList();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Friendship> listPossibleFriendshipsByUser(User user) {
+		List<Friendship> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT f FROM Friendship f WHERE f.user2 = :id AND f.accepted = 0", Friendship.class)
+					.setParameter("id", user)
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = Collections.emptyList();
+		}
+		return list;
+	}
+	
 	@Override
 	public void accept(Friendship friendship) {
 		this.entityManager

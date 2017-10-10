@@ -12,7 +12,21 @@ public interface FriendshipDAO extends AbstractDAO<Friendship>{
 	 * @param user
 	 * @return list of friendships
 	 */
-	List<Friendship> listByUser(User user);
+	List<Friendship> listFriendshipsByUser(User user);
+	
+	/**
+	 * List pending friendships for given user
+	 * @param user
+	 * @return list of friendships
+	 */
+	List<Friendship> listPendingFriendshipsByUser(User user);
+	
+	/**
+	 * List possible friendships for given user
+	 * @param user
+	 * @return list of friendships
+	 */
+	List<Friendship> listPossibleFriendshipsByUser(User user);
 	
 	/**
 	 * accept friendship

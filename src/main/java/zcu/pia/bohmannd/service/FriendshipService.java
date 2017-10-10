@@ -17,5 +17,9 @@ public interface FriendshipService {
     
     public List<Friendship> listFriendshipByUser(User user);
     
+    public List<Friendship> listPendingFriendshipByUser(User user);
+    
+    public List<Friendship> listPossibleFriendshipByUser(User user);
+    
     public void acceptFriendship(Friendship friendship);
 }

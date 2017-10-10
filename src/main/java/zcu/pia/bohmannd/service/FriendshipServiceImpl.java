@@ -43,13 +43,25 @@ public class FriendshipServiceImpl implements FriendshipService {
 	@Transactional
 	@Override
 	public List<Friendship> listFriendshipByUser(User user) {
-		return friendshipDAO.listByUser(user);
+		return friendshipDAO.listFriendshipsByUser(user);
 	}
 
 	@Transactional
 	@Override
 	public void acceptFriendship(Friendship friendship) {
 		friendshipDAO.accept(friendship);
+	}
+
+	@Transactional
+	@Override
+	public List<Friendship> listPendingFriendshipByUser(User user) {
+		return friendshipDAO.listPendingFriendshipsByUser(user);
+	}
+
+	@Transactional
+	@Override
+	public List<Friendship> listPossibleFriendshipByUser(User user) {	
+		return friendshipDAO.listPossibleFriendshipsByUser(user);
 	}
 
 }

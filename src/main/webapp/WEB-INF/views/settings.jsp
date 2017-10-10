@@ -83,7 +83,7 @@
             <div class="row">
               <img src="<c:url value="/images/${loggedUser.photo}"/>" id="profilePicture" class="img-rounded" height="250" width="250" alt="<c:url value="/images/${loggedUser.photo}"/>">
             </div>
-            
+            <span style="display:inline-block; width: 10em;height: 1em;"></span>
             <div class="row">
             	<form method="POST" action="settings/changePicture" enctype="multipart/form-data">
               		<label class="btn btn-default">
