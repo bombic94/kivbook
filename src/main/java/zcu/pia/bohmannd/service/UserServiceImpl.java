@@ -1,5 +1,6 @@
 package zcu.pia.bohmannd.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -7,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import zcu.pia.bohmannd.dao.FriendshipDAO;
 import zcu.pia.bohmannd.dao.UserDAO;
+import zcu.pia.bohmannd.model.Friendship;
 import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.utils.Encoder;
 
@@ -18,6 +21,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
     private UserDAO userDAO;
+	@Autowired
+    private FriendshipDAO friendshipDAO;
 	@Autowired
 	private Encoder encoder;
 	
@@ -82,6 +87,24 @@ public class UserServiceImpl implements UserService {
 		return u;
 	}
 
+	@Transactional
+	@Override
+	public List<User> listUsersToFriend(User user) {
+		List<User> listU = userDAO.list();
+		List<Friendship> listF = friendshipDAO.listFriendshipsByUser(user);
+		listF.addAll(friendshipDAO.listPendingFriendshipsByUser(user));
+		
+		for (Friendship f :listF) {
+			for (Iterator<User> iterator = listU.iterator(); iterator.hasNext();) {
+				User u = iterator.next();			
+				if (u.getId() == f.getUser1().getId() || u.getId() == f.getUser2().getId()) {
+					iterator.remove();
+				}				
+			}
+		}
+		return listU;
+	}
+	
 	@Transactional
 	@Override
 	public void changeSettings(User user) {

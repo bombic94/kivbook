@@ -25,4 +25,6 @@ public interface UserService {
 	public void changePhoto(User user);
 	
 	public void changePassword(User user);
+
+	List<User> listUsersToFriend(User user);
 }

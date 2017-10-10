@@ -52,6 +52,7 @@ public class UsersController {
 			
 			mv.addObject("friendships", friendshipService.listFriendshipByUser(user));
 			mv.addObject("pendingFriendships", friendshipService.listPendingFriendshipByUser(user));
+			mv.addObject("usersToFriend", userService.listUsersToFriend(user));
 			
 		}
 	

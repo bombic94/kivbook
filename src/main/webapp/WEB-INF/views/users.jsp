@@ -50,6 +50,9 @@
             <div class="well">
               <h4 class="text-center">Your friends</h4>
               <ul class="list-group">
+              <c:if test="${empty friendships}">
+				    <p>No friends. Add someone as friend</p>
+				</c:if>
               <c:forEach items="${friendships}" var="friendship">
          		<c:if test="${friendship.user1.id == loggedUser.id}">
          			<c:set var = "friend" scope = "session" value = "${friendship.user2}"/>
@@ -69,7 +72,9 @@
                       <p class="media-heading">Friends since <fmt:formatDate value="${friendship.created_at}" pattern="yyyy/MM/dd HH:mm"/></p>
                     </div>
                     <div class="media-right">
-                      <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-minus-sign friendicon-minus"></span></button>
+                    	<form method="POST" action="users/deleteFriend/"${friendship}">
+                      		<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-minus-sign friendicon-minus"></span></button>
+                      	</form>
                     </div>
                   </div>
                 </li>
@@ -80,7 +85,10 @@
           <div class="col-sm-6">
             <div class="well">
               <h4 class="text-center">Pending requests</h4>
-              <ul class="list-group">              
+              <ul class="list-group">     
+              	<c:if test="${empty pendingFriendships}">
+				    <p>No pending requests. Add someone as friend</p>
+				</c:if>         
                 <c:forEach items="${pendingFriendships}" var="friendship">
          		<c:if test="${friendship.user1.id == loggedUser.id}">
          			<c:set var = "friend" scope = "session" value = "${friendship.user2}"/>
@@ -100,7 +108,9 @@
                       <p class="media-heading">Requested friendship on: <fmt:formatDate value="${friendship.created_at}" pattern="yyyy/MM/dd HH:mm"/></p>
                     </div>
                     <div class="media-right">
-                      <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
+                      <form method="POST" action="users/acceptFriend/"${friendship}">
+                      	<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
+                      </form>
                     </div>
                   </div>
                 </li>
@@ -110,38 +120,29 @@
             <div class="well">
               <h4 class="text-center">Find new friends</h4>
               <ul class="list-group">
+              	<c:if test="${empty usersToFriend}">
+				    <p>No other users on Kivbook to connect. Tell your friends about Kivbook</p>
+				</c:if>              
+                <c:forEach items="${usersToFriend}" var="friend">  
                 <li class="list-group-item">
                   <div class="media">
                     <div class="media-left">
-                      <a href="./profile.html"><img src="img/02-kyle-broflovski-a.png" class="media-object img-60" alt="photo"></a>
+                      <a href="profile/${friend.id}"><img src="<c:url value="/images/${friend.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${friend.photo}"/>"></a>
                     </div>
                     <div class="media-body">
-                      <a href="./profile.html">
-                        <h4 class="media-heading black">Kyle Broflovski</h4>
+                      <a href="profile/${friend.id}">
+                        <h4 class="media-heading black">${friend.firstname}</h4>
                       </a>
-                      <p class="media-heading">On Kivbook since January 1, 2017</p>
+                      <p class="media-heading">On Kivbook since: <fmt:formatDate value="${friend.created_at}" pattern="yyyy/MM/dd HH:mm"/></p>
                     </div>
                     <div class="media-right">
-                      <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
+                      <form method="POST" action="users/addFriend/"${friend}">
+                      	<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
+                      </form>
                     </div>
                   </div>
                 </li>
-                <li class="list-group-item">
-                  <div class="media">
-                    <div class="media-left">
-                      <a href="./profile.html"><img src="img/01-stan-marsh-a.png" class="media-object img-60" alt="photo"></a>
-                    </div>
-                    <div class="media-body">
-                      <a href="./profile.html">
-                        <h4 class="media-heading black">Stan Marsh</h4>
-                      </a>
-                      <p class="media-heading">On Kivbook since January 1, 2017</p>
-                    </div>
-                    <div class="media-right">
-                      <button type="button" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
-                    </div>
-                  </div>
-                </li>
+                </c:forEach>           
               </ul>
             </div>
           </div>
