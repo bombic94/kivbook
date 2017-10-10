@@ -58,7 +58,7 @@ public class FriendshipDAOImpl implements FriendshipDAO {
 
 	@Override
 	public void delete(Friendship f) {
-		this.entityManager.remove(f);	
+		this.entityManager.remove(entityManager.contains(f) ? f : entityManager.merge(f));	
 	}
 
 	@Override

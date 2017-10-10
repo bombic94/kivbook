@@ -58,7 +58,7 @@ public class Chat_LineDAOImpl implements Chat_LineDAO {
 
 	@Override
 	public void delete(Chat_Line ch) {
-		this.entityManager.remove(ch);
+		this.entityManager.remove(entityManager.contains(ch) ? ch : entityManager.merge(ch));
 	}
 
 	@Override

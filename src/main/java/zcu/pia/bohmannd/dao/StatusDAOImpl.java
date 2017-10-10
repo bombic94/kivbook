@@ -57,7 +57,7 @@ public class StatusDAOImpl implements StatusDAO {
 
 	@Override
 	public void delete(Status s) {
-		this.entityManager.remove(s);
+		this.entityManager.remove(entityManager.contains(s) ? s : entityManager.merge(s));
 	}
 
 }

@@ -58,7 +58,7 @@ public class LikeDAOImpl implements LikeDAO {
 
 	@Override
 	public void delete(Like l) {
-		this.entityManager.remove(l);
+		this.entityManager.remove(entityManager.contains(l) ? l : entityManager.merge(l));
 	}
 
 	@Override

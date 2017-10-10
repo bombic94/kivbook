@@ -58,7 +58,7 @@ public class ChatDAOImpl implements ChatDAO {
 
 	@Override
 	public void delete(Chat ch) {
-		this.entityManager.remove(ch);
+		this.entityManager.remove(entityManager.contains(ch) ? ch : entityManager.merge(ch));
 	}
 
 	@Override

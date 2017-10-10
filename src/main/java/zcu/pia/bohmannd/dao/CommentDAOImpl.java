@@ -58,7 +58,7 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public void delete(Comment c) {
-		this.entityManager.remove(c);
+		this.entityManager.remove(entityManager.contains(c) ? c : entityManager.merge(c));
 	}
 
 	@Override
