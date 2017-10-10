@@ -91,8 +91,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> listUsersToFriend(User user) {
 		List<User> listU = userDAO.list();
-		List<Friendship> listF = friendshipDAO.listFriendshipsByUser(user);
-		listF.addAll(friendshipDAO.listPendingFriendshipsByUser(user));
+		List<Friendship> listF = friendshipDAO.listAllFriendshipsByUser(user);
+		
+		for (Iterator<User> iterator = listU.iterator(); iterator.hasNext();) {
+			User u = iterator.next();			
+			if (u.getId() == user.getId()) {
+				iterator.remove();
+			}				
+		}
 		
 		for (Friendship f :listF) {
 			for (Iterator<User> iterator = listU.iterator(); iterator.hasNext();) {

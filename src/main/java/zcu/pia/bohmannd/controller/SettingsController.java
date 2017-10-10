@@ -65,28 +65,6 @@ public class SettingsController {
         return mv;
     }
 	
-//	@RequestMapping(value = "/settings/changePicture")
-//    public ModelAndView changePicture(@ModelAttribute User user, ModelAndView mv, HttpSession session, RedirectAttributes redirectAttributes) {
-//		logger.info("Settings - changeSettings Controller");
-//		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
-//			logger.info("Not logged in");
-//			mv.setViewName("redirect:/homepage");
-//		} else {
-//			logger.info("Logged in: " + session.getAttribute("USER"));
-//			
-//			logger.info("Trying to change user picture: " + user.toString());
-//			userService.changePhoto(user);
-//			
-//			logger.info("Changes saved: " + user.toString());
-//			mv = new ModelAndView("settings");     				
-//			redirectAttributes.addFlashAttribute("message", "Changes saved");
-//        	mv.setViewName("redirect:/settings");			
-//			
-//		}
-//	
-//        return mv;
-//    }
-	
 	/**
 	 * Upload single file using Spring Controller
 	 */

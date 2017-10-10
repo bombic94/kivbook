@@ -50,7 +50,7 @@
           <div class="col-sm-8 well">
             <div class="text-center">
               <h3>${user.firstname} ${user.lastname} (${user.username})</h3>
-              <img src="<c:url value="/images/${loggedUser.photo}"/>" id="profilePicture" class="img-circle" height="250" width="250" alt="<c:url value="/images/${loggedUser.photo}"/>">
+              <img src="<c:url value="/images/${user.photo}"/>" id="profilePicture" class="img-circle" height="250" width="250" alt="<c:url value="/images/${user.photo}"/>">
             </div>
             <span style="display:inline-block; width: 10em;height: 2em;"></span>
             <div class="row">

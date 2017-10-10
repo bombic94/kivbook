@@ -72,7 +72,7 @@
                       <p class="media-heading">Friends since <fmt:formatDate value="${friendship.created_at}" pattern="yyyy/MM/dd HH:mm"/></p>
                     </div>
                     <div class="media-right">
-                    	<form method="POST" action="users/deleteFriend/"${friendship}">
+                    	<form method="POST" action="users/deleteFriend/${friendship.id}">
                       		<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-minus-sign friendicon-minus"></span></button>
                       	</form>
                     </div>
@@ -108,7 +108,7 @@
                       <p class="media-heading">Requested friendship on: <fmt:formatDate value="${friendship.created_at}" pattern="yyyy/MM/dd HH:mm"/></p>
                     </div>
                     <div class="media-right">
-                      <form method="POST" action="users/acceptFriend/"${friendship}">
+                      <form method="POST" action="users/acceptFriend/${friendship.id}">
                       	<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
                       </form>
                     </div>
@@ -136,7 +136,7 @@
                       <p class="media-heading">On Kivbook since: <fmt:formatDate value="${friend.created_at}" pattern="yyyy/MM/dd HH:mm"/></p>
                     </div>
                     <div class="media-right">
-                      <form method="POST" action="users/addFriend/"${friend}">
+                      <form method="POST" action="users/addFriend/${friend.id}">
                       	<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
                       </form>
                     </div>
