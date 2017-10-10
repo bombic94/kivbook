@@ -1,7 +1,5 @@
 package zcu.pia.bohmannd.dao;
 
-import java.util.List;
-
 import zcu.pia.bohmannd.model.User;
 
 public interface UserDAO extends AbstractDAO<User>{

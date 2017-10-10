@@ -3,8 +3,6 @@ package zcu.pia.bohmannd.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Date;
-
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,12 +51,13 @@ public class SettingsController {
 			mv = new ModelAndView("settings");     
 		
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
-			mv.addObject("loggedUser", user);
-			mv.addObject("user", user);
-			mv.addObject("datepickerDefault", user.getDateofbirth().getTime());
-			mv.addObject("newFriendships", friendshipService.listFriendships().size());
+			mv.addObject("loggedUser", user);			
+			mv.addObject("newFriendships", friendshipService.listPendingFriendshipByUser(user).size());
 			mv.addObject("newMessages", chatService.listChats().size());
 			mv.addObject("newStatuses", statusService.listStatuss().size());
+			
+			mv.addObject("user", user);
+			mv.addObject("datepickerDefault", user.getDateofbirth().getTime());
 		}
 	
         return mv;

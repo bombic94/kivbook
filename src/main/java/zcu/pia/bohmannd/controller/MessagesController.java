@@ -67,9 +67,9 @@ public class MessagesController {
 //			mv.addObject("status", new Status());
 //			mv.addObject("user", new User());
 //			
-			mv.addObject("loggedUser", userService.getUserByUsername(session.getAttribute("USER").toString()));
-			
-			mv.addObject("newFriendships", friendshipService.listFriendships().size());
+			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
+			mv.addObject("loggedUser", user);			
+			mv.addObject("newFriendships", friendshipService.listPendingFriendshipByUser(user).size());
 			mv.addObject("newMessages", chatService.listChats().size());
 			mv.addObject("newStatuses", statusService.listStatuss().size());
 //			

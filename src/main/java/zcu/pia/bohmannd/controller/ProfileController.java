@@ -68,8 +68,9 @@ public class ProfileController {
 			mv.addObject("userGender", gender);
 			mv.addObject("userFriends", friendships.size());
 			
-			mv.addObject("loggedUser", userService.getUserByUsername(session.getAttribute("USER").toString()));			
-			mv.addObject("newFriendships", friendshipService.listFriendships().size());
+			User userL = userService.getUserByUsername(session.getAttribute("USER").toString());
+			mv.addObject("loggedUser", userL);			
+			mv.addObject("newFriendships", friendshipService.listPendingFriendshipByUser(userL).size());
 			mv.addObject("newMessages", chatService.listChats().size());
 			mv.addObject("newStatuses", statusService.listStatuss().size());
 

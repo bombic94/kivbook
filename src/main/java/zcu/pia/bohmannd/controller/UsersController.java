@@ -1,9 +1,5 @@
 package zcu.pia.bohmannd.controller;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -49,9 +45,8 @@ public class UsersController {
 			mv = new ModelAndView("users");    
 			
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
-			mv.addObject("loggedUser", user);
-			
-			mv.addObject("newFriendships", friendshipService.listFriendships().size());
+			mv.addObject("loggedUser", user);			
+			mv.addObject("newFriendships", friendshipService.listPendingFriendshipByUser(user).size());
 			mv.addObject("newMessages", chatService.listChats().size());
 			mv.addObject("newStatuses", statusService.listStatuss().size());
 			
