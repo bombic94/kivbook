@@ -63,18 +63,16 @@ pageEncoding="ISO-8859-1"%>
 		  <script type="text/javascript">
            	$('#myModal').modal({ show: false})
           </script> 
-				  
+		  <c:if test="${not empty message}">  
+		    <script type="text/javascript">
+                	$('#myModal').modal('show');
+            </script> 
+		  </c:if>	  
           <div class="col-sm-8">
             <p>Kivbook is a simple social network developed for needs of Department of Informatics and Computer Science</p>
             <h3 class="text-center">There are <strong>${userCount}</strong> users of Kivbook at this moment</h3>
             
-            <c:if test="${not empty message}">
-			    
-			    <script type="text/javascript">
-                 	$('#myModal').modal('show');
-                </script> 
-			    
-			</c:if>
+            
 		  </div>			
           <div class="col-sm-4 well">
             <ul class="nav nav-pills">
