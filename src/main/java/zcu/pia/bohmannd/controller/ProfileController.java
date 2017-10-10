@@ -2,7 +2,6 @@ package zcu.pia.bohmannd.controller;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,18 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import zcu.pia.bohmannd.model.Chat;
-import zcu.pia.bohmannd.model.Chat_Line;
-import zcu.pia.bohmannd.model.Comment;
 import zcu.pia.bohmannd.model.Friendship;
-import zcu.pia.bohmannd.model.Like;
-import zcu.pia.bohmannd.model.Status;
 import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.service.ChatService;
-import zcu.pia.bohmannd.service.Chat_LineService;
-import zcu.pia.bohmannd.service.CommentService;
 import zcu.pia.bohmannd.service.FriendshipService;
-import zcu.pia.bohmannd.service.LikeService;
 import zcu.pia.bohmannd.service.StatusService;
 import zcu.pia.bohmannd.service.UserService;
 
@@ -39,19 +30,10 @@ public class ProfileController {
     private StatusService statusService;
 	
 	@Autowired
-    private LikeService likeService;
-	
-	@Autowired
     private ChatService chatService;
 	
 	@Autowired
-    private Chat_LineService chat_lineService;
-	
-	@Autowired
     private FriendshipService friendshipService;
-	
-	@Autowired
-    private CommentService commentService;
 	
 	final Logger logger = Logger.getLogger(HomepageController.class);
 	
@@ -72,7 +54,7 @@ public class ProfileController {
 			
 			String age = "Unknown";
 			if (user.getDateofbirth() != null) {
-				age = Integer.toString(Period.between(LocalDate.now(), user.getDateofbirth().toLocalDate()).getYears());
+				age = Integer.toString(Period.between(user.getDateofbirth().toLocalDate(), LocalDate.now()).getYears());
 			}
 			
 			String gender = "Male";

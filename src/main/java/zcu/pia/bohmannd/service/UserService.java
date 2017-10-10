@@ -19,4 +19,10 @@ public interface UserService {
 	public boolean validateUser(User user);
 
 	public boolean register(User user);
+
+	public void changeSettings(User user);
+	
+	public void changePhoto(User user);
+	
+	public void changePassword(User user);
 }

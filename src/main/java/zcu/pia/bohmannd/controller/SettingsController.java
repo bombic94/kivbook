@@ -5,21 +5,14 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import zcu.pia.bohmannd.model.Chat;
-import zcu.pia.bohmannd.model.Chat_Line;
-import zcu.pia.bohmannd.model.Comment;
-import zcu.pia.bohmannd.model.Friendship;
-import zcu.pia.bohmannd.model.Like;
-import zcu.pia.bohmannd.model.Status;
 import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.service.ChatService;
-import zcu.pia.bohmannd.service.Chat_LineService;
-import zcu.pia.bohmannd.service.CommentService;
 import zcu.pia.bohmannd.service.FriendshipService;
-import zcu.pia.bohmannd.service.LikeService;
 import zcu.pia.bohmannd.service.StatusService;
 import zcu.pia.bohmannd.service.UserService;
 
@@ -33,19 +26,10 @@ public class SettingsController {
     private StatusService statusService;
 	
 	@Autowired
-    private LikeService likeService;
-	
-	@Autowired
     private ChatService chatService;
 	
 	@Autowired
-    private Chat_LineService chat_lineService;
-	
-	@Autowired
     private FriendshipService friendshipService;
-	
-	@Autowired
-    private CommentService commentService;
 	
 	final Logger logger = Logger.getLogger(HomepageController.class);
 	
@@ -59,23 +43,78 @@ public class SettingsController {
 			logger.info("Logged in: " + session.getAttribute("USER"));
 			
 			mv = new ModelAndView("settings");     
-//			mv.addObject("comment", new Comment());
-//			mv.addObject("friendship", new Friendship());
-//			mv.addObject("chat_line", new Chat_Line());
-//			mv.addObject("chat", new Chat());
-//			mv.addObject("like", new Like());
-//			mv.addObject("status", new Status());
-//			mv.addObject("user", new User());
-//			
-			mv.addObject("loggedUser", userService.getUserByUsername(session.getAttribute("USER").toString()));
-			
+		
+			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
+			mv.addObject("loggedUser", user);
+			mv.addObject("user", user);
+			mv.addObject("datepickerDefault", user.getDateofbirth().getTime());
 			mv.addObject("newFriendships", friendshipService.listFriendships().size());
 			mv.addObject("newMessages", chatService.listChats().size());
 			mv.addObject("newStatuses", statusService.listStatuss().size());
-//			
-//			mv.addObject("friendships", friendshipService.listFriendships());
-//			mv.addObject("messages", chatService.listChats());
-//			mv.addObject("statuses", statusService.listStatuss());
+		}
+	
+        return mv;
+    }
+	
+	@RequestMapping(value = "/settings/changeSettings")
+    public ModelAndView changeSettings(@ModelAttribute User user, ModelAndView mv, HttpSession session, RedirectAttributes redirectAttributes) {
+		logger.info("Settings - changeSettings Controller");
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
+			logger.info("Not logged in");
+			mv.setViewName("redirect:/homepage");
+		} else {
+			logger.info("Logged in: " + session.getAttribute("USER"));
+			
+			logger.info("Trying to change user settings: " + user.toString());
+			userService.changeSettings(user);
+			
+			logger.info("Changes saved: " + user.toString());
+			mv = new ModelAndView("settings");     				
+			redirectAttributes.addFlashAttribute("message", "Changes saved");
+        	mv.setViewName("redirect:/settings");			
+			
+		}
+	
+        return mv;
+    }
+	
+	@RequestMapping(value = "/settings/changePassword")
+    public ModelAndView changePassword(@ModelAttribute User user, ModelAndView mv, HttpSession session, RedirectAttributes redirectAttributes) {
+		logger.info("Settings - changeSettings Controller");
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
+			logger.info("Not logged in");
+			mv.setViewName("redirect:/homepage");
+		} else {
+			logger.info("Logged in: " + session.getAttribute("USER"));
+			
+			logger.info("Trying to change user password: " + user.toString());
+			userService.changePassword(user);
+			
+			logger.info("Changes saved: " + user.toString());
+			mv = new ModelAndView("settings");     				
+			redirectAttributes.addFlashAttribute("message", "Changes saved");
+        	mv.setViewName("redirect:/settings");			
+			
+		}
+	
+        return mv;
+    }
+	
+	@RequestMapping(value = "/settings/delete")
+    public ModelAndView deleteUser(@ModelAttribute User user, ModelAndView mv, HttpSession session, RedirectAttributes redirectAttributes) {
+		logger.info("Settings - changeSettings Controller");
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
+			logger.info("Not logged in");
+			mv.setViewName("redirect:/homepage");
+		} else {
+			logger.info("Logged in: " + session.getAttribute("USER"));
+			
+			logger.info("Trying to delete user: " + user.toString());
+			userService.deleteUser(user);
+			
+			logger.info("User deleted: " + user.toString());
+			
+        	mv.setViewName("redirect:/homepage");					
 		}
 	
         return mv;

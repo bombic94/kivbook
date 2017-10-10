@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -52,7 +53,10 @@
     <div class="content">
       <div class="container-fluid">
         <div class="col-sm-6">
-          <div class="well text-center">
+          <form:form class="well text-center" data-toggle="validator" modelAttribute="user" method="post" action="settings/changeSettings">
+          	<div hidden>
+            	<form:input path="id" value="${loggedUser.id}"></form:input>
+            </div>
             <div class="row">
               <img src="img/04-kenny-mccormick-a.png" class="img-rounded" height="250" width="250" alt="Avatar">
             </div>
@@ -60,20 +64,24 @@
               <label class="btn btn-primary">
               Change profile picture <input type="file" accept="image/*" hidden>
               </label>
+              <button type="submit" class="btn btn-primary">Save new profile picture</button>
             </div>
-          </div>
-          <form class="well" data-toggle="validator">
+          </form:form>
+          <form:form class="well" data-toggle="validator" modelAttribute="user" method="post" action="settings/changeSettings">
             <h3>Edit information</h3>
+            <div hidden>
+            	<form:input path="id" value="${loggedUser.id}"></form:input>
+            </div>
             <div class="form-group">
               <label for="name">First name</label>
-              <input type="text" class="form-control" id="name" value="Kenny"
-                placeholder="Please enter your first name" required="required" data-error="First name is required">
+              <form:input path="firstname" type="text" class="form-control" id="name" value="${loggedUser.firstname}"
+                placeholder="Please enter your first name" required="required" data-error="First name is required"/>
               <div class="help-block with-errors"></div>
             </div>
             <div class="form-group">
               <label for="surname">Last name</label>
-              <input type="text" class="form-control" id="surname" value="McCormick"
-                placeholder="Please enter your last name" required="required" data-error="Last name is required">
+              <form:input path="lastname" type="text" class="form-control" id="surname" value="${loggedUser.lastname}"
+                placeholder="Please enter your last name" required="required" data-error="Last name is required"/>
               <div class="help-block with-errors"></div>
             </div>
             <div class="form-group">
@@ -82,28 +90,51 @@
               <script type="text/javascript">
                 $(function () {
                     $('#datetimepicker').datetimepicker({
-                        format: "MM/DD/YYYY",
-                        defaultDate: "03/22/2005",
+                        format: "YYYY-MM-DD",
+                        date: new Date(${datepickerDefault})
                     });
                 });
               </script>
+              <div hidden>
+                <form:input path="dateofbirth" type="date" id="dateofbirth" value="${loggedUser.dateofbirth}"/>
+              </div>
+              <script type="text/javascript">
+                 $(function () {
+                   $("#datetimepicker").on("dp.change", function (e) {
+   					document.getElementById("dateofbirth").value = document.getElementById('datetimepicker').value;
+				 });
+                 });
+              </script> 
             </div>
             <div class="form-group">
               <label>Gender</label>
               <br>
-              <label class="radio-inline"><input type="radio" required="required" id="gender1" name="gender">Male</label>
-              <label class="radio-inline"><input type="radio" required="required" id="gender2" name="gender">Female</label>
+              <label class="radio-inline"><input type="radio" required="required" id="gender1" name="gender" value="m">Male</label>
+              <label class="radio-inline"><input type="radio" required="required" id="gender2" name="gender" value="f">Female</label>
+              <script type="text/javascript">
+              		$(function () {
+              			if (${loggedUser.gender == 'm'} ) {
+              				$("#gender1").prop("checked", true);
+              			} else {
+              				$("#gender2").prop("checked", true);
+              			}
+                      });
+              </script>
             </div>
             <button type="submit" class="btn btn-primary">Save changes</button>
-          </form>
+          </form:form>
         </div>
+        
         <div class="col-sm-6">
-          <form class="well" data-toggle="validator">
+          <form:form class="well" data-toggle="validator" modelAttribute="user" method="post" action="settings/changePassword">
             <h3>Change password</h3>
+            <div hidden>
+            	<form:input path="id" value="${loggedUser.id}"></form:input>
+            </div>
             <div class="form-group">
               <label for="password">New Password</label>
-              <input type="password" class="form-control" id="password"
-                placeholder="Please enter your new password" required="required" data-minlength="6" data-error="Password is required (Minimum of 6 characters)">
+              <form:input path="password" type="password" class="form-control" id="password" value=""
+                placeholder="Please enter your new password" required="required" data-minlength="6" data-error="Password is required (Minimum of 6 characters)"/>
               <div class="help-block with-errors">Minimum of 6 characters</div>
             </div>
             <div class="form-group">
@@ -113,9 +144,13 @@
               <div class="help-block with-errors"></div>
             </div>
             <button type="submit" class="btn btn-primary">Change password</button>
-          </form>
-          <form class="well" data-toggle="validator">
+          </form:form>
+          
+          <form:form class="well" data-toggle="validator" modelAttribute="user" method="post" action="settings/delete">
             <h3>Delete profile</h3>
+            <div hidden>
+            	<form:input path="id" value="${loggedUser.id}"></form:input>
+            </div>
             <div class="form-group">
               <label for="password">Write 'DELETE' to confirm deleting of profile</label>
               <input type="text" id="delete-match" value="DELETE" hidden>
@@ -124,7 +159,7 @@
               <div class="help-block with-errors"></div>
             </div>
             <button type="submit" class="btn btn-danger">DELETE</button>
-          </form>
+          </form:form>
         </div>
       </div>
     </div>

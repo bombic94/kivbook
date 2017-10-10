@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -50,7 +50,7 @@
           <div class="col-sm-8 well">
             <div class="text-center">
               <h3>${user.firstname} ${user.lastname} (${user.username})</h3>
-              <img src="img/04-kenny-mccormick-a.png" class="img-circle img-250" alt="Avatar">
+              <img src="<c:url value="../resources/img/${user.photo}"/>" class="img-circle img-250" alt="Avatar">
             </div>
             <div class="row">
               <h4 class="text-center">About ${user.firstname}</h4>
@@ -59,15 +59,19 @@
                 <p>Age</p>
                 <p>Gender</p>
                 <p>Number of friends</p>
+                <p>On kivbook since</p>
               </div>
               <div class="col-sm-8 col-xs-8">
                 <p>${user.email}</p>
                 <p>${userAge}</p>
                 <p>${userGender}</p>
                 <p>${userFriends}</p>
+                <p><fmt:formatDate value="${user.created_at}" pattern="yyyy/MM/dd/ HH:mm"/></p>
               </div>
             </div>
-            <p class="text-center"><a href="./settings.html">Edit profile</a></p>
+            <c:if test = "${loggedUser.id eq user.id}">
+            	<p class="text-center"><a href="../settings">Edit profile</a></p>
+            </c:if>
           </div>
           <div class="col-sm-2">
           </div>

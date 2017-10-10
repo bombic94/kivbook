@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,8 +42,10 @@ public class HomepageController {
 	
 	@RequestMapping(value = "/homepage/register", method = RequestMethod.POST)
 	public ModelAndView register(@ModelAttribute User user, ModelAndView mv, RedirectAttributes redirectAttributes) {
-		logger.info("Registration controller");
-		logger.info("Trying to register: " + user.toString());
+		logger.info("Homepage - registration controller");
+		
+		user.setPhoto("default-profile-picture.jpg");
+		logger.info("Trying to register: " + user.toString());		
 		
         boolean registered = userService.register(user);
         
@@ -62,7 +65,7 @@ public class HomepageController {
 	
 	@RequestMapping(value = "/homepage/login", method = RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute User user, ModelAndView mv, HttpSession session, RedirectAttributes redirectAttributes) {
-		logger.info("Login Controller");
+		logger.info("Homepage - login Controller");
 		logger.info("Trying to login: " + user.toString());
 		
         boolean validated = userService.validateUser(user);

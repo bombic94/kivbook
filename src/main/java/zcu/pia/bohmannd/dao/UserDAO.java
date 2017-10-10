@@ -6,4 +6,9 @@ public interface UserDAO extends AbstractDAO<User>{
 
 	User getByUsername(String username);
    
+	void updateSettings(User user);
+	
+	void updatePhoto(User user);
+	
+	void updatePassword(User user);
 }

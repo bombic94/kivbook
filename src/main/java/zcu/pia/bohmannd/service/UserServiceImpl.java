@@ -58,10 +58,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean register(User user) {
 		boolean success;
-		
-//		if(!user.isNew()) {
-//            throw new RuntimeException("User already exists, use save method for updates!");
-//        }
+
 		User u = userDAO.getByUsername(user.getUsername());
         
         if(u != null) {
@@ -76,12 +73,32 @@ public class UserServiceImpl implements UserService {
         return success;
 	}
 
+	@Transactional
 	@Override
 	public User getUserByUsername(String username) {
 		
 		User u = userDAO.getByUsername(username);
 		
 		return u;
+	}
+
+	@Transactional
+	@Override
+	public void changeSettings(User user) {
+		userDAO.updateSettings(user);	
+	}
+
+	@Transactional
+	@Override
+	public void changePhoto(User user) {
+		userDAO.updatePhoto(user);
+	}
+
+	@Transactional
+	@Override
+	public void changePassword(User user) {
+		user.setPassword(encoder.encode(user.getPassword()));
+		userDAO.updatePassword(user);
 	}
 
 }

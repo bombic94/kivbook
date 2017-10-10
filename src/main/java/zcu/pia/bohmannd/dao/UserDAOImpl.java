@@ -72,6 +72,36 @@ public class UserDAOImpl implements UserDAO {
 			u = null;
 		}
 		return u;
+	}
+
+	@Override
+	public void updateSettings(User user) {
+		this.entityManager
+					.createQuery("UPDATE User u SET u.firstname = :firstname, u.lastname = :lastname, u.dateofbirth = :dateofbirth, u.gender = :gender WHERE u.id = :id")
+					.setParameter("firstname", user.getFirstname())
+					.setParameter("lastname", user.getLastname())
+					.setParameter("dateofbirth", user.getDateofbirth())
+					.setParameter("gender", user.getGender())
+					.setParameter("id", user.getId())
+					.executeUpdate();	
+	}
+
+	@Override
+	public void updatePhoto(User user) {
+		this.entityManager
+					.createQuery("UPDATE User u SET u.photo = :photo WHERE u.id = :id")
+					.setParameter("photo", user.getPhoto())
+					.setParameter("id", user.getId())
+					.executeUpdate();		
+	}
+
+	@Override
+	public void updatePassword(User user) {
+		this.entityManager
+					.createQuery("UPDATE User u SET u.password = :password WHERE u.id = :id")
+					.setParameter("password", user.getPassword())
+					.setParameter("id", user.getId())
+					.executeUpdate();	
 	}	
 
 }
