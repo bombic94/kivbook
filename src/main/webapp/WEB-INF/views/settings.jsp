@@ -158,8 +158,8 @@
             </div>
             <div class="form-group">
               <label for="password">New Password</label>
-              <form:input path="password" type="password" class="form-control" id="password" value=""
-                placeholder="Please enter your new password" required="required" data-minlength="6" data-error="Password is required (Minimum of 6 characters)"/>
+              <input type="password" class="form-control" id="password"
+                placeholder="Please enter your new password" required="required" data-minlength="6" data-error="Password is required (Minimum of 6 characters)">
               <div class="help-block with-errors">Minimum of 6 characters</div>
             </div>
             <div class="form-group">
@@ -169,6 +169,14 @@
               <div class="help-block with-errors"></div>
             </div>
             <button type="submit" class="btn btn-primary">Change password</button>
+            <div hidden>
+            	<form:input type="password" id="passForm" path="password" value=""></form:input>
+            </div>
+            <script>
+            	$('#password').change(function() {
+		    		$('#passForm').val($(this).val());
+				});
+            </script>		            
           </form:form>
           
           <form:form class="well" data-toggle="validator" modelAttribute="user" method="post" action="settings/delete">
