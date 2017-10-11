@@ -66,7 +66,7 @@ public class Chat_LineDAOImpl implements Chat_LineDAO {
 		List<Chat_Line> list;
 		try {
 			list = this.entityManager
-					.createQuery("SELECT ch FROM Chat_Line ch WHERE ch.chat = :id", Chat_Line.class)
+					.createQuery("SELECT ch FROM Chat_Line ch WHERE ch.chat = :id ORDER BY ch.created_at", Chat_Line.class)
 					.setParameter("id", chat)
 					.getResultList();
 		} catch (NoResultException nre) {

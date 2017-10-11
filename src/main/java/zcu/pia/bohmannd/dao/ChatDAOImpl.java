@@ -66,7 +66,7 @@ public class ChatDAOImpl implements ChatDAO {
 		List<Chat> list;
 		try {
 			list = this.entityManager
-					.createQuery("SELECT ch FROM Chat ch WHERE ch.user1 = :id OR ch.user2 = :id", Chat.class)
+					.createQuery("SELECT ch FROM Chat ch WHERE ch.user1 = :id OR ch.user2 = :id ORDER BY created_at ASC", Chat.class)
 					.setParameter("id", user)
 					.getResultList();
 		} catch (NoResultException nre) {

@@ -1,6 +1,8 @@
 package zcu.pia.bohmannd.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -34,6 +37,15 @@ public class Chat extends AbstractObject {
 	@Column(name="created_at")
 	private Timestamp created_at;
 	
+	@OneToMany(mappedBy = "chat")
+	private List<Chat_Line> chat_Lines = new ArrayList<Chat_Line>();
+	
+	public List<Chat_Line> getChat_Lines() {
+		return chat_Lines;
+	}
+	public void setChat_Lines(List<Chat_Line> chat_Lines) {
+		this.chat_Lines = chat_Lines;
+	}
 	public Integer getId() {
 		return id;
 	}

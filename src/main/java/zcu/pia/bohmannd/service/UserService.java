@@ -27,4 +27,6 @@ public interface UserService {
 	public void changePassword(User user);
 
 	List<User> listUsersToFriend(User user);
+
+	List<User> listUsersToChat(User user);
 }

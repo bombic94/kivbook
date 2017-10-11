@@ -61,7 +61,7 @@ public class UsersController {
     }
 	
 	@RequestMapping(value = "/users/deleteFriend/{friendshipId}")
-    public ModelAndView addFriend(ModelAndView mv, HttpSession session, @PathVariable Integer friendshipId) {
+    public ModelAndView deleteFriend(ModelAndView mv, HttpSession session, @PathVariable Integer friendshipId) {
 		logger.info("Profile Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
@@ -106,7 +106,7 @@ public class UsersController {
     }
 	
 	@RequestMapping(value = "/users/addFriend/{friendId}")
-    public ModelAndView deleteFriend(ModelAndView mv, HttpSession session, @PathVariable Integer friendId) {
+    public ModelAndView addFriend(ModelAndView mv, HttpSession session, @PathVariable Integer friendId) {
 		logger.info("Profile Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");

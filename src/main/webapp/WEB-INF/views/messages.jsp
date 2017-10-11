@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -49,103 +51,124 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="well">
+              <h4 class="text-center">Recent chats</h4>
               <ul class="list-group">
+              <c:if test="${empty chats}">
+				    <p>No recent chats. Start conversation with someone</p>
+				</c:if>
+              <c:forEach items="${chats}" var="chat">
+         		<c:if test="${chat.user1.id == loggedUser.id}">
+         			<c:set var = "friend" scope = "session" value = "${chat.user2}"/>
+         		</c:if> 
+         		<c:if test="${chat.user2.id == loggedUser.id}">
+         			<c:set var = "friend" scope = "session" value = "${chat.user1}"/>
+         		</c:if>    
                 <li class="list-group-item">
                   <div class="media">
                     <div class="media-left">
-                      <a href="./profile.html"><img src="img/05-chef-a.png" class="media-object img-40" alt="photo"></a> 
+                      <a href="profile/${friend.id}"><img src="<c:url value="/images/${friend.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${friend.photo}"/>"></a>
                     </div>
                     <div class="media-body">
-                      <a href="./profile.html">
-                        <h4 class="media-heading black">Chef</h4>
+                      <a href="profile/${friend.id}">
+                      	<c:if test="${not empty chat.chat_Lines}"><c:set var="length" value="${fn:length(chat.chat_Lines)}" /></c:if>
+                        <h4 class="media-heading black">${friend.firstname} <c:if test="${not empty chat.chat_Lines}">
+                        	<small><i><fmt:formatDate value="${chat.chat_Lines[length - 1].created_at}" pattern="yyyy/MM/dd HH:mm"/></i></small>
+                        	</c:if>
+                        </h4>
                       </a>
-                      <p class="media-heading black">Hi, whats new?</p>
+                      <form method="POST" action="messages/setChat/${chat.id}">
+                      	<button type="submit" class="btn btn-link">
+                      		<c:if test="${empty chat.chat_Lines}">Write something</c:if>                     		
+                      		<c:if test="${not empty chat.chat_Lines}">${chat.chat_Lines[length - 1].line_text}</c:if>
+                      	</button>
+                      </form>
                     </div>
                   </div>
                 </li>
+                </c:forEach>
+              </ul>
+            </div>
+            <div class="well">
+              <h4 class="text-center">Start new chat</h4>
+              <ul class="list-group">
+              	<c:if test="${empty usersToChat}">
+				    <p>No other users on Kivbook to write. Tell your friends about Kivbook</p>
+				</c:if>              
+                <c:forEach items="${usersToChat}" var="friend">  
                 <li class="list-group-item">
                   <div class="media">
                     <div class="media-left">
-                      <a href="./profile.html"><img src="img/06-mackey-a.png" class="media-object img-40" alt="photo"></a>
+                      <a href="profile/${friend.id}"><img src="<c:url value="/images/${friend.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${friend.photo}"/>"></a>
                     </div>
                     <div class="media-body">
-                      <a href="./profile.html">
-                        <h4 class="media-heading black">Mackey</h4>
+                      <a href="profile/${friend.id}">
+                        <h4 class="media-heading black">${friend.firstname}</h4>
                       </a>
-                      <p class="media-heading black">Drugs are bad, mkay?</p>
+                      <form method="POST" action="messages/addChat/${friend.id}">
+                      	<button type="submit" class="btn btn-link">Start a conversation</button>
+                      </form>
                     </div>
                   </div>
                 </li>
+                </c:forEach>           
               </ul>
             </div>
           </div>
           <div class="col-sm-8">
+          	 
+			<c:if test="${not empty selectedChat}">
+				<c:if test="${selectedChat.user1.id == loggedUser.id}">
+         			<c:set var = "friend" scope = "session" value = "${selectedChat.user2}"/>
+         		</c:if> 
+         		<c:if test="${selectedChat.user2.id == loggedUser.id}">
+         			<c:set var = "friend" scope = "session" value = "${selectedChat.user1}"/>
+         		</c:if>  
+			<h4 class="text-center">Chat with ${friend.firstname}</h4>
             <ul class="list-group">
-              <li class="list-group-item">
-                <div class="media">
-                  <div class="media-left">
-                    <a href="./profile.html"><img src="img/04-kenny-mccormick-a.png" class="media-object img-60" alt="photo"></a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading"><a href="./profile.html">Kenny</a> <small><i>January 19, 2017, 20:58</i></small></h4>
-                    <p>Hey Chef, what's for lunch</p>
-                  </div>
-                </div>
-              </li>
-              <li class="list-group-item">
-                <div class="media">
-                  <div class="media-left">
-                    <a href="./profile.html"><img src="img/05-chef-a.png" class="media-object img-60"" alt="photo"></a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading"><a href="./profile.html">Chef</a> <small><i>January 19, 2017, 20:59</i></small></h4>
-                    <p>Hi Kenny, today we serve our favourite meatballs</p>
-                  </div>
-                </div>
-              </li>
-              <li class="list-group-item">
-                <div class="media">
-                  <div class="media-left">
-                    <a href="./profile.html"><img src="img/04-kenny-mccormick-a.png" class="media-object img-60" alt="photo"></a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading"><a href="./profile.html">Kenny</a> <small><i>January 19, 2017, 21:00</i></small></h4>
-                    <p>Thanks Chef!</p>
-                  </div>
-                </div>
-              </li>
-              <li class="list-group-item">
-                <div class="media">
-                  <div class="media-left">
-                    <a href="./profile.html"><img src="img/05-chef-a.png" class="media-object img-60" alt="photo"></a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading"><a href="./profile.html">Chef</a> <small><i>January 21, 2017, 21:58</i></small></h4>
-                    <p>Hi, whats new?</p>
-                  </div>
-                </div>
-              </li>
+            	<c:if test="${empty activeChat}">
+					<p class="text-center">No messages so far</p>
+				</c:if>            	             
+              <c:forEach items="${activeChat}" var="message">  
+	              <li class="list-group-item">
+	                <div class="media">
+	                  <div class="media-left">
+	                    <a href="profile/${message.sender.id}"><img src="<c:url value="/images/${message.sender.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${message.sender.photo}"/>"></a>
+	                  </div>
+	                  <div class="media-body">
+	                    <h4 class="media-heading"><a href="profile/${message.sender.id}">${message.sender.firstname}</a> <small><i><fmt:formatDate value="${message.created_at}" pattern="yyyy/MM/dd HH:mm"/></i></small></h4>
+	                    <p>${message.line_text}</p>
+	                  </div>
+	                </div>
+	              </li>
+              </c:forEach>
+              
             </ul>
             <div class="row">
               <div class="col-sm-12">
                 <div class="media">
                   <div class="media-left">
-                    <img src="img/04-kenny-mccormick-a.png" class="media-object img-60" alt="photo">
+                    <img src="<c:url value="/images/${loggedUser.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${loggedUser.photo}"/>">
                   </div>
                   <div class="media-body">
-                    <form data-toggle="validator">
+                    <form:form data-toggle="validator" modelAttribute="chat_Line" method="post" action="messages/newMessage">
                       <div class="form-group">
                         <textarea placeholder="Write a message" required="required" class="form-control" rows="2" id="message"></textarea>
                       </div>
-                      <label class="btn btn-default">
-                      Upload a picture <input type="file" accept="image/*" hidden>
-                      </label>
+                      <div hidden>
+                      	<form:input type="text" id="line_text" path="line_text" value=""></form:input>
+                      </div>
                       <button type="submit" class="btn btn-primary">Send</button>
-                    </form>
+                      <script>
+		            	$('#message').change(function() {
+				    		$('#line_text').val($(this).val());
+						});
+			          </script>	
+                    </form:form>
                   </div>
                 </div>
               </div>
             </div>
+            </c:if> 
           </div>
         </div>
       </div>

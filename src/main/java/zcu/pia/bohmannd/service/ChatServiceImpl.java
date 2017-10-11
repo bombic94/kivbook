@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import zcu.pia.bohmannd.dao.ChatDAO;
+import zcu.pia.bohmannd.dao.Chat_LineDAO;
 import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.User;
 
@@ -15,6 +16,9 @@ public class ChatServiceImpl implements ChatService {
 
 	@Autowired
 	private ChatDAO chatDAO;
+	
+	@Autowired
+	private Chat_LineDAO chat_LineDAO;
 	
 	@Transactional
 	@Override
@@ -43,7 +47,12 @@ public class ChatServiceImpl implements ChatService {
 	@Transactional
 	@Override
 	public List<Chat> listChatByUser(User user) {
-		return chatDAO.listByUser(user);
+		List<Chat> listCh = chatDAO.listByUser(user);
+		for (Chat ch : listCh) { 
+			ch.setChat_Lines(chat_LineDAO.listByChat(ch));
+		}
+		
+		return listCh;
 	}
 
 	@Transactional

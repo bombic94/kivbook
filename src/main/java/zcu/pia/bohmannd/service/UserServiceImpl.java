@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import zcu.pia.bohmannd.dao.FriendshipDAO;
+import zcu.pia.bohmannd.dao.ChatDAO;
 import zcu.pia.bohmannd.dao.UserDAO;
+import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.Friendship;
 import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.utils.Encoder;
@@ -21,6 +23,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
     private UserDAO userDAO;
+	@Autowired
+    private ChatDAO chatDAO;
 	@Autowired
     private FriendshipDAO friendshipDAO;
 	@Autowired
@@ -104,6 +108,30 @@ public class UserServiceImpl implements UserService {
 			for (Iterator<User> iterator = listU.iterator(); iterator.hasNext();) {
 				User u = iterator.next();			
 				if (u.getId() == f.getUser1().getId() || u.getId() == f.getUser2().getId()) {
+					iterator.remove();
+				}				
+			}
+		}
+		return listU;
+	}
+	
+	@Transactional
+	@Override
+	public List<User> listUsersToChat(User user) {
+		List<User> listU = userDAO.list();
+		List<Chat> listCh = chatDAO.listByUser(user);
+		
+		for (Iterator<User> iterator = listU.iterator(); iterator.hasNext();) {
+			User u = iterator.next();			
+			if (u.getId() == user.getId()) {
+				iterator.remove();
+			}				
+		}
+		
+		for (Chat ch :listCh) {
+			for (Iterator<User> iterator = listU.iterator(); iterator.hasNext();) {
+				User u = iterator.next();			
+				if (u.getId() == ch.getUser1().getId() || u.getId() == ch.getUser2().getId()) {
 					iterator.remove();
 				}				
 			}
