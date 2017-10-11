@@ -66,7 +66,7 @@ public class CommentDAOImpl implements CommentDAO {
 		List<Comment> list;
 		try {
 			list = this.entityManager
-					.createQuery("SELECT l FROM Comment c WHERE c.status = :status ORDER BY c.created_at", Comment.class)
+					.createQuery("SELECT c FROM Comment c WHERE c.status = :status ORDER BY c.created_at", Comment.class)
 					.setParameter("status", status)
 					.getResultList();
 		} catch (NoResultException nre) {

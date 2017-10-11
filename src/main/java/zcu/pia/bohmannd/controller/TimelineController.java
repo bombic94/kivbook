@@ -70,6 +70,9 @@ public class TimelineController {
 			mv.addObject("chats", chats);
 			mv.addObject("pendingFriendships", friendshipService.listPendingFriendshipByUser(user));
 			mv.addObject("usersToFriend", userService.listUsersToFriend(user));
+			
+			mv.addObject("statuses", statusService.listStatusesForUser(user));
+			logger.info(statusService.listStatusesForUser(user).size());
 		}
 	
         return mv;

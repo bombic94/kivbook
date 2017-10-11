@@ -160,7 +160,7 @@
               <div class="col-sm-12">
                 <div class="media">
                   <div class="media-left">
-                    <img src="img/04-kenny-mccormick-a.png" class="media-object img-60" alt="photo">
+                    <img src="<c:url value="/images/${loggedUser.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${loggedUser.photo}"/>">
                   </div>
                   <div class="media-body">
                     <form data-toggle="validator">
@@ -177,16 +177,17 @@
               </div>
             </div>
             <span style="display:inline-block; width: 10em;height: 1em;"></span>
+            <c:forEach items="${statuses}" var="status">
             <div class="well">
               <div class="media">
                 <div class="media-left">
-                  <a href="./profile.html">
-                    <img src="img/05-chef-a.png" class="media-object img-60" alt="photo">
+                  <a href="profile/${status.user.id}">
+                    <img src="<c:url value="/images/${status.user.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${status.user.photo}"/>">
                   </a>
                 </div>              
                 <div class="media-body">
-                  <h4 class="media-heading"><a href="./profile.html">Chef</a> <small><i>January 21, 2017, 20:58</i></small></h4>
-                  <p class="media-heading"> Hey kids, how you all doing</p>
+                  <h4 class="media-heading"><a href="profile/${status.user.id}">${status.user.firstname}</a> <small><i><fmt:formatDate value="${status.created_at}" pattern="yyyy/MM/dd HH:mm"/></i></small></h4>
+                  <p class="media-heading"> ${status.status_text}</p>
                   <div class="media-heading">
                     <button type="button" class="btn btn-default invisible-button">
                       <span class="glyphicon glyphicon-thumbs-up"></span>
@@ -194,7 +195,7 @@
                     <button type="button" data-toggle="collapse" data-target="#comments1" class="btn btn-default invisible-button">
                       <span class="glyphicon glyphicon-comment"></span>
                     </button>  
-                    <small>5 likes, 2 comments</small>
+                    <small>${fn:length(status.likes)} likes, ${fn:length(status.comments)} comments</small>
                     <div class="collapse" id="comments1">
                       <div class="media">
                         <div class="media-left">
@@ -240,6 +241,7 @@
                 </div>
               </div>
             </div>
+            </c:forEach>
             <div class="well">
               <div class="media">
                 <div class="media-left">
