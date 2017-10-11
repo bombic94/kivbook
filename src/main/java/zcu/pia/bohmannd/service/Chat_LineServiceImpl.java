@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import zcu.pia.bohmannd.dao.ChatDAO;
 import zcu.pia.bohmannd.dao.Chat_LineDAO;
 import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.Chat_Line;
@@ -16,11 +17,14 @@ public class Chat_LineServiceImpl implements Chat_LineService {
 	@Autowired
 	private Chat_LineDAO chat_LineDAO;
 	
+	@Autowired
+	private ChatDAO chatDAO;
+	
 	@Transactional
 	@Override
 	public void insertChat_Line(Chat_Line chat_Line) {
-		chat_LineDAO.save(chat_Line);
-		chat_Line.getChat().setSeen(false);
+		chatDAO.setUnread(chat_Line.getChat());
+		chat_LineDAO.save(chat_Line);		
 	}
 
 	@Transactional

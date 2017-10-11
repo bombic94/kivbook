@@ -58,16 +58,15 @@ public class MessagesController {
 			List<Chat> chats = chatService.listChatByUser(user);
 			mv.addObject("chats", chats);
 			
-			Chat activeChat = chatService.getActiveChat();
 			if (chats.size() > 0) {
-				if (activeChat == null) {
-					activeChat = chats.get(0);
-					logger.info("Active chat not selected, selecting most recent chat: " + chats.get(0).toString());
+				if (chatService.getActiveChat() == null) {
+					chatService.setActiveChat(chats.get(0));
+					logger.info("Active chat not selected, selecting most recent chat: " + chatService.getActiveChat());
 				} else {					
-					logger.info("Active chat selected: " + activeChat.toString());
+					logger.info("Active chat selected: " + chatService.getActiveChat().toString());
 				}
-				mv.addObject("activeChat", chat_lineService.listChat_LinesByChat(activeChat));
-				mv.addObject("selectedChat", activeChat);
+				mv.addObject("activeChat", chat_lineService.listChat_LinesByChat(chatService.getActiveChat()));
+				mv.addObject("selectedChat", chatService.getActiveChat());
 			}
 			mv.addObject("usersToChat", userService.listUsersToChat(user));
 			mv.addObject("chat_Line", new Chat_Line());

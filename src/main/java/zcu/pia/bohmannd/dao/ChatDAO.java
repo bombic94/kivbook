@@ -19,4 +19,10 @@ public interface ChatDAO extends AbstractDAO<Chat>{
 	 * @param chat
 	 */
 	void accept(Chat chat);
+	
+	/**
+	 * set chat unread
+	 * @param chat
+	 */
+	void setUnread(Chat chat);
 }

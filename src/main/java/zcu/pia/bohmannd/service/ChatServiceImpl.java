@@ -91,6 +91,7 @@ public class ChatServiceImpl implements ChatService {
 			List<Chat_Line> chL = ch.getChat_Lines();
 			if (ch.isSeen()) {
 				iterator.remove();
+				continue;
 			}
 			if (chL.get(chL.size() - 1).getSender().getId() == user.getId()) {
 				iterator.remove();

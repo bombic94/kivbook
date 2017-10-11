@@ -83,4 +83,12 @@ public class ChatDAOImpl implements ChatDAO {
 				.executeUpdate();
 	}
 
+	@Override
+	public void setUnread(Chat chat) {
+		this.entityManager
+				.createQuery("UPDATE Chat ch SET ch.seen=0 WHERE ch.id = :id")
+				.setParameter("id", chat.getId())
+				.executeUpdate();
+	}
+
 }
