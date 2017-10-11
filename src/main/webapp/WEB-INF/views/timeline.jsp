@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -49,69 +51,107 @@
         <div class="row">
           <div class="col-sm-4">
             <div class="well text-center">
-              <h4><a href="./profile.html">My Account</a></h4>
-              <img src="img/04-kenny-mccormick-a.png" class="img-circle img-120" alt="Avatar">
+              <h4><a href="profile/${loggedUser.id}">My Account</a></h4>
+              <img src="<c:url value="/images/${loggedUser.photo}"/>" id="profilePicture" class="img-circle img-120" alt="<c:url value="/images/${loggedUser.photo}"/>">
             </div>
             <div class="well">
-              <h4 class="text-center"><a href="./messages.html">Messages</a></h4>
+              <h4 class="text-center"><a href="messages">Recent chats</a></h4>
               <ul class="list-group">
+              <c:if test="${empty chats}">
+				    <p>No recent chats. Start conversation with someone</p>
+				</c:if>
+              <c:forEach items="${chats}" var="chat">
+         		<c:if test="${chat.user1.id == loggedUser.id}">
+         			<c:set var = "friend" scope = "session" value = "${chat.user2}"/>
+         		</c:if> 
+         		<c:if test="${chat.user2.id == loggedUser.id}">
+         			<c:set var = "friend" scope = "session" value = "${chat.user1}"/>
+         		</c:if>    
                 <li class="list-group-item">
-                  <a href="messages">
-                    <div class="media">
-                      <div class="media-left">
-                        <img src="img/05-chef-a.png" class="media-object img-40" alt="photo"> 
-                      </div>
-                      <div class="media-body">
-                        <h4 class="media-heading black">Chef</h4>
-                        <p class="media-heading black">Hi, whats new?</p>
-                      </div>
+                  <div class="media">
+                    <div class="media-left">
+                      <a href="profile/${friend.id}"><img src="<c:url value="/images/${friend.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${friend.photo}"/>"></a>
                     </div>
-                  </a>
-                </li>
-                <li class="list-group-item">
-                  <a href="./messages.html">
-                    <div class="media">
-                      <div class="media-left">
-                        <img src="img/06-mackey-a.png" class="media-object img-40" alt="photo">
-                      </div>
-                      <div class="media-body">
-                        <h4 class="media-heading black">Mackey</h4>
-                        <p class="media-heading black">Drugs are bad, mkay?</p>
-                      </div>
+                    <div class="media-body">
+                      <a href="profile/${friend.id}">
+                      	<c:if test="${not empty chat.chat_Lines}"><c:set var="length" value="${fn:length(chat.chat_Lines)}" /></c:if>
+                        <h4 class="media-heading black">${friend.firstname} <c:if test="${not empty chat.chat_Lines}">
+                        	<small><i><fmt:formatDate value="${chat.chat_Lines[length - 1].created_at}" pattern="yyyy/MM/dd HH:mm"/></i></small>
+                        	</c:if>
+                        </h4>
+                      </a>
+                      <form method="POST" action="messages/setChat/${chat.id}">
+                      	<button type="submit" class="btn btn-link">
+                      		<c:if test="${empty chat.chat_Lines}">Write something</c:if>                     		
+                      		<c:if test="${not empty chat.chat_Lines}">${chat.chat_Lines[length - 1].line_text}</c:if>
+                      	</button>
+                      </form>
                     </div>
-                  </a>
+                  </div>
                 </li>
+                </c:forEach>
               </ul>
             </div>
             <div class="well">
-              <h4 class="text-center"><a href="./users.html">Find friends</a></h4>
+              <h4 class="text-center"><a href="users">Pending requests</a></h4>
+              <ul class="list-group">     
+              	<c:if test="${empty pendingFriendships}">
+				    <p>No pending requests. Add someone as friend</p>
+				</c:if>         
+                <c:forEach items="${pendingFriendships}" var="friendship">
+         		<c:if test="${friendship.user1.id == loggedUser.id}">
+         			<c:set var = "friend" scope = "session" value = "${friendship.user2}"/>
+         		</c:if> 
+         		<c:if test="${friendship.user2.id == loggedUser.id}">
+         			<c:set var = "friend" scope = "session" value = "${friendship.user1}"/>
+         		</c:if>    
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-left">
+                      <a href="profile/${friend.id}"><img src="<c:url value="/images/${friend.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${friend.photo}"/>"></a>
+                    </div>
+                    <div class="media-body">
+                      <a href="profile/${friend.id}">
+                        <h4 class="media-heading black">${friend.firstname}</h4>
+                      </a>
+                      <p class="media-heading">Requested friendship on: <fmt:formatDate value="${friendship.created_at}" pattern="yyyy/MM/dd HH:mm"/></p>
+                    </div>
+                    <div class="media-right">
+                      <form method="POST" action="users/acceptFriend/${friendship.id}">
+                      	<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
+                      </form>
+                    </div>
+                  </div>
+                </li>
+                </c:forEach>           
+              </ul>
+            </div>
+            <div class="well">
+              <h4 class="text-center"><a href="users">Find new friends</a></h4>
               <ul class="list-group">
+              	<c:if test="${empty usersToFriend}">
+				    <p>No other users on Kivbook to connect. Tell your friends about Kivbook</p>
+				</c:if>              
+                <c:forEach items="${usersToFriend}" var="friend">  
                 <li class="list-group-item">
-                  <a href="./users.html">
-                    <div class="media">
-                      <div class="media-left">
-                        <img src="img/02-kyle-broflovski-a.png" class="media-object img-40" alt="photo">
-                      </div>
-                      <div class="media-body">
-                        <h4 class="media-heading black">Kyle Broflovski</h4>
-                        <p class="media-heading black">On Kivbook since January 1, 2017</p>
-                      </div>
+                  <div class="media">
+                    <div class="media-left">
+                      <a href="profile/${friend.id}"><img src="<c:url value="/images/${friend.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${friend.photo}"/>"></a>
                     </div>
-                  </a>
-                </li>
-                <li class="list-group-item">
-                  <a href="./users.html">
-                    <div class="media">
-                      <div class="media-left">
-                        <img src="img/01-stan-marsh-a.png" class="media-object img-40" alt="photo">
-                      </div>
-                      <div class="media-body">
-                        <h4 class="media-heading black">Stan Marsh</h4>
-                        <p class="media-heading black">On Kivbook since January 1, 2017</p>
-                      </div>
+                    <div class="media-body">
+                      <a href="profile/${friend.id}">
+                        <h4 class="media-heading black">${friend.firstname}</h4>
+                      </a>
+                      <p class="media-heading">On Kivbook since: <fmt:formatDate value="${friend.created_at}" pattern="yyyy/MM/dd HH:mm"/></p>
                     </div>
-                  </a>
+                    <div class="media-right">
+                      <form method="POST" action="users/addFriend/${friend.id}">
+                      	<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
+                      </form>
+                    </div>
+                  </div>
                 </li>
+                </c:forEach>           
               </ul>
             </div>
           </div>
@@ -136,7 +176,7 @@
                 </div>
               </div>
             </div>
-            <span style="display:inline-block; width: 10em;"></span>
+            <span style="display:inline-block; width: 10em;height: 1em;"></span>
             <div class="well">
               <div class="media">
                 <div class="media-left">

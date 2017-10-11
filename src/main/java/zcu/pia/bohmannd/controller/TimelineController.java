@@ -1,5 +1,7 @@
 package zcu.pia.bohmannd.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -59,13 +61,7 @@ public class TimelineController {
 			logger.info("Logged in: " + session.getAttribute("USER"));
 			
 			mv = new ModelAndView("timeline");     
-			mv.addObject("comment", new Comment());
-			mv.addObject("friendship", new Friendship());
-			mv.addObject("chat_line", new Chat_Line());
-			mv.addObject("chat", new Chat());
-			mv.addObject("like", new Like());
-			mv.addObject("status", new Status());
-			mv.addObject("user", new User());
+			
 			mv.addObject("loggedUser", userService.getUserByUsername(session.getAttribute("USER").toString()));
 			
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
@@ -74,9 +70,10 @@ public class TimelineController {
 			mv.addObject("newMessages", chatService.listChats().size());
 			mv.addObject("newStatuses", statusService.listStatuss().size());
 			
-			mv.addObject("friendships", friendshipService.listFriendships());
-			mv.addObject("messages", chatService.listChats());
-			mv.addObject("statuses", statusService.listStatuss());
+			List<Chat> chats = chatService.listChatByUser(user);
+			mv.addObject("chats", chats);
+			mv.addObject("pendingFriendships", friendshipService.listPendingFriendshipByUser(user));
+			mv.addObject("usersToFriend", userService.listUsersToFriend(user));
 		}
 	
         return mv;
