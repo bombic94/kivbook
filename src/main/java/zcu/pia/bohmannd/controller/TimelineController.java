@@ -41,9 +41,6 @@ public class TimelineController {
     private ChatService chatService;
 	
 	@Autowired
-    private Chat_LineService chat_lineService;
-	
-	@Autowired
     private FriendshipService friendshipService;
 	
 	@Autowired
@@ -67,8 +64,7 @@ public class TimelineController {
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			mv.addObject("loggedUser", user);			
 			mv.addObject("newFriendships", friendshipService.listPendingFriendshipByUser(user).size());
-			mv.addObject("newMessages", chatService.listChats().size());
-			mv.addObject("newStatuses", statusService.listStatuss().size());
+			mv.addObject("newMessages", chatService.listUnreadChatByUser(user).size());
 			
 			List<Chat> chats = chatService.listChatByUser(user);
 			mv.addObject("chats", chats);

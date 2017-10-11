@@ -13,7 +13,6 @@ import zcu.pia.bohmannd.model.Friendship;
 import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.service.ChatService;
 import zcu.pia.bohmannd.service.FriendshipService;
-import zcu.pia.bohmannd.service.StatusService;
 import zcu.pia.bohmannd.service.UserService;
 
 @Controller
@@ -21,9 +20,6 @@ public class UsersController {
 
 	@Autowired
     private UserService userService;
-	
-	@Autowired
-    private StatusService statusService;
 	
 	@Autowired
     private ChatService chatService;
@@ -47,8 +43,7 @@ public class UsersController {
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			mv.addObject("loggedUser", user);			
 			mv.addObject("newFriendships", friendshipService.listPendingFriendshipByUser(user).size());
-			mv.addObject("newMessages", chatService.listChats().size());
-			mv.addObject("newStatuses", statusService.listStatuss().size());
+			mv.addObject("newMessages", chatService.listUnreadChatByUser(user).size());
 			
 			
 			mv.addObject("friendships", friendshipService.listFriendshipByUser(user));

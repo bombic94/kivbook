@@ -1,5 +1,6 @@
 package zcu.pia.bohmannd.service;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import zcu.pia.bohmannd.dao.ChatDAO;
 import zcu.pia.bohmannd.dao.Chat_LineDAO;
 import zcu.pia.bohmannd.model.Chat;
+import zcu.pia.bohmannd.model.Chat_Line;
 import zcu.pia.bohmannd.model.User;
 
 @Service
@@ -17,6 +19,8 @@ public class ChatServiceImpl implements ChatService {
 	@Autowired
 	private ChatDAO chatDAO;
 	
+	private Chat activeChat;
+
 	@Autowired
 	private Chat_LineDAO chat_LineDAO;
 	
@@ -57,8 +61,43 @@ public class ChatServiceImpl implements ChatService {
 
 	@Transactional
 	@Override
-	public void acceptChat(Chat chat) {
-		chatDAO.accept(chat);
+	public void readChat(Chat chat, User user) {
+		List<Chat_Line> chL = chat.getChat_Lines();
+		if (chL.get(chL.size() - 1).getSender().getId() != user.getId()) {
+			chatDAO.accept(chat);
+		}
+	}
+	
+	@Override
+	public Chat getActiveChat() {
+		return activeChat;
+	}
+
+	@Override
+	public void setActiveChat(Chat activeChat) {
+		this.activeChat = activeChat;
+	}
+
+	@Override
+	public List<Chat> listUnreadChatByUser(User user) {
+		
+		List<Chat> listCh = chatDAO.listByUser(user);
+		for (Chat ch : listCh) { 
+			ch.setChat_Lines(chat_LineDAO.listByChat(ch));
+		}		
+		
+		for (Iterator<Chat> iterator = listCh.iterator(); iterator.hasNext();) {
+			Chat ch = iterator.next();
+			List<Chat_Line> chL = ch.getChat_Lines();
+			if (ch.isSeen()) {
+				iterator.remove();
+			}
+			if (chL.get(chL.size() - 1).getSender().getId() == user.getId()) {
+				iterator.remove();
+			}				
+		}
+		
+		return listCh;
 	}
 
 }

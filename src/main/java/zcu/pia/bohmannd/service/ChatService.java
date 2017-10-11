@@ -17,5 +17,11 @@ public interface ChatService {
     
     public List<Chat> listChatByUser(User user);
     
-    public void acceptChat(Chat chat);
+    public List<Chat> listUnreadChatByUser(User user);
+    
+    public void readChat(Chat chat, User user);
+
+	Chat getActiveChat();
+
+	void setActiveChat(Chat activeChat);
 }

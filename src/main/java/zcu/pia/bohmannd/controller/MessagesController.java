@@ -1,6 +1,5 @@
 package zcu.pia.bohmannd.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,12 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.Chat_Line;
-import zcu.pia.bohmannd.model.Friendship;
 import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.service.ChatService;
 import zcu.pia.bohmannd.service.Chat_LineService;
 import zcu.pia.bohmannd.service.FriendshipService;
-import zcu.pia.bohmannd.service.StatusService;
 import zcu.pia.bohmannd.service.UserService;
 
 @Controller
@@ -32,9 +29,6 @@ public class MessagesController {
     private UserService userService;
 	
 	@Autowired
-    private StatusService statusService;
-	
-	@Autowired
     private ChatService chatService;
 	
 	@Autowired
@@ -42,8 +36,6 @@ public class MessagesController {
 	
 	@Autowired
     private FriendshipService friendshipService;
-	
-	private Chat activeChat;
 	
 	final Logger logger = Logger.getLogger(HomepageController.class);
 	
@@ -61,12 +53,12 @@ public class MessagesController {
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			mv.addObject("loggedUser", user);			
 			mv.addObject("newFriendships", friendshipService.listPendingFriendshipByUser(user).size());
-			mv.addObject("newMessages", chatService.listChats().size());
-			mv.addObject("newStatuses", statusService.listStatuss().size());
+			mv.addObject("newMessages", chatService.listUnreadChatByUser(user).size());
 			
 			List<Chat> chats = chatService.listChatByUser(user);
 			mv.addObject("chats", chats);
 			
+			Chat activeChat = chatService.getActiveChat();
 			if (chats.size() > 0) {
 				if (activeChat == null) {
 					activeChat = chats.get(0);
@@ -101,10 +93,11 @@ public class MessagesController {
 			Chat chat = new Chat();
 			chat.setUser1(user);
 			chat.setUser2(friend);
+			chat.setSeen(false);
 			logger.info("Trying to create new chat: " + chat.toString());
 			chatService.insertChat(chat);
 			logger.info("Chat created, setting active: " + chat.toString());
-			activeChat = chat;
+			chatService.setActiveChat(chat);
 			
 			mv.setViewName("redirect:/messages");
 		}
@@ -123,11 +116,13 @@ public class MessagesController {
 			
 			mv = new ModelAndView("messages");     
 			
+			User user = userService.getUserByUsername(session.getAttribute("USER").toString());	
 			Chat chat = chatService.getChat(chatId);
 			chat.setChat_Lines(chat_lineService.listChat_LinesByChat(chat));
 			
 			logger.info("Setting active chat: " + chat.toString());
-			activeChat = chat;
+			chatService.setActiveChat(chat);
+			chatService.readChat(chat, user);
 			
 			mv.setViewName("redirect:/messages");
 		}
@@ -147,7 +142,7 @@ public class MessagesController {
 			mv = new ModelAndView("messages");     
 			
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());	
-			chat_Line.setChat(activeChat);
+			chat_Line.setChat(chatService.getActiveChat());
 			chat_Line.setSender(user);
 			
 			logger.info("Saving new message: " + chat_Line.toString());

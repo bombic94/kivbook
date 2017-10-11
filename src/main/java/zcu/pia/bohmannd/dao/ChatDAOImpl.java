@@ -66,7 +66,7 @@ public class ChatDAOImpl implements ChatDAO {
 		List<Chat> list;
 		try {
 			list = this.entityManager
-					.createQuery("SELECT ch FROM Chat ch WHERE ch.user1 = :id OR ch.user2 = :id ORDER BY created_at ASC", Chat.class)
+					.createQuery("SELECT ch FROM Chat ch WHERE ch.user1 = :id OR ch.user2 = :id ORDER BY created_at desc", Chat.class)
 					.setParameter("id", user)
 					.getResultList();
 		} catch (NoResultException nre) {
@@ -78,7 +78,7 @@ public class ChatDAOImpl implements ChatDAO {
 	@Override
 	public void accept(Chat chat) {
 		this.entityManager
-				.createQuery("UPDATE Chat ch SET ch.accepted=1 WHERE ch.id = :id")
+				.createQuery("UPDATE Chat ch SET ch.seen=1 WHERE ch.id = :id")
 				.setParameter("id", chat.getId())
 				.executeUpdate();
 	}

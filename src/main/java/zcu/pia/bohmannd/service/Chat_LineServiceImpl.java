@@ -20,6 +20,7 @@ public class Chat_LineServiceImpl implements Chat_LineService {
 	@Override
 	public void insertChat_Line(Chat_Line chat_Line) {
 		chat_LineDAO.save(chat_Line);
+		chat_Line.getChat().setSeen(false);
 	}
 
 	@Transactional
