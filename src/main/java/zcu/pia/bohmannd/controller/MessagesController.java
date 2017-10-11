@@ -92,7 +92,7 @@ public class MessagesController {
 			Chat chat = new Chat();
 			chat.setUser1(user);
 			chat.setUser2(friend);
-			chat.setSeen(false);
+			chat.setSeen(true);
 			logger.info("Trying to create new chat: " + chat.toString());
 			chatService.insertChat(chat);
 			logger.info("Chat created, setting active: " + chat.toString());

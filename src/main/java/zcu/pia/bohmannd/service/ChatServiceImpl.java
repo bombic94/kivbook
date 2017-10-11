@@ -89,13 +89,15 @@ public class ChatServiceImpl implements ChatService {
 		for (Iterator<Chat> iterator = listCh.iterator(); iterator.hasNext();) {
 			Chat ch = iterator.next();
 			List<Chat_Line> chL = ch.getChat_Lines();
-			if (ch.isSeen()) {
-				iterator.remove();
-				continue;
+			if (chL.size() > 0) {
+				if (ch.isSeen()) {
+					iterator.remove();
+					continue;
+				}
+				if (chL.get(chL.size() - 1).getSender().getId() == user.getId()) {
+					iterator.remove();
+				}		
 			}
-			if (chL.get(chL.size() - 1).getSender().getId() == user.getId()) {
-				iterator.remove();
-			}				
 		}
 		
 		return listCh;
