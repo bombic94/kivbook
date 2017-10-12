@@ -14,6 +14,7 @@ import zcu.pia.bohmannd.dao.UserDAO;
 import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.Friendship;
 import zcu.pia.bohmannd.model.User;
+import zcu.pia.bohmannd.utils.EmailAPI;
 import zcu.pia.bohmannd.utils.Encoder;
 
 @Service
@@ -29,6 +30,9 @@ public class UserServiceImpl implements UserService {
     private FriendshipDAO friendshipDAO;
 	@Autowired
 	private Encoder encoder;
+	
+	@Autowired
+	private EmailAPI emailAPI;
 	
 	@Transactional
 	@Override
@@ -73,6 +77,8 @@ public class UserServiceImpl implements UserService {
         if(u != null) {
         	success = false;
         } else {
+        	emailAPI.sendMail(user);   	
+        	
 	        user.setPassword(encoder.encode(user.getPassword()));
 	        userDAO.save(user);
 	        

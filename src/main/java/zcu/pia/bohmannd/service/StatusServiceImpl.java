@@ -13,7 +13,6 @@ import zcu.pia.bohmannd.dao.CommentDAO;
 import zcu.pia.bohmannd.dao.FriendshipDAO;
 import zcu.pia.bohmannd.dao.LikeDAO;
 import zcu.pia.bohmannd.dao.StatusDAO;
-import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.Friendship;
 import zcu.pia.bohmannd.model.Status;
 import zcu.pia.bohmannd.model.User;

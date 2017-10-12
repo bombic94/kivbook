@@ -18,14 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import zcu.pia.bohmannd.model.Chat;
-import zcu.pia.bohmannd.model.Chat_Line;
 import zcu.pia.bohmannd.model.Comment;
-import zcu.pia.bohmannd.model.Friendship;
 import zcu.pia.bohmannd.model.Like;
 import zcu.pia.bohmannd.model.Status;
 import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.service.ChatService;
-import zcu.pia.bohmannd.service.Chat_LineService;
 import zcu.pia.bohmannd.service.CommentService;
 import zcu.pia.bohmannd.service.FriendshipService;
 import zcu.pia.bohmannd.service.LikeService;
