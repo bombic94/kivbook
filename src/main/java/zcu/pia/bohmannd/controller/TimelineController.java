@@ -62,9 +62,7 @@ public class TimelineController {
 			mv.addObject("loggedUser", userService.getUserByUsername(session.getAttribute("USER").toString()));
 			
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
-			mv.addObject("loggedUser", user);			
-			mv.addObject("newFriendships", friendshipService.listPendingFriendshipByUser(user).size());
-			mv.addObject("newMessages", chatService.listUnreadChatByUser(user).size());
+			mv.addObject("loggedUser", user);
 			
 			List<Chat> chats = chatService.listChatByUser(user);
 			mv.addObject("chats", chats);

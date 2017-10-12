@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import zcu.pia.bohmannd.model.Friendship;
 import zcu.pia.bohmannd.model.User;
-import zcu.pia.bohmannd.service.ChatService;
 import zcu.pia.bohmannd.service.FriendshipService;
 import zcu.pia.bohmannd.service.UserService;
 
@@ -24,9 +23,6 @@ public class ProfileController {
 
 	@Autowired
     private UserService userService;
-	
-	@Autowired
-    private ChatService chatService;
 	
 	@Autowired
     private FriendshipService friendshipService;
@@ -65,9 +61,7 @@ public class ProfileController {
 			mv.addObject("userFriends", friendships.size());
 			
 			User userL = userService.getUserByUsername(session.getAttribute("USER").toString());
-			mv.addObject("loggedUser", userL);			
-			mv.addObject("newFriendships", friendshipService.listPendingFriendshipByUser(user).size());
-			mv.addObject("newMessages", chatService.listUnreadChatByUser(user).size());
+			mv.addObject("loggedUser", userL);
 
 		}
 	

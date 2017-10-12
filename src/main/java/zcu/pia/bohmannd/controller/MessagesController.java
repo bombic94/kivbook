@@ -19,7 +19,6 @@ import zcu.pia.bohmannd.model.Chat_Line;
 import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.service.ChatService;
 import zcu.pia.bohmannd.service.Chat_LineService;
-import zcu.pia.bohmannd.service.FriendshipService;
 import zcu.pia.bohmannd.service.UserService;
 
 @Controller
@@ -33,9 +32,6 @@ public class MessagesController {
 	
 	@Autowired
     private Chat_LineService chat_lineService;
-	
-	@Autowired
-    private FriendshipService friendshipService;
 	
 	final Logger logger = Logger.getLogger(HomepageController.class);
 	
@@ -51,9 +47,7 @@ public class MessagesController {
 			mv = new ModelAndView("messages");     
 			
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
-			mv.addObject("loggedUser", user);			
-			mv.addObject("newFriendships", friendshipService.listPendingFriendshipByUser(user).size());
-			mv.addObject("newMessages", chatService.listUnreadChatByUser(user).size());
+			mv.addObject("loggedUser", user);
 			
 			List<Chat> chats = chatService.listChatByUser(user);
 			mv.addObject("chats", chats);

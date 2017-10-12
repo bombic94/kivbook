@@ -18,8 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import zcu.pia.bohmannd.model.User;
-import zcu.pia.bohmannd.service.ChatService;
-import zcu.pia.bohmannd.service.FriendshipService;
 import zcu.pia.bohmannd.service.UserService;
 
 @Controller
@@ -27,12 +25,6 @@ public class SettingsController {
 
 	@Autowired
     private UserService userService;
-	
-	@Autowired
-    private ChatService chatService;
-	
-	@Autowired
-    private FriendshipService friendshipService;
 	
 	final Logger logger = Logger.getLogger(HomepageController.class);
 	
@@ -48,9 +40,7 @@ public class SettingsController {
 			mv = new ModelAndView("settings");     
 		
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
-			mv.addObject("loggedUser", user);			
-			mv.addObject("newFriendships", friendshipService.listPendingFriendshipByUser(user).size());
-			mv.addObject("newMessages", chatService.listUnreadChatByUser(user).size());
+			mv.addObject("loggedUser", user);
 			
 			mv.addObject("user", user);
 			mv.addObject("datepickerDefault", user.getDateofbirth().getTime());

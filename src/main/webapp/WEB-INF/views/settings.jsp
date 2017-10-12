@@ -25,6 +25,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
   </head>
   <body>
+  	<script type="text/javascript">
+    	function ajaxNotif() {
+	        $.ajax({
+	            url : 'ajaxNotif',
+	            dataType : 'json',
+	            contentType: "application/json;charset=utf-8",
+	            success : function(data) {
+	            	$('#newMSG').html(data[0]);
+	            	$('#newFRD').html(data[1]);
+	            }
+	        });
+	    }
+	</script>
+	<script type="text/javascript">
+		$( document ).ready(function() {
+	    	ajaxNotif();
+	    	var intervalId = 0;
+	    	intervalId = setInterval(ajaxNotif, 1000);
+		});   
+	</script>
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -39,8 +59,8 @@
           <ul class="nav navbar-nav">
             <li><a href="timeline"><span class="glyphicon glyphicon-home"></span> Home</a></li>
             <li><a href="profile/${loggedUser.id}"><span class="glyphicon glyphicon-user"></span> My Account</a></li>
-            <li><a href="messages"><span class="glyphicon glyphicon-envelope"></span> Messages <span class="badge">${newMessages}</span></a></li>
-            <li><a href="users"><span class="glyphicon glyphicon-list-alt"></span> Find friends <span class="badge">${newFriendships}</span></a></li>
+            <li><a href="messages"><span class="glyphicon glyphicon-envelope"></span> Messages <span id="newMSG" class="badge"></span></a></li>
+            <li><a href="users"><span class="glyphicon glyphicon-list-alt"></span> Find friends <span id="newFRD" class="badge"></span></a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="settings"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>

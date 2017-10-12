@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import zcu.pia.bohmannd.model.User;
-import zcu.pia.bohmannd.service.ChatService;
-import zcu.pia.bohmannd.service.FriendshipService;
 import zcu.pia.bohmannd.service.UserService;
 
 @Controller
@@ -18,12 +16,6 @@ public class AboutController {
 
 	@Autowired
     private UserService userService;
-	
-	@Autowired
-    private ChatService chatService;
-	
-	@Autowired
-    private FriendshipService friendshipService;
 	
 	final Logger logger = Logger.getLogger(HomepageController.class);
 	
@@ -39,10 +31,9 @@ public class AboutController {
 			mv = new ModelAndView("about");  
 			
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
-			mv.addObject("loggedUser", user);			
-			mv.addObject("newFriendships", friendshipService.listPendingFriendshipByUser(user).size());
-			mv.addObject("newMessages", chatService.listUnreadChatByUser(user).size());
-
+			mv.addObject("loggedUser", user);
+			int userCount = userService.listUsers().size();
+	        mv.addObject("userCount", userCount);
 		}
 	
         return mv;
