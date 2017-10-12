@@ -104,18 +104,18 @@ public class Status extends AbstractObject {
 		} else {
 			sb.append("null");
 		}
-		sb.append(", Likes: ");
-		if (getLikes() != null) {
-			sb.append(getLikes().size());
-		} else {
-			sb.append("null");
-		}
-		sb.append(", Comments: ");
-		if (getComments() != null) {
-			sb.append(getComments().size());
-		} else {
-			sb.append("null");
-		}
+//		sb.append(", Likes: ");
+//		if (getLikes() != null) {
+//			sb.append(getLikes().size());
+//		} else {
+//			sb.append("null");
+//		}
+//		sb.append(", Comments: ");
+//		if (getComments() != null) {
+//			sb.append(getComments().size());
+//		} else {
+//			sb.append("null");
+//		}
 		
         return sb.toString();
     }

@@ -20,6 +20,10 @@
   margin: 0px; 
 }
 
+.likedBtn {
+  color: blue;
+}
+
 .friendicon-plus {
     font-size: 25px;
     padding-top: 12px;

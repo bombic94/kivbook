@@ -28,13 +28,11 @@ public class HomepageController {
 		//after logout
 		if (session != null) {
 		    session.invalidate();
-		}
-		
+		}	
 		
         mv.addObject("user", new User());
         int userCount = userService.listUsers().size();
         mv.addObject("userCount", userCount);
-        
         
         return mv;
     }

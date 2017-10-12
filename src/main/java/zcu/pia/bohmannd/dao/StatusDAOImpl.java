@@ -10,7 +10,6 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import zcu.pia.bohmannd.model.Status;
-import zcu.pia.bohmannd.model.User;
 
 @Repository("statusDAO")
 public class StatusDAOImpl implements StatusDAO {
@@ -59,20 +58,6 @@ public class StatusDAOImpl implements StatusDAO {
 	@Override
 	public void delete(Status s) {
 		this.entityManager.remove(entityManager.contains(s) ? s : entityManager.merge(s));
-	}
-
-	@Override
-	public List<Status> listByUser(User user) {
-		List<Status> list;
-		try {
-			list = this.entityManager
-					.createQuery("SELECT s FROM Status s WHERE (s.user, s.user) IN (SELECT f.user1, f.user2 FROM Friendship f WHERE f.user1 = :id OR f.user2 = :id)", Status.class)
-					.setParameter("id", user)
-					.getResultList();
-		} catch (NoResultException nre) {
-			list = Collections.emptyList();
-		}
-		return list;
 	}
 
 }

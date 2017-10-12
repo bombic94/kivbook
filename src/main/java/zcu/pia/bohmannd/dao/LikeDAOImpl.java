@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import zcu.pia.bohmannd.model.Like;
 import zcu.pia.bohmannd.model.Status;
+import zcu.pia.bohmannd.model.User;
 
 @Repository("likeDAO")
 public class LikeDAOImpl implements LikeDAO {
@@ -68,6 +69,35 @@ public class LikeDAOImpl implements LikeDAO {
 			list = this.entityManager
 					.createQuery("SELECT l FROM Like l WHERE l.status = :status ORDER BY l.created_at", Like.class)
 					.setParameter("status", status)
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = Collections.emptyList();
+		}
+		return list;
+	}
+
+	@Override
+	public Like getExists(Like like) {
+		Like l;
+		try {
+			l = this.entityManager
+					.createQuery("SELECT l FROM Like l WHERE l.status = :status AND l.user = :user", Like.class)
+					.setParameter("status", like.getStatus())
+					.setParameter("user", like.getUser())
+					.getSingleResult();
+		} catch (NoResultException nre) {
+			l = null;
+		}
+		return l;
+	}
+
+	@Override
+	public List<Like> listByUser(User user) {
+		List<Like> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT l FROM Like l WHERE l.user = :user ORDER BY l.created_at", Like.class)
+					.setParameter("user", user)
 					.getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();

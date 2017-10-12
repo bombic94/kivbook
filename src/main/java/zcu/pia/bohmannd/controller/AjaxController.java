@@ -35,16 +35,19 @@ public class AjaxController {
 	@RequestMapping(value = "/ajaxNotif", method = RequestMethod.GET)
 	@ResponseBody
     public List<Integer> addItems(HttpSession session, HttpServletResponse response) {
-		User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 		List<Integer> notif = new ArrayList<Integer>();
-		if (user != null) {			
+	
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
+			notif.add(0);
+			notif.add(0);
+				        
+		} else {
+			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
+			
 			notif.add(chatService.listUnreadChatByUser(user).size());
 			notif.add(friendshipService.listPendingFriendshipByUser(user).size());
 			response.setContentType("application/json");
-			logger.info("Ajax notifications - Chats: " + notif.get(0) + ", Friendships: " + notif.get(1));			        
-		} else {
-			notif.add(0);
-			notif.add(0);
+			logger.info("Ajax notifications - Chats: " + notif.get(0) + ", Friendships: " + notif.get(1));		
 		}
 			
 		return notif;

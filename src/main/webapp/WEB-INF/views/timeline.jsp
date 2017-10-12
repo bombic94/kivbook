@@ -80,7 +80,7 @@
               <c:if test="${empty chats}">
 				    <p>No recent chats. Start conversation with someone</p>
 				</c:if>
-              <c:forEach items="${chats}" var="chat">
+              <c:forEach begin="0" end="1" items="${chats}" var="chat">
          		<c:if test="${chat.user1.id == loggedUser.id}">
          			<c:set var = "friend" scope = "session" value = "${chat.user2}"/>
          		</c:if> 
@@ -118,7 +118,7 @@
               	<c:if test="${empty pendingFriendships}">
 				    <p>No pending requests. Add someone as friend</p>
 				</c:if>         
-                <c:forEach items="${pendingFriendships}" var="friendship">
+                <c:forEach begin="0" end="1" items="${pendingFriendships}" var="friendship">
          		<c:if test="${friendship.user1.id == loggedUser.id}">
          			<c:set var = "friend" scope = "session" value = "${friendship.user2}"/>
          		</c:if> 
@@ -152,7 +152,7 @@
               	<c:if test="${empty usersToFriend}">
 				    <p>No other users on Kivbook to connect. Tell your friends about Kivbook</p>
 				</c:if>              
-                <c:forEach items="${usersToFriend}" var="friend">  
+                <c:forEach begin="0" end="1" items="${usersToFriend}" var="friend">  
                 <li class="list-group-item">
                   <div class="media">
                     <div class="media-left">
@@ -183,16 +183,35 @@
                     <img src="<c:url value="/images/${loggedUser.photo}"/>" class="media-object img-60" alt="<c:url value="/images/${loggedUser.photo}"/>">
                   </div>
                   <div class="media-body">
-                    <form data-toggle="validator">
+                    <form data-toggle="validator" method="POST" action="timeline/newStatus" enctype="multipart/form-data">
                       <div class="form-group">
                         <textarea placeholder="Tell us what's new" required="required" class="form-control" rows="3" id="status"></textarea>
+                        <div id="status-img-div" style="display:none">
+                      		<img src="" id="status-img" class="img-thumbnail img-250" alt="status-img">
+                      	</div>
+                      </div>                      
+                      <div hidden>
+                      	<input type="text" id="text" name="text" value=""></input>
                       </div>
                       <label class="btn btn-default">
-                      Upload a picture <input type="file" accept="image/*" hidden>
+                      Add a picture <input type="file" id="file" name="file" accept="image/*" onchange="loadFile(event)" hidden>
                       </label>
                       <button type="submit" class="btn btn-primary">Post</button>
-                    </form>
-                  </div>
+                      <script>
+		            	$('#status').change(function() {
+				    		$('#text').val($(this).val());
+						});
+			          </script>	
+			          <script>
+						  var loadFile = function(event) {
+						    var pic = document.getElementById('status-img');
+						    pic.src = URL.createObjectURL(event.target.files[0]);
+						    var div = document.getElementById('status-img-div');
+						    div.style.display = 'block'; 
+						  };
+					  </script>	
+                    </form> 
+                  </div>  
                 </div>
               </div>
             </div>
@@ -208,52 +227,68 @@
                 <div class="media-body">
                   <h4 class="media-heading"><a href="profile/${status.user.id}">${status.user.firstname}</a> <small><i><fmt:formatDate value="${status.created_at}" pattern="yyyy/MM/dd HH:mm"/></i></small></h4>
                   <p class="media-heading"> ${status.status_text}</p>
+                  <c:if test="${not empty status.photo}">
+                  	<div>
+                      <img src="<c:url value="/images/${status.photo}"/>" id="status-img" class="img-thumbnail img-120" alt="status-img">
+                    </div>
+                  </c:if>
                   <div class="media-heading">
-                    <button type="button" class="btn btn-default invisible-button">
-                      <span class="glyphicon glyphicon-thumbs-up"></span>
-                    </button>
-                    <button type="button" data-toggle="collapse" data-target="#comments1" class="btn btn-default invisible-button">
-                      <span class="glyphicon glyphicon-comment"></span>
-                    </button>  
-                    <small>${fn:length(status.likes)} likes, ${fn:length(status.comments)} comments</small>
-                    <div class="collapse" id="comments1">
+                  	<form method="POST" action="timeline/like/${status.id}">
+                  	  
+                   	  <button type="submit" class="btn btn-default invisible-button">
+                        <span class="glyphicon glyphicon-thumbs-up" style=" 
+                          <c:if test="${not empty userLikes}">
+                   			<c:forEach items="${userLikes}" var="like">
+								<c:if test="${like.status.id == status.id}">
+			         				color: blue;
+			         			</c:if>		         	
+                    		</c:forEach>
+                      	  </c:if>">
+                      	</span>
+                      </button>
+                      <button type="button" data-toggle="collapse" data-target="#comments${status.id}" class="btn btn-default invisible-button">
+                        <span class="glyphicon glyphicon-comment"></span>
+                      </button>  
+                      <small>${fn:length(status.likes)} likes, ${fn:length(status.comments)} comments</small>
+                    </form>                   
+                    <div class="collapse" id="comments${status.id}">
+                      
+                      <c:forEach items="${status.comments}" var="comment">
+	                      <div class="media">
+	                        <div class="media-left">
+	                          <a href="profile/${comment.user.id}">
+	                          <img src="<c:url value="/images/${comment.user.photo}"/>" class="media-object img-40" alt="<c:url value="/images/${comment.user.photo}"/>">
+	                          </a>
+	                        </div>
+	                        <div class="media-body">
+	                          <h5 class="media-heading"><a href="profile/${comment.user.id}">${comment.user.firstname}</a> <small><i><fmt:formatDate value="${comment.created_at}" pattern="yyyy/MM/dd HH:mm"/></i></small></h5>
+	                          <h6 class="black">${comment.comment_text}</h6>
+	                        </div>
+	                      </div>
+                      </c:forEach>
                       <div class="media">
-                        <div class="media-left">
-                          <a href="./profile.html">
-                          <img src="img/04-kenny-mccormick-a.png" class="media-object img-40" alt="photo">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <h5 class="media-heading"><a href="./profile.html">Kenny</a> <small><i>January 21, 2017, 21:00</i></small></h5>
-                          <h6 class="black">Pretty good Chef, how about you?</h6>
-                        </div>
-                      </div>
-                      <div class="media">
-                        <div class="media-left">
-                          <a href="./profile.html">
-                          <img src="img/05-chef-a.png" class="media-object img-40" alt="photo">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <h5 class="media-heading"><a href="./profile.html">Chef</a> <small><i>January 21, 2017, 21:05</i></small></h5>
-                          <h6 class="black">I'm gonna make love to the woman!</h6>
-                        </div>
-                      </div>
-                      <div class="media">
-                        <form data-toggle="validator">
+                        <form data-toggle="validator" method="POST" action="timeline/newComment/${status.id}">
                           <div class="media-left">
-                            <img src="img/04-kenny-mccormick-a.png" class="media-object img-40" alt="photo">
+                            <img src="<c:url value="/images/${loggedUser.photo}"/>" class="media-object img-40" alt="<c:url value="/images/${loggedUser.photo}"/>">
                           </div>
                           <div class="media-body">
                               <div class="form-group">
-                                <textarea placeholder="Write a comment" required="required" class="form-control" rows="1" id="comment1"></textarea>
+                                <textarea placeholder="Write a comment" required="required" class="form-control" rows="1" id="commenttext${status.id}"></textarea>
                               </div>
                           </div>
+                          <div hidden>
+                      		<input type="text" id="comment_text${status.id}" name="comment_text" value=""></input>
+                      	  </div>
                           <div class="media-right">
                             <button type="submit" class="btn btn-default btn-sm">
                               <span class="	glyphicon glyphicon-comment"></span> Comment
                             </button>
                           </div> 
+                          <script>
+			            	$('#commenttext${status.id}').change(function() {
+					    		$('#comment_text${status.id}').val($(this).val());
+							});
+				          </script>
                         </form>
                       </div>
                     </div>
@@ -262,69 +297,6 @@
               </div>
             </div>
             </c:forEach>
-            <div class="well">
-              <div class="media">
-                <div class="media-left">
-                  <a href="./profile.html">
-                    <img src="img/05-chef-a.png" class="media-object img-60" alt="photo">
-                  </a>
-                </div>              
-                <div class="media-body">
-                  <h4 class="media-heading"><a href="./profile.html">Chef</a> <small><i>January 21, 2017, 20:58</i></small></h4>
-                  <p class="media-heading"> Hey kids, how you all doing</p>
-                  <div class="media-heading">
-                    <button type="button" class="btn btn-default invisible-button">
-                      <span class="glyphicon glyphicon-thumbs-up"></span>
-                    </button>
-                    <button type="button" data-toggle="collapse" data-target="#comments2" class="btn btn-default invisible-button">
-                      <span class="glyphicon glyphicon-comment"></span>
-                    </button>  
-                    <small>5 likes, 2 comments</small>
-                    <div class="collapse" id="comments2">
-                      <div class="media">
-                        <div class="media-left">
-                          <a href="./profile.html">
-                          <img src="img/04-kenny-mccormick-a.png" class="media-object img-40" alt="photo">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <h5 class="media-heading"><a href="./profile.html">Kenny</a> <small><i>January 21, 2017, 21:00</i></small></h5>
-                          <h6 class="black">Pretty good Chef, how about you?</h6>
-                        </div>
-                      </div>
-                      <div class="media">
-                        <div class="media-left">
-                          <a href="./profile.html">
-                          <img src="img/05-chef-a.png" class="media-object img-40" alt="photo">
-                          </a>
-                        </div>
-                        <div class="media-body">
-                          <h5 class="media-heading"><a href="./profile.html">Chef</a> <small><i>January 21, 2017, 21:05</i></small></h5>
-                          <h6 class="black">I'm gonna make love to the woman!</h6>
-                        </div>
-                      </div>
-                      <div class="media">
-                        <form data-toggle="validator">
-                          <div class="media-left">
-                            <img src="img/04-kenny-mccormick-a.png" class="media-object img-40" alt="photo">
-                          </div>
-                          <div class="media-body">
-                              <div class="form-group">
-                                <textarea placeholder="Write a comment" required="required" class="form-control" rows="1" id="comment2"></textarea>
-                              </div>
-                          </div>
-                          <div class="media-right">
-                            <button type="submit" class="btn btn-default btn-sm">
-                              <span class="	glyphicon glyphicon-comment"></span> Comment
-                            </button>
-                          </div> 
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div class="text-center">
               <ul class="pagination">
                 <li class="active"><a href="#">1</a></li>
