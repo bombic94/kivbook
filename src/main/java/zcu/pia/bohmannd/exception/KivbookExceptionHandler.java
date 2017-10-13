@@ -1,4 +1,4 @@
-package zcu.pia.bohmannd.controller;
+package zcu.pia.bohmannd.exception;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class MyExceptionHandler {
+public class KivbookExceptionHandler {
 
 	@ExceptionHandler(KivbookException.class)
     public String defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {

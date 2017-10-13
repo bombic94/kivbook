@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import zcu.pia.bohmannd.exception.KivbookException;
 import zcu.pia.bohmannd.model.Friendship;
 import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.service.FriendshipService;

@@ -1,4 +1,4 @@
-package zcu.pia.bohmannd.controller;
+package zcu.pia.bohmannd.exception;
 
 public class KivbookException extends Exception{
 
