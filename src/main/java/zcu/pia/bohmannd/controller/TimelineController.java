@@ -78,7 +78,7 @@ public class TimelineController {
 			int pages = ((allStatuses.size() - 1) / num) + 1;
 			mv.addObject("pages", pages);
 			mv.addObject("num", num);
-
+			mv.addObject("statusCount", allStatuses.size());
 			if (id > pages) {
 				throw new KivbookException();
 			}

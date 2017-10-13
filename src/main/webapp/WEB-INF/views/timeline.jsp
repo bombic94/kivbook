@@ -300,6 +300,27 @@
               </div>
             </div>
             </c:forEach>
+              <script type="text/javascript">
+			    	function ajaxFrd() {
+				        $.ajax({
+				            url : 'ajaxTimeline',
+				            dataType : 'json',
+				            contentType: "application/json;charset=utf-8",
+				            success : function(data) {
+				            	if (data[0] != "${fn:length(chats)}" || data[1] != "${fn:length(pendingFriendships)}" || data[2] != "${fn:length(usersToFriend)}" || data[3] != "${statusCount}"){
+				            		window.location.reload(true); 
+				            	}
+				            }
+				        });
+				    }
+			  </script> 
+			  <script type="text/javascript">
+				$( document ).ready(function() {
+			    	ajaxFrd();
+					var intervalI2 = 0;
+					intervalId2 = setInterval(ajaxFrd, 1000);
+				});   
+			  </script>      
             <div class="text-center">
               <ul class="pagination">
               	<c:forEach var="i" begin="1" end="${pages}">

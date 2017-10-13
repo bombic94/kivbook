@@ -17,6 +17,7 @@ import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.service.ChatService;
 import zcu.pia.bohmannd.service.Chat_LineService;
 import zcu.pia.bohmannd.service.FriendshipService;
+import zcu.pia.bohmannd.service.StatusService;
 import zcu.pia.bohmannd.service.UserService;
 
 @Controller
@@ -33,6 +34,9 @@ public class AjaxController {
 
 	@Autowired
 	private Chat_LineService chat_lineService;
+	
+	@Autowired
+	private StatusService statusService;
 	
 	final Logger logger = Logger.getLogger(AjaxController.class);
 
@@ -82,8 +86,28 @@ public class AjaxController {
 			friendCountList.add(friendshipService.listFriendshipByUser(user).size());
 			friendCountList.add(friendshipService.listPendingFriendshipByUser(user).size());
 			friendCountList.add(userService.listUsersToFriend(user).size());
-			logger.info("Ajax friends - pending friendships count: " + friendCountList);
+			logger.info("Ajax friends - friendships count: " + friendCountList);
 		}
 		return friendCountList;
+	}
+	
+	@RequestMapping(value = "/ajaxTimeline", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Integer> timelineUpdate(HttpSession session, HttpServletResponse response) {
+		List<Integer> timelineCountList = new ArrayList<Integer>();
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {;
+			timelineCountList.add(0);
+			timelineCountList.add(0);
+			timelineCountList.add(0);
+			timelineCountList.add(0);
+		} else {
+			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
+			timelineCountList.add(chatService.listChatByUser(user).size());
+			timelineCountList.add(friendshipService.listPendingFriendshipByUser(user).size());
+			timelineCountList.add(userService.listUsersToFriend(user).size());
+			timelineCountList.add(statusService.listStatusesForUser(user).size());
+			logger.info("Ajax friends - timeline info count: " + timelineCountList);
+		}
+		return timelineCountList;
 	}
 }
