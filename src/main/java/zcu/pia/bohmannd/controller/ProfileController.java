@@ -39,8 +39,13 @@ public class ProfileController {
 			logger.info("Logged in: " + session.getAttribute("USER"));
 			
 			mv = new ModelAndView("profile");     
-
+			
 			User user = userService.getUser(userId);
+			
+			if (user == null) {
+				user = userService.getUserByUsername(session.getAttribute("USER").toString());
+				logger.info("User does not exist, showing logged user: " + user);
+			}
 			
 			List<Friendship> friendships = friendshipService.listFriendshipByUser(user);
 			
