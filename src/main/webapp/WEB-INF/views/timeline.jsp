@@ -312,11 +312,7 @@
               </ul>
               <div class="form-group">
 				  <label for="sel1">Number of statuses for page</label>
-				  <select class="form-control" id="sel1" name="sel1" style="width:100px; margin: 0 auto;"
-				  onchange=<c:url var="url" value="/timeline">
-					   <c:param name="page" value="${i}"/>
-					   <c:param name="num" value="${num}"/>
-					</c:url>>
+				  <select class="form-control" id="sel1" name="sel1" style="width:100px; margin: 0 auto;">
 				  	<c:forEach var="j" begin="5" end="20" step="5">
 				    <option value="${j}">${j}</option>
 				    </c:forEach>
@@ -329,7 +325,7 @@
 			   </script>
 			   <script>
 			     $('#sel1').change(function() {
-		    		${num} = $(this).val();
+		    		window.location.href = "timeline?page=1&num=" + $(this).val();
 				 });
 			   </script>
             </div>
