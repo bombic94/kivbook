@@ -55,7 +55,8 @@ public class TimelineController {
 
 	@RequestMapping(value = "/timeline")
 	public ModelAndView addItems(ModelAndView mv, HttpSession session,
-			@RequestParam(value = "page", required = false, defaultValue = "1") Integer id) throws KivbookException {
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer id,
+			@RequestParam(value = "num", required = false, defaultValue = "10") Integer num) throws KivbookException {
 		logger.info("Timeline Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
@@ -74,15 +75,16 @@ public class TimelineController {
 			mv.addObject("usersToFriend", userService.listUsersToFriend(user));
 
 			List<Status> allStatuses = statusService.listStatusesForUser(user);
-			int pages = ((allStatuses.size() - 1) / 10) + 1;
+			int pages = ((allStatuses.size() - 1) / num) + 1;
 			mv.addObject("pages", pages);
+			mv.addObject("num", num);
 
 			if (id > pages) {
 				throw new KivbookException();
 			}
 			mv.addObject("activePage", id);
 
-			mv.addObject("statuses", statusService.getNstatuses(allStatuses, id));
+			mv.addObject("statuses", statusService.getNstatuses(allStatuses, id, num));
 			mv.addObject("userLikes", likeService.listLikesByUser(user));
 
 			logger.info(statusService.listStatusesForUser(user).size());

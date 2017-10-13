@@ -7,13 +7,36 @@ import zcu.pia.bohmannd.model.Status;
 
 public interface CommentService {
 
+	
+	/**
+	 * Insert new comment
+	 * @param comment Object to insert
+	 */
 	public void insertComment(Comment comment);
 
+	/**
+	 * List all comments
+	 * @return list of all comments
+	 */
 	public List<Comment> listComments();
 
+	/**
+	 * Retrieve comment by given id
+	 * @param id ID of comment
+	 * @return Comment Object
+	 */
 	public Comment getComment(Integer id);
 
+	/**
+	 * Delete given comment
+	 * @param comment Object to delete
+	 */
 	public void deleteComment(Comment comment);
 
+	/**
+	 * List all comments for given status
+	 * @param status Status Object
+	 * @return list of comments for status
+	 */
 	public List<Comment> listCommentsByStatus(Status status);
 }

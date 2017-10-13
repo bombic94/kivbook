@@ -34,7 +34,7 @@ public class StatusServiceImpl implements StatusService {
 
 	@Transactional
 	@Override
-	public List<Status> listStatuss() {
+	public List<Status> listStatuses() {
 		return statusDAO.list();
 	}
 
@@ -74,11 +74,11 @@ public class StatusServiceImpl implements StatusService {
 	}
 
 	@Override
-	public List<Status> getNstatuses(List<Status> allStatuses, Integer id) {
+	public List<Status> getNstatuses(List<Status> allStatuses, Integer id, Integer n) {
 		List<Status> result = new ArrayList<Status>();
 
-		int start = ((id - 1) * 10);
-		int end = id * 10;
+		int start = ((id - 1) * n);
+		int end = id * n;
 		if (allStatuses.size() < end) {
 			end = allStatuses.size();
 		}
