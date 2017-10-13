@@ -24,7 +24,7 @@ public class ErrorController {
 	@RequestMapping(value = "errors", method = RequestMethod.GET)
 	public ModelAndView renderErrorPage(HttpServletRequest httpRequest, HttpSession session, ModelAndView mv) {
 
-		logger.info("Timeline Controller");
+		logger.info("Error Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
@@ -34,27 +34,28 @@ public class ErrorController {
 			int httpErrorCode = getErrorCode(httpRequest);
 
 			switch (httpErrorCode) {
-			case 400: {
-				errorMsg = "HTTP Error Code: 400. Bad Request";
-				break;
+				case 400: {
+					errorMsg = "HTTP Error Code: 400. Bad Request";
+					break;
+				}
+				case 401: {
+					errorMsg = "HTTP Error Code: 401. Unauthorized";
+					break;
+				}
+				case 404: {
+					errorMsg = "HTTP Error Code: 404. Resource not found";
+					break;
+				}
+				case 500: {
+					errorMsg = "HTTP Error Code: 500. Internal Server Error";
+					break;
+				}
+				default: {
+					errorMsg = "Error";
+					break;
+				}
 			}
-			case 401: {
-				errorMsg = "HTTP Error Code: 401. Unauthorized";
-				break;
-			}
-			case 404: {
-				errorMsg = "HTTP Error Code: 404. Resource not found";
-				break;
-			}
-			case 500: {
-				errorMsg = "HTTP Error Code: 500. Internal Server Error";
-				break;
-			}
-			default: {
-				errorMsg = "Error";
-				break;
-			}
-			}
+			logger.info("Error: " + errorMsg);
 			mv.addObject("errorMsg", errorMsg);
 			User userL = userService.getUserByUsername(session.getAttribute("USER").toString());
 			mv.addObject("loggedUser", userL);

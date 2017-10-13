@@ -40,7 +40,6 @@ public class AjaxController {
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			notif.add(0);
 			notif.add(0);
-
 		} else {
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 

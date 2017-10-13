@@ -163,8 +163,29 @@
 	                  </div>
 	                </div>
 	              </li>
-              </c:forEach>
-              
+              </c:forEach>  
+              <script type="text/javascript">
+			    	function ajaxMsg() {
+				        $.ajax({
+				            url : 'messagesAjax',
+				            dataType : 'json',
+				            contentType: "application/json;charset=utf-8",
+				            success : function(data) {
+				            	//$('#newMSG').html(data[0]);
+				            	//$('#newFRD').html(data[1]);
+				            	alert(data);
+				            }
+				        });
+				    }
+			  </script>
+			  <script type="text/javascript">
+					$( document ).ready(function() {
+				    	ajaxMsg();
+				    	var intervalId = 0;
+				    	intervalId = setInterval(ajaxMsg, 1000);
+					});   
+			  </script>
+                    
             </ul>
             <div class="row">
               <div class="col-sm-12">

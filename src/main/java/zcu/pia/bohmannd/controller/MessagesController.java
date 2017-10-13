@@ -1,7 +1,9 @@
 package zcu.pia.bohmannd.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -33,7 +36,7 @@ public class MessagesController {
 	@Autowired
 	private Chat_LineService chat_lineService;
 
-	final Logger logger = Logger.getLogger(HomepageController.class);
+	final Logger logger = Logger.getLogger(MessagesController.class);
 
 	@RequestMapping(value = "/messages")
 	public ModelAndView addItems(ModelAndView mv, HttpSession session) {
@@ -148,5 +151,27 @@ public class MessagesController {
 		}
 
 		return mv;
+	}
+	
+	@RequestMapping(value = "/messagesAjax", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Chat_Line> chatUpdate(HttpSession session, HttpServletResponse response) {
+		List<Chat_Line> updatedChatList;
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {;
+			updatedChatList = new ArrayList<Chat_Line>();
+		} else {
+			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
+			List<Chat> chats = chatService.listChatByUser(user);
+			if (chats.size() > 0) {
+				if (chatService.getActiveChat() == null) {
+					chatService.setActiveChat(chats.get(0));
+				} else {
+				}
+
+			}
+			updatedChatList = chat_lineService.listChat_LinesByChat(chatService.getActiveChat());	
+			logger.info("Messages Ajax Controller: " + chat_lineService.listChat_LinesByChat(chatService.getActiveChat()).size());
+		}
+		return updatedChatList;
 	}
 }
