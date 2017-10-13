@@ -58,7 +58,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="settings"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
             <li><a href="about"><span class="glyphicon glyphicon-info-sign"></span> About</a></li>
-            <li><a href="homepage"><span class="glyphicon glyphicon-off"></span> Log out</a></li>
+            <li><a href="homepage/logout"><span class="glyphicon glyphicon-off"></span> Log out</a></li>
           </ul>
         </div>
       </div>
