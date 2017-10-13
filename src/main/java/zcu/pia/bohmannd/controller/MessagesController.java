@@ -155,23 +155,14 @@ public class MessagesController {
 	
 	@RequestMapping(value = "/messagesAjax", method = RequestMethod.GET)
 	@ResponseBody
-	public List<Chat_Line> chatUpdate(HttpSession session, HttpServletResponse response) {
-		List<Chat_Line> updatedChatList;
+	public Integer chatUpdate(HttpSession session, HttpServletResponse response) {
+		Integer chatLineCount;
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {;
-			updatedChatList = new ArrayList<Chat_Line>();
+			chatLineCount = 0;
 		} else {
-			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
-			List<Chat> chats = chatService.listChatByUser(user);
-			if (chats.size() > 0) {
-				if (chatService.getActiveChat() == null) {
-					chatService.setActiveChat(chats.get(0));
-				} else {
-				}
-
-			}
-			updatedChatList = chat_lineService.listChat_LinesByChat(chatService.getActiveChat());	
-			logger.info("Messages Ajax Controller: " + chat_lineService.listChat_LinesByChat(chatService.getActiveChat()).size());
+			chatLineCount = chat_lineService.listChat_LinesByChat(chatService.getActiveChat()).size();	
+			logger.info("Messages Ajax Controller: " + chatLineCount);
 		}
-		return updatedChatList;
+		return chatLineCount;
 	}
 }

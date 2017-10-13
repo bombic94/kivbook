@@ -42,6 +42,9 @@
 	    	ajaxNotif();
 	    	var intervalId = 0;
 	    	intervalId = setInterval(ajaxNotif, 1000);
+	    	ajaxMsg();
+			var intervalI2 = 0;
+			intervalId2 = setInterval(ajaxMsg, 1000);
 		});   
 	</script>
     <nav class="navbar navbar-default">
@@ -171,21 +174,13 @@
 				            dataType : 'json',
 				            contentType: "application/json;charset=utf-8",
 				            success : function(data) {
-				            	//$('#newMSG').html(data[0]);
-				            	//$('#newFRD').html(data[1]);
-				            	alert(data);
+				            	if (data > "${fn:length(activeChat)}"){
+				            		window.location.reload(true); 
+				            	}
 				            }
 				        });
 				    }
-			  </script>
-			  <script type="text/javascript">
-					$( document ).ready(function() {
-				    	ajaxMsg();
-				    	var intervalId = 0;
-				    	intervalId = setInterval(ajaxMsg, 1000);
-					});   
-			  </script>
-                    
+			  </script>                    
             </ul>
             <div class="row">
               <div class="col-sm-12">
