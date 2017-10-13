@@ -75,7 +75,16 @@ public class User extends AbstractObject {
     public boolean isNew() {
         return id == null;
     }
+	
+	@Transient
+    public boolean rememberMe;
 
+	public boolean isRememberMe() {
+		return rememberMe;
+	}
+	public void setRememberMe(boolean rememberMe) {
+		this.rememberMe = rememberMe;
+	}
 	public Integer getId() {
 		return id;
 	}

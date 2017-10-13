@@ -96,7 +96,7 @@ pageEncoding="ISO-8859-1"%>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="checkbox">
-                    <label><input type="checkbox">Remember me</label>
+                    <label><form:checkbox path="rememberMe"/>Keep me logged in</label>
                   </div>
                   <button type="submit" class="btn btn-default">Log in</button>
                 </form:form>
