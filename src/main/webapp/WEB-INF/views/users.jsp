@@ -145,7 +145,28 @@
                     </div>
                   </div>
                 </li>
-                </c:forEach>           
+                </c:forEach>  
+                <script type="text/javascript">
+			    	function ajaxFrd() {
+				        $.ajax({
+				            url : 'ajaxFriends',
+				            dataType : 'json',
+				            contentType: "application/json;charset=utf-8",
+				            success : function(data) {
+				            	if (data[0] != "${fn:length(friendships)}" || data[1] != "${fn:length(pendingFriendships)}" || data[2] != "${fn:length(usersToFriend)}"){
+				            		window.location.reload(true); 
+				            	}
+				            }
+				        });
+				    }
+			  </script> 
+			  <script type="text/javascript">
+				$( document ).ready(function() {
+			    	ajaxFrd();
+					var intervalI2 = 0;
+					intervalId2 = setInterval(ajaxFrd, 1000);
+				});   
+			  </script>         
               </ul>
             </div>
             <div class="well">

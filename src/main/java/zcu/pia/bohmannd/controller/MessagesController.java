@@ -152,17 +152,4 @@ public class MessagesController {
 
 		return mv;
 	}
-	
-	@RequestMapping(value = "/messagesAjax", method = RequestMethod.GET)
-	@ResponseBody
-	public Integer chatUpdate(HttpSession session, HttpServletResponse response) {
-		Integer chatLineCount;
-		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {;
-			chatLineCount = 0;
-		} else {
-			chatLineCount = chat_lineService.listChat_LinesByChat(chatService.getActiveChat()).size();	
-			logger.info("Messages Ajax Controller: " + chatLineCount);
-		}
-		return chatLineCount;
-	}
 }

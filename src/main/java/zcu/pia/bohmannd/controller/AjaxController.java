@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.service.ChatService;
+import zcu.pia.bohmannd.service.Chat_LineService;
 import zcu.pia.bohmannd.service.FriendshipService;
 import zcu.pia.bohmannd.service.UserService;
 
@@ -30,6 +31,9 @@ public class AjaxController {
 	@Autowired
 	private FriendshipService friendshipService;
 
+	@Autowired
+	private Chat_LineService chat_lineService;
+	
 	final Logger logger = Logger.getLogger(AjaxController.class);
 
 	@RequestMapping(value = "/ajaxNotif", method = RequestMethod.GET)
@@ -50,5 +54,36 @@ public class AjaxController {
 		}
 
 		return notif;
+	}
+	
+	@RequestMapping(value = "/ajaxMessages", method = RequestMethod.GET)
+	@ResponseBody
+	public Integer chatUpdate(HttpSession session, HttpServletResponse response) {
+		Integer chatLineCount;
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {;
+			chatLineCount = 0;
+		} else {
+			chatLineCount = chat_lineService.listChat_LinesByChat(chatService.getActiveChat()).size();	
+			logger.info("Ajax messages - Messages count: " + chatLineCount);
+		}
+		return chatLineCount;
+	}
+	
+	@RequestMapping(value = "/ajaxFriends", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Integer> friendUpdate(HttpSession session, HttpServletResponse response) {
+		List<Integer> friendCountList = new ArrayList<Integer>();
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {;
+			friendCountList.add(0);
+			friendCountList.add(0);
+			friendCountList.add(0);
+		} else {
+			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
+			friendCountList.add(friendshipService.listFriendshipByUser(user).size());
+			friendCountList.add(friendshipService.listPendingFriendshipByUser(user).size());
+			friendCountList.add(userService.listUsersToFriend(user).size());
+			logger.info("Ajax friends - pending friendships count: " + friendCountList);
+		}
+		return friendCountList;
 	}
 }

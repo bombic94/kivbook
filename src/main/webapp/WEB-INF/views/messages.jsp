@@ -42,9 +42,6 @@
 	    	ajaxNotif();
 	    	var intervalId = 0;
 	    	intervalId = setInterval(ajaxNotif, 1000);
-	    	ajaxMsg();
-			var intervalI2 = 0;
-			intervalId2 = setInterval(ajaxMsg, 1000);
 		});   
 	</script>
     <nav class="navbar navbar-default">
@@ -170,17 +167,24 @@
               <script type="text/javascript">
 			    	function ajaxMsg() {
 				        $.ajax({
-				            url : 'messagesAjax',
+				            url : 'ajaxMessages',
 				            dataType : 'json',
 				            contentType: "application/json;charset=utf-8",
 				            success : function(data) {
-				            	if (data > "${fn:length(activeChat)}"){
+				            	if (data != "${fn:length(activeChat)}"){
 				            		window.location.reload(true); 
 				            	}
 				            }
 				        });
 				    }
-			  </script>                    
+			  </script> 
+			  <script type="text/javascript">
+				$( document ).ready(function() {
+			    	ajaxMsg();
+					var intervalI2 = 0;
+					intervalId2 = setInterval(ajaxMsg, 1000);
+				});   
+			  </script>                   
             </ul>
             <div class="row">
               <div class="col-sm-12">
