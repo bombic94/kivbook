@@ -18,105 +18,104 @@ import zcu.pia.bohmannd.service.UserService;
 public class UsersController {
 
 	@Autowired
-    private UserService userService;
-	
+	private UserService userService;
+
 	@Autowired
-    private FriendshipService friendshipService;
-	
+	private FriendshipService friendshipService;
+
 	final Logger logger = Logger.getLogger(HomepageController.class);
-	
+
 	@RequestMapping(value = "/users")
-    public ModelAndView addItems(ModelAndView mv, HttpSession session) {
+	public ModelAndView addItems(ModelAndView mv, HttpSession session) {
 		logger.info("Users Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
-			mv = new ModelAndView("users");    
-			
+
+			mv = new ModelAndView("users");
+
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			mv.addObject("loggedUser", user);
-			
+
 			mv.addObject("friendships", friendshipService.listFriendshipByUser(user));
 			mv.addObject("pendingFriendships", friendshipService.listPendingFriendshipByUser(user));
 			mv.addObject("usersToFriend", userService.listUsersToFriend(user));
-			
+
 		}
-	
-        return mv;
-    }
-	
+
+		return mv;
+	}
+
 	@RequestMapping(value = "/users/deleteFriend/{friendshipId}")
-    public ModelAndView deleteFriend(ModelAndView mv, HttpSession session, @PathVariable Integer friendshipId) {
+	public ModelAndView deleteFriend(ModelAndView mv, HttpSession session, @PathVariable Integer friendshipId) {
 		logger.info("Profile Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
-			mv = new ModelAndView("users");     
+
+			mv = new ModelAndView("users");
 
 			Friendship friendship = friendshipService.getFriendship(friendshipId);
 			logger.info("Trying to delete friendship: " + friendship.toString());
 			friendshipService.deleteFriendship(friendship);
-			
+
 			logger.info("Friendship deleted: " + friendship.toString());
 			mv.setViewName("redirect:/users");
 		}
-	
-        return mv;
-    }
-	
+
+		return mv;
+	}
+
 	@RequestMapping(value = "/users/acceptFriend/{friendshipId}")
-    public ModelAndView acceptFriend(ModelAndView mv, HttpSession session, @PathVariable Integer friendshipId) {
+	public ModelAndView acceptFriend(ModelAndView mv, HttpSession session, @PathVariable Integer friendshipId) {
 		logger.info("Profile Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
-			mv = new ModelAndView("users");     
-			
+
+			mv = new ModelAndView("users");
+
 			Friendship friendship = friendshipService.getFriendship(friendshipId);
 			logger.info("Trying to accept friendship: " + friendship.toString());
 			friendshipService.acceptFriendship(friendship);
-			
+
 			logger.info("Friendship accepted: " + friendship.toString());
-			
+
 			mv.setViewName("redirect:/users");
 		}
-	
-        return mv;
-    }
-	
+
+		return mv;
+	}
+
 	@RequestMapping(value = "/users/addFriend/{friendId}")
-    public ModelAndView addFriend(ModelAndView mv, HttpSession session, @PathVariable Integer friendId) {
+	public ModelAndView addFriend(ModelAndView mv, HttpSession session, @PathVariable Integer friendId) {
 		logger.info("Profile Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
-			mv = new ModelAndView("users");     
-			
-			
+
+			mv = new ModelAndView("users");
+
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			User friend = userService.getUser(friendId);
 			Friendship friendship = new Friendship();
 			friendship.setUser1(user);
-			friendship.setUser2(friend);			
+			friendship.setUser2(friend);
 			friendship.setAccepted(false);
 			logger.info("Trying to create new friendship: " + friendship.toString());
 			friendshipService.insertFriendship(friendship);
 			logger.info("New friendship request sent: " + friendship.toString());
 			mv.setViewName("redirect:/users");
 		}
-	
-        return mv;
-    }
+
+		return mv;
+	}
 }

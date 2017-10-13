@@ -15,27 +15,27 @@ import zcu.pia.bohmannd.service.UserService;
 public class AboutController {
 
 	@Autowired
-    private UserService userService;
-	
+	private UserService userService;
+
 	final Logger logger = Logger.getLogger(HomepageController.class);
-	
+
 	@RequestMapping(value = "/about")
-    public ModelAndView addItems(ModelAndView mv, HttpSession session) {
+	public ModelAndView addItems(ModelAndView mv, HttpSession session) {
 		logger.info("About Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
-			mv = new ModelAndView("about");  
-			
+
+			mv = new ModelAndView("about");
+
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			mv.addObject("loggedUser", user);
 			int userCount = userService.listUsers().size();
-	        mv.addObject("userCount", userCount);
+			mv.addObject("userCount", userCount);
 		}
-	
-        return mv;
-    }
+
+		return mv;
+	}
 }

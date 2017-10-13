@@ -23,55 +23,57 @@ import zcu.pia.bohmannd.service.UserService;
 public class ProfileController {
 
 	@Autowired
-    private UserService userService;
-	
+	private UserService userService;
+
 	@Autowired
-    private FriendshipService friendshipService;
-	
+	private FriendshipService friendshipService;
+
 	final Logger logger = Logger.getLogger(HomepageController.class);
-	
+
 	@RequestMapping(value = "/profile/{userId}")
-    public ModelAndView addItems(ModelAndView mv, HttpSession session, @PathVariable Integer userId) throws KivbookException {
+	public ModelAndView addItems(ModelAndView mv, HttpSession session, @PathVariable Integer userId)
+			throws KivbookException {
 		logger.info("Profile Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
-			mv = new ModelAndView("profile");     
-			
+
+			mv = new ModelAndView("profile");
+
 			User user = userService.getUser(userId);
-			
+
 			if (user == null) {
 				throw new KivbookException();
-				//user = userService.getUserByUsername(session.getAttribute("USER").toString());
-				//logger.info("User does not exist, showing logged user: " + user);
+				// user =
+				// userService.getUserByUsername(session.getAttribute("USER").toString());
+				// logger.info("User does not exist, showing logged user: " + user);
 			}
-			
+
 			List<Friendship> friendships = friendshipService.listFriendshipByUser(user);
-			
+
 			String age = "Unknown";
 			if (user.getDateofbirth() != null) {
 				age = Integer.toString(Period.between(user.getDateofbirth().toLocalDate(), LocalDate.now()).getYears());
 			}
-			
+
 			String gender = "Male";
 			if (user.getGender().equals("f")) {
 				gender = "Female";
 			}
-			
+
 			logger.info("Showing user: " + user);
 			mv.addObject("user", user);
 			mv.addObject("userAge", age);
 			mv.addObject("userGender", gender);
 			mv.addObject("userFriends", friendships.size());
-			
+
 			User userL = userService.getUserByUsername(session.getAttribute("USER").toString());
 			mv.addObject("loggedUser", userL);
 
 		}
-	
-        return mv;
-    }
+
+		return mv;
+	}
 }

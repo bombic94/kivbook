@@ -32,128 +32,132 @@ import zcu.pia.bohmannd.service.UserService;
 
 @Controller
 public class TimelineController {
-	
+
 	@Autowired
-    private UserService userService;
-	
+	private UserService userService;
+
 	@Autowired
-    private StatusService statusService;
-	
+	private StatusService statusService;
+
 	@Autowired
-    private LikeService likeService;
-	
+	private LikeService likeService;
+
 	@Autowired
-    private ChatService chatService;
-	
+	private ChatService chatService;
+
 	@Autowired
-    private FriendshipService friendshipService;
-	
+	private FriendshipService friendshipService;
+
 	@Autowired
-    private CommentService commentService;
-	
+	private CommentService commentService;
+
 	final Logger logger = Logger.getLogger(HomepageController.class);
-	
+
 	@RequestMapping(value = "/timeline")
-    public ModelAndView addItems(ModelAndView mv, HttpSession session, @RequestParam(value = "page", required = false, defaultValue = "1") Integer id) throws KivbookException {
+	public ModelAndView addItems(ModelAndView mv, HttpSession session,
+			@RequestParam(value = "page", required = false, defaultValue = "1") Integer id) throws KivbookException {
 		logger.info("Timeline Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
-			mv = new ModelAndView("timeline");     
-			
+
+			mv = new ModelAndView("timeline");
+
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			mv.addObject("loggedUser", user);
-			
+
 			List<Chat> chats = chatService.listChatByUser(user);
 			mv.addObject("chats", chats);
 			mv.addObject("pendingFriendships", friendshipService.listPendingFriendshipByUser(user));
 			mv.addObject("usersToFriend", userService.listUsersToFriend(user));
-			
+
 			List<Status> allStatuses = statusService.listStatusesForUser(user);
 			int pages = ((allStatuses.size() - 1) / 10) + 1;
-			mv.addObject("pages", pages); 
-			
-			if(id > pages) {
+			mv.addObject("pages", pages);
+
+			if (id > pages) {
 				throw new KivbookException();
 			}
-			mv.addObject("activePage", id); 
-			
+			mv.addObject("activePage", id);
+
 			mv.addObject("statuses", statusService.getNstatuses(allStatuses, id));
 			mv.addObject("userLikes", likeService.listLikesByUser(user));
-			
+
 			logger.info(statusService.listStatusesForUser(user).size());
 		}
-	
-        return mv;
-    }
-	
+
+		return mv;
+	}
+
 	@RequestMapping(value = "/timeline/newStatus", method = RequestMethod.POST)
-    public ModelAndView newStatus(@RequestParam("file") MultipartFile file, @RequestParam("text") String text, ModelAndView mv, HttpSession session) {
+	public ModelAndView newStatus(@RequestParam("file") MultipartFile file, @RequestParam("text") String text,
+			ModelAndView mv, HttpSession session) {
 		logger.info("Timeline Controller - new status");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
+
 			mv = new ModelAndView("timeline");
-			
+
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
-			
+
 			Status status = new Status();
 			status.setStatus_text(text);
 			status.setUser(user);
-			
+
 			if (!file.isEmpty()) {
 				try {
 					byte[] bytes = file.getBytes();
-	
+
 					// Creating the directory to store file
 					String rootPath = System.getProperty("catalina.home");
 					File dir = new File(rootPath + File.separator + "img");
 					if (!dir.exists())
 						dir.mkdirs();
-					
+
 					// Create the file on server
-					File serverFile = new File(dir.getAbsolutePath() + File.separator + user.getId() + "-status-" + file.hashCode() + ".png");
+					File serverFile = new File(dir.getAbsolutePath() + File.separator + user.getId() + "-status-"
+							+ file.hashCode() + ".png");
 					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 					stream.write(bytes);
 					stream.close();
-	
+
 					logger.info("Server File Location=" + serverFile.getAbsolutePath());
-						
+
 					status.setPhoto(user.getId() + "-status-" + file.hashCode() + ".png");
-					
+
 				} catch (Exception e) {
 					logger.info("Changes NOT saved");
-		        	mv.setViewName("redirect:/settings");
+					mv.setViewName("redirect:/settings");
 				}
-			}			
-			
+			}
+
 			logger.info("Saving new status: " + status.toString());
-			
+
 			statusService.insertStatus(status);
-			
+
 			mv.setViewName("redirect:/timeline");
 		}
-	
-        return mv;
-    }
-	
+
+		return mv;
+	}
+
 	@RequestMapping(value = "/timeline/newComment/{statusId}")
-    public ModelAndView newComment(ModelAndView mv, HttpSession session, @RequestParam("comment_text") String comment_text, @PathVariable Integer statusId) {
+	public ModelAndView newComment(ModelAndView mv, HttpSession session,
+			@RequestParam("comment_text") String comment_text, @PathVariable Integer statusId) {
 		logger.info("Timeline Controller - new comment");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
+
 			mv = new ModelAndView("timeline");
-			
+
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			Comment comment = new Comment();
 			comment.setComment_text(comment_text);
@@ -161,31 +165,31 @@ public class TimelineController {
 			comment.setUser(user);
 
 			logger.info("Saving new comment: " + comment.toString());
-			
+
 			commentService.insertComment(comment);
-			
+
 			mv.setViewName("redirect:/timeline");
 		}
-	
-        return mv;
-    }
+
+		return mv;
+	}
 
 	@RequestMapping(value = "/timeline/like/{statusId}")
-    public ModelAndView like(ModelAndView mv, HttpSession session, @PathVariable Integer statusId) {
+	public ModelAndView like(ModelAndView mv, HttpSession session, @PathVariable Integer statusId) {
 		logger.info("Timeline Controller - like");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
+
 			mv = new ModelAndView("timeline");
-			
+
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			Like like = new Like();
 			like.setStatus(statusService.getStatus(statusId));
 			like.setUser(user);
-			
+
 			if (likeService.isLiked(like) != null) {
 				like = likeService.isLiked(like);
 				logger.info("Status was liked by this user, removing like: " + like.toString());
@@ -194,10 +198,10 @@ public class TimelineController {
 				logger.info("Saving new like: " + like.toString());
 				likeService.insertLike(like);
 			}
-			
+
 			mv.setViewName("redirect:/timeline");
 		}
-	
-        return mv;
-    }
+
+		return mv;
+	}
 }

@@ -22,34 +22,34 @@ import zcu.pia.bohmannd.service.UserService;
 public class AjaxController {
 
 	@Autowired
-    private UserService userService;
-	
+	private UserService userService;
+
 	@Autowired
-    private ChatService chatService;
-	
+	private ChatService chatService;
+
 	@Autowired
-    private FriendshipService friendshipService;
-	
+	private FriendshipService friendshipService;
+
 	final Logger logger = Logger.getLogger(AjaxController.class);
-	
+
 	@RequestMapping(value = "/ajaxNotif", method = RequestMethod.GET)
 	@ResponseBody
-    public List<Integer> addItems(HttpSession session, HttpServletResponse response) {
+	public List<Integer> addItems(HttpSession session, HttpServletResponse response) {
 		List<Integer> notif = new ArrayList<Integer>();
-	
+
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			notif.add(0);
 			notif.add(0);
-				        
+
 		} else {
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
-			
+
 			notif.add(chatService.listUnreadChatByUser(user).size());
 			notif.add(friendshipService.listPendingFriendshipByUser(user).size());
 			response.setContentType("application/json");
-			logger.info("Ajax notifications - Chats: " + notif.get(0) + ", Friendships: " + notif.get(1));		
+			logger.info("Ajax notifications - Chats: " + notif.get(0) + ", Friendships: " + notif.get(1));
 		}
-			
+
 		return notif;
-    }
+	}
 }

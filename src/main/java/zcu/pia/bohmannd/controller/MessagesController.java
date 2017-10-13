@@ -25,38 +25,38 @@ import zcu.pia.bohmannd.service.UserService;
 public class MessagesController {
 
 	@Autowired
-    private UserService userService;
-	
+	private UserService userService;
+
 	@Autowired
-    private ChatService chatService;
-	
+	private ChatService chatService;
+
 	@Autowired
-    private Chat_LineService chat_lineService;
-	
+	private Chat_LineService chat_lineService;
+
 	final Logger logger = Logger.getLogger(HomepageController.class);
-	
+
 	@RequestMapping(value = "/messages")
-    public ModelAndView addItems(ModelAndView mv, HttpSession session) {
+	public ModelAndView addItems(ModelAndView mv, HttpSession session) {
 		logger.info("Messages Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
-			mv = new ModelAndView("messages");     
-			
+
+			mv = new ModelAndView("messages");
+
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			mv.addObject("loggedUser", user);
-			
+
 			List<Chat> chats = chatService.listChatByUser(user);
 			mv.addObject("chats", chats);
-			
+
 			if (chats.size() > 0) {
 				if (chatService.getActiveChat() == null) {
 					chatService.setActiveChat(chats.get(0));
 					logger.info("Active chat not selected, selecting most recent chat: " + chatService.getActiveChat());
-				} else {					
+				} else {
 					logger.info("Active chat selected: " + chatService.getActiveChat().toString());
 				}
 				mv.addObject("activeChat", chat_lineService.listChat_LinesByChat(chatService.getActiveChat()));
@@ -64,24 +64,25 @@ public class MessagesController {
 			}
 			mv.addObject("usersToChat", userService.listUsersToChat(user));
 			mv.addObject("chat_Line", new Chat_Line());
-			
+
 		}
-	
-        return mv;
-    }
-	
+
+		return mv;
+	}
+
 	@RequestMapping(value = "/messages/addChat/{friendId}")
-    public ModelAndView addChat(ModelAndView mv, HttpSession session, @PathVariable Integer friendId, RedirectAttributes redirectAttributes) {
+	public ModelAndView addChat(ModelAndView mv, HttpSession session, @PathVariable Integer friendId,
+			RedirectAttributes redirectAttributes) {
 		logger.info("Profile Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
-			mv = new ModelAndView("messages");     
-			
-			User user = userService.getUserByUsername(session.getAttribute("USER").toString());	
+
+			mv = new ModelAndView("messages");
+
+			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			User friend = userService.getUser(friendId);
 			Chat chat = new Chat();
 			chat.setUser1(user);
@@ -91,59 +92,61 @@ public class MessagesController {
 			chatService.insertChat(chat);
 			logger.info("Chat created, setting active: " + chat.toString());
 			chatService.setActiveChat(chat);
-			
+
 			mv.setViewName("redirect:/messages");
 		}
-	
-        return mv;
-    }
-	
+
+		return mv;
+	}
+
 	@RequestMapping(value = "/messages/setChat/{chatId}")
-    public ModelAndView setChat(ModelAndView mv, HttpSession session, @PathVariable Integer chatId, RedirectAttributes redirectAttributes) {
+	public ModelAndView setChat(ModelAndView mv, HttpSession session, @PathVariable Integer chatId,
+			RedirectAttributes redirectAttributes) {
 		logger.info("Profile Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
-			mv = new ModelAndView("messages");     
-			
-			User user = userService.getUserByUsername(session.getAttribute("USER").toString());	
+
+			mv = new ModelAndView("messages");
+
+			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			Chat chat = chatService.getChat(chatId);
 			chat.setChat_Lines(chat_lineService.listChat_LinesByChat(chat));
-			
+
 			logger.info("Setting active chat: " + chat.toString());
 			chatService.setActiveChat(chat);
 			chatService.readChat(chat, user);
-			
+
 			mv.setViewName("redirect:/messages");
 		}
-	
-        return mv;
-    }
-	
+
+		return mv;
+	}
+
 	@RequestMapping(value = "/messages/newMessage", method = RequestMethod.POST)
-    public ModelAndView newMessage(@ModelAttribute Chat_Line chat_Line, ModelAndView mv, HttpSession session, RedirectAttributes redirectAttributes) {
+	public ModelAndView newMessage(@ModelAttribute Chat_Line chat_Line, ModelAndView mv, HttpSession session,
+			RedirectAttributes redirectAttributes) {
 		logger.info("Profile Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
 			logger.info("Logged in: " + session.getAttribute("USER"));
-			
-			mv = new ModelAndView("messages");     
-			
-			User user = userService.getUserByUsername(session.getAttribute("USER").toString());	
+
+			mv = new ModelAndView("messages");
+
+			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
 			chat_Line.setChat(chatService.getActiveChat());
 			chat_Line.setSender(user);
-			
+
 			logger.info("Saving new message: " + chat_Line.toString());
 			chat_lineService.insertChat_Line(chat_Line);
-			
+
 			mv.setViewName("redirect:/messages");
 		}
-	
-        return mv;
-    }
+
+		return mv;
+	}
 }

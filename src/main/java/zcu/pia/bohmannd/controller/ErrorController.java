@@ -17,52 +17,52 @@ import zcu.pia.bohmannd.service.UserService;
 public class ErrorController {
 
 	@Autowired
-    private UserService userService;
-	
+	private UserService userService;
+
 	final Logger logger = Logger.getLogger(ErrorController.class);
-	
+
 	@RequestMapping(value = "errors", method = RequestMethod.GET)
-    public ModelAndView renderErrorPage(HttpServletRequest httpRequest, HttpSession session, ModelAndView mv) {
-		
+	public ModelAndView renderErrorPage(HttpServletRequest httpRequest, HttpSession session, ModelAndView mv) {
+
 		logger.info("Timeline Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
 			mv.setViewName("redirect:/homepage");
 		} else {
-	        mv = new ModelAndView("errorPage");
-	        String errorMsg = "";
-	        int httpErrorCode = getErrorCode(httpRequest);
-	 
-	        switch (httpErrorCode) {
-	            case 400: {
-	                errorMsg = "HTTP Error Code: 400. Bad Request";
-	                break;
-	            }
-	            case 401: {
-	                errorMsg = "HTTP Error Code: 401. Unauthorized";
-	                break;
-	            }
-	            case 404: {
-	                errorMsg = "HTTP Error Code: 404. Resource not found";
-	                break;
-	            }
-	            case 500: {
-	                errorMsg = "HTTP Error Code: 500. Internal Server Error";
-	                break;
-	            }
-	            default: {
-	                errorMsg = "Error";
-	                break;
-	            }
-	        }
-	        mv.addObject("errorMsg", errorMsg);
-	        User userL = userService.getUserByUsername(session.getAttribute("USER").toString());
-	        mv.addObject("loggedUser", userL);
+			mv = new ModelAndView("errorPage");
+			String errorMsg = "";
+			int httpErrorCode = getErrorCode(httpRequest);
+
+			switch (httpErrorCode) {
+			case 400: {
+				errorMsg = "HTTP Error Code: 400. Bad Request";
+				break;
+			}
+			case 401: {
+				errorMsg = "HTTP Error Code: 401. Unauthorized";
+				break;
+			}
+			case 404: {
+				errorMsg = "HTTP Error Code: 404. Resource not found";
+				break;
+			}
+			case 500: {
+				errorMsg = "HTTP Error Code: 500. Internal Server Error";
+				break;
+			}
+			default: {
+				errorMsg = "Error";
+				break;
+			}
+			}
+			mv.addObject("errorMsg", errorMsg);
+			User userL = userService.getUserByUsername(session.getAttribute("USER").toString());
+			mv.addObject("loggedUser", userL);
 		}
-        return mv;
-    }
-     
-    private int getErrorCode(HttpServletRequest httpRequest) {
-        return (Integer) httpRequest.getAttribute("javax.servlet.error.status_code");
-    }
+		return mv;
+	}
+
+	private int getErrorCode(HttpServletRequest httpRequest) {
+		return (Integer) httpRequest.getAttribute("javax.servlet.error.status_code");
+	}
 }
