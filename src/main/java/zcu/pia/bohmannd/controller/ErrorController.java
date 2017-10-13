@@ -34,6 +34,10 @@ public class ErrorController {
                 errorMsg = "HTTP Error Code: 500. Internal Server Error";
                 break;
             }
+            default: {
+                errorMsg = "Error";
+                break;
+            }
         }
         errorPage.addObject("errorMsg", errorMsg);
         return errorPage;

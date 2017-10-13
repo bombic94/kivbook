@@ -53,7 +53,7 @@ public class TimelineController {
 	final Logger logger = Logger.getLogger(HomepageController.class);
 	
 	@RequestMapping(value = "/timeline")
-    public ModelAndView addItems(ModelAndView mv, HttpSession session, @RequestParam(value = "page", required = false, defaultValue = "1") Integer id) {
+    public ModelAndView addItems(ModelAndView mv, HttpSession session, @RequestParam(value = "page", required = false, defaultValue = "1") Integer id) throws KivbookException {
 		logger.info("Timeline Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
@@ -76,7 +76,7 @@ public class TimelineController {
 			mv.addObject("pages", pages); 
 			
 			if(id > pages) {
-				id = 1;
+				throw new KivbookException();
 			}
 			mv.addObject("activePage", id); 
 			

@@ -30,7 +30,7 @@ public class ProfileController {
 	final Logger logger = Logger.getLogger(HomepageController.class);
 	
 	@RequestMapping(value = "/profile/{userId}")
-    public ModelAndView addItems(ModelAndView mv, HttpSession session, @PathVariable Integer userId) {
+    public ModelAndView addItems(ModelAndView mv, HttpSession session, @PathVariable Integer userId) throws KivbookException {
 		logger.info("Profile Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
@@ -43,8 +43,9 @@ public class ProfileController {
 			User user = userService.getUser(userId);
 			
 			if (user == null) {
-				user = userService.getUserByUsername(session.getAttribute("USER").toString());
-				logger.info("User does not exist, showing logged user: " + user);
+				throw new KivbookException();
+				//user = userService.getUserByUsername(session.getAttribute("USER").toString());
+				//logger.info("User does not exist, showing logged user: " + user);
 			}
 			
 			List<Friendship> friendships = friendshipService.listFriendshipByUser(user);
