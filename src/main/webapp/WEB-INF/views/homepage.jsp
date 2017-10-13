@@ -4,8 +4,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<html lang="cs-cz">
   <head>
     <title>Kivbook homepage</title>
     <meta charset="utf-8">
@@ -173,7 +174,7 @@
                   </div>
                   <div class="g-recaptcha" data-callback="correctCaptcha" data-sitekey="6LcTzjEUAAAAAN5D7WuKyKYP6yf4t0GCGoP5edFr"></div>
                   <div class="checkbox" hidden>
-                    <label><input type="checkbox" required="required" id="captchaOK"></label>
+                    <label><input type="checkbox" id="captchaOK"></label>
                     <div class="help-block with-errors"></div>
                   </div>
                   <script type="text/javascript">

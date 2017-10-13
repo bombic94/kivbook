@@ -4,8 +4,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="en">
+<html lang="cs-cz">
   <head>
     <title>Kivbook users</title>
     <meta charset="utf-8">
@@ -131,9 +132,16 @@
                       <p class="media-heading">Requested friendship on: <fmt:formatDate value="${friendship.created_at}" pattern="yyyy/MM/dd HH:mm"/></p>
                     </div>
                     <div class="media-right">
-                      <form method="POST" action="users/acceptFriend/${friendship.id}">
-                      	<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
-                      </form>
+                    	<div class="media-left">
+                      	  <form method="POST" action="users/acceptFriend/${friendship.id}">
+                      		<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-plus-sign friendicon-plus"></span></button>
+                      	  </form>
+                      	</div>
+                      	<div class="media-right">
+                      	  <form method="POST" action="users/deleteFriend/${friendship.id}">
+                      		<button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-minus-sign friendicon-minus"></span></button>
+                          </form>
+                        </div>
                     </div>
                   </div>
                 </li>
