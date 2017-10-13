@@ -53,7 +53,7 @@ public class TimelineController {
 	final Logger logger = Logger.getLogger(HomepageController.class);
 	
 	@RequestMapping(value = "/timeline")
-    public ModelAndView addItems(ModelAndView mv, HttpSession session) {
+    public ModelAndView addItems(ModelAndView mv, HttpSession session, @RequestParam(value = "page", required = false, defaultValue = "1") Integer id) {
 		logger.info("Timeline Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			logger.info("Not logged in");
@@ -71,7 +71,16 @@ public class TimelineController {
 			mv.addObject("pendingFriendships", friendshipService.listPendingFriendshipByUser(user));
 			mv.addObject("usersToFriend", userService.listUsersToFriend(user));
 			
-			mv.addObject("statuses", statusService.listStatusesForUser(user));
+			List<Status> allStatuses = statusService.listStatusesForUser(user);
+			int pages = ((allStatuses.size() - 1) / 10) + 1;
+			mv.addObject("pages", pages); 
+			
+			if(id > pages) {
+				id = 1;
+			}
+			mv.addObject("activePage", id); 
+			
+			mv.addObject("statuses", statusService.getNstatuses(allStatuses, id));
 			mv.addObject("userLikes", likeService.listLikesByUser(user));
 			
 			logger.info(statusService.listStatusesForUser(user).size());

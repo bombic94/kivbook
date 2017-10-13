@@ -16,4 +16,6 @@ public interface StatusService {
     public void deleteStatus(Status status);
 
 	List<Status> listStatusesForUser(User user);
+
+	public List<Status> getNstatuses(List<Status> allStatuses, Integer id);
 }

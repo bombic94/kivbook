@@ -78,4 +78,21 @@ public class StatusServiceImpl implements StatusService {
 		
 		return statuses;
 	}
+
+	@Override
+	public List<Status> getNstatuses(List<Status> allStatuses, Integer id) {
+		List<Status> result = new ArrayList<Status>();
+		
+		int start = ((id - 1) * 10);
+		int end = id * 10;
+		if (allStatuses.size() < end) {
+			end = allStatuses.size();
+		}
+		
+		for (int i = start; i < end; i++) {
+			result.add(allStatuses.get(i));
+		}
+		
+		return result;
+	}
 }

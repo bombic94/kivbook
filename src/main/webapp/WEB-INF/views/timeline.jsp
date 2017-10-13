@@ -299,11 +299,13 @@
             </c:forEach>
             <div class="text-center">
               <ul class="pagination">
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
+              	<c:forEach var="i" begin="1" end="${pages}">
+                	<li <c:if test="${i eq activePage}">class="active"</c:if>>
+                	<c:url var="url" value="/timeline">
+					   <c:param name="page" value="${i}"/>
+					</c:url>
+					<a href="${url}">${i}</a></li>
+                </c:forEach>
               </ul>
             </div>
           </div>
