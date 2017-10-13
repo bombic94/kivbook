@@ -9,17 +9,17 @@ public interface FriendshipService {
 
 	public void insertFriendship(Friendship friendship);
 
-    public List<Friendship> listFriendships();
+	public List<Friendship> listFriendships();
 
-    public Friendship getFriendship(Integer id);
-    
-    public void deleteFriendship(Friendship friendship);
-    
-    public List<Friendship> listFriendshipByUser(User user);
-    
-    public List<Friendship> listPendingFriendshipByUser(User user);
-    
-    public List<Friendship> listPossibleFriendshipByUser(User user);
-    
-    public void acceptFriendship(Friendship friendship);
+	public Friendship getFriendship(Integer id);
+
+	public void deleteFriendship(Friendship friendship);
+
+	public List<Friendship> listFriendshipByUser(User user);
+
+	public List<Friendship> listPendingFriendshipByUser(User user);
+
+	public List<Friendship> listPossibleFriendshipByUser(User user);
+
+	public void acceptFriendship(Friendship friendship);
 }

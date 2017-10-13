@@ -9,11 +9,11 @@ public interface CommentService {
 
 	public void insertComment(Comment comment);
 
-    public List<Comment> listComments();
+	public List<Comment> listComments();
 
-    public Comment getComment(Integer id);
-    
-    public void deleteComment(Comment comment);
-    
-    public List<Comment> listCommentsByStatus(Status status);
+	public Comment getComment(Integer id);
+
+	public void deleteComment(Comment comment);
+
+	public List<Comment> listCommentsByStatus(Status status);
 }

@@ -15,7 +15,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 
 	@Autowired
 	private FriendshipDAO friendshipDAO;
-	
+
 	@Transactional
 	@Override
 	public void insertFriendship(Friendship friendship) {
@@ -60,7 +60,7 @@ public class FriendshipServiceImpl implements FriendshipService {
 
 	@Transactional
 	@Override
-	public List<Friendship> listPossibleFriendshipByUser(User user) {	
+	public List<Friendship> listPossibleFriendshipByUser(User user) {
 		return friendshipDAO.listAllFriendshipsByUser(user);
 	}
 

@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import zcu.pia.bohmannd.model.User;
 
 @Service("email")
-public class EmailAPI {
+public class EmailServiceImpl implements EmailService{
 
 	@Autowired
 	private MailSender mailSender;
 	
+	@Override
 	public void sendMail(User user) {
 		
 		String from = "kivbook.zcu@gmail.com";

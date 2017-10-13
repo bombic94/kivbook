@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import zcu.pia.bohmannd.dao.ChatDAO;
-import zcu.pia.bohmannd.dao.Chat_LineDAO;
 import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.Chat_Line;
 import zcu.pia.bohmannd.model.User;
@@ -18,12 +17,11 @@ public class ChatServiceImpl implements ChatService {
 
 	@Autowired
 	private ChatDAO chatDAO;
-	
+	@Autowired
+	private Chat_LineService chat_LineService;
+
 	private Chat activeChat;
 
-	@Autowired
-	private Chat_LineDAO chat_LineDAO;
-	
 	@Transactional
 	@Override
 	public void insertChat(Chat chat) {
@@ -52,10 +50,10 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public List<Chat> listChatByUser(User user) {
 		List<Chat> listCh = chatDAO.listByUser(user);
-		for (Chat ch : listCh) { 
-			ch.setChat_Lines(chat_LineDAO.listByChat(ch));
+		for (Chat ch : listCh) {
+			ch.setChat_Lines(chat_LineService.listChat_LinesByChat(ch));
 		}
-		
+
 		return listCh;
 	}
 
@@ -67,7 +65,7 @@ public class ChatServiceImpl implements ChatService {
 			chatDAO.accept(chat);
 		}
 	}
-	
+
 	@Override
 	public Chat getActiveChat() {
 		return activeChat;
@@ -80,12 +78,12 @@ public class ChatServiceImpl implements ChatService {
 
 	@Override
 	public List<Chat> listUnreadChatByUser(User user) {
-		
+
 		List<Chat> listCh = chatDAO.listByUser(user);
-		for (Chat ch : listCh) { 
-			ch.setChat_Lines(chat_LineDAO.listByChat(ch));
-		}		
-		
+		for (Chat ch : listCh) {
+			ch.setChat_Lines(chat_LineService.listChat_LinesByChat(ch));
+		}
+
 		for (Iterator<Chat> iterator = listCh.iterator(); iterator.hasNext();) {
 			Chat ch = iterator.next();
 			List<Chat_Line> chL = ch.getChat_Lines();
@@ -96,11 +94,17 @@ public class ChatServiceImpl implements ChatService {
 				}
 				if (chL.get(chL.size() - 1).getSender().getId() == user.getId()) {
 					iterator.remove();
-				}		
+				}
 			}
 		}
-		
+
 		return listCh;
+	}
+
+	@Transactional
+	@Override
+	public void setUnread(Chat chat) {
+		chatDAO.setUnread(chat);
 	}
 
 }

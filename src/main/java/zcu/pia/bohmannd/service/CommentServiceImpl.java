@@ -15,7 +15,7 @@ public class CommentServiceImpl implements CommentService {
 
 	@Autowired
 	private CommentDAO commentDAO;
-	
+
 	@Transactional
 	@Override
 	public void insertComment(Comment comment) {

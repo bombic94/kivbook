@@ -8,36 +8,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import zcu.pia.bohmannd.dao.FriendshipDAO;
-import zcu.pia.bohmannd.dao.ChatDAO;
 import zcu.pia.bohmannd.dao.UserDAO;
 import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.Friendship;
 import zcu.pia.bohmannd.model.User;
-import zcu.pia.bohmannd.utils.EmailAPI;
+import zcu.pia.bohmannd.utils.EmailService;
 import zcu.pia.bohmannd.utils.Encoder;
 
 @Service
 public class UserServiceImpl implements UserService {
 
 	final Logger logger = Logger.getLogger(UserServiceImpl.class);
-	
+
 	@Autowired
-    private UserDAO userDAO;
+	private UserDAO userDAO;
 	@Autowired
-    private ChatDAO chatDAO;
+	private ChatService chatService;
 	@Autowired
-    private FriendshipDAO friendshipDAO;
+	private FriendshipService friendshipService;
 	@Autowired
 	private Encoder encoder;
-	
 	@Autowired
-	private EmailAPI emailAPI;
-	
+	private EmailService emailService;
+
 	@Transactional
 	@Override
 	public void insertUser(User user) {
-		userDAO.save(user);		
+		userDAO.save(user);
 	}
 
 	@Transactional
@@ -61,10 +58,10 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	@Override
 	public boolean validateUser(User user) {
-		
+
 		User u = userDAO.getByUsername(user.getUsername());
-        
-        return (u != null && encoder.validate(user.getPassword(), u.getPassword()));
+
+		return (u != null && encoder.validate(user.getPassword(), u.getPassword()));
 	}
 
 	@Transactional
@@ -73,27 +70,27 @@ public class UserServiceImpl implements UserService {
 		boolean success;
 
 		User u = userDAO.getByUsername(user.getUsername());
-        
-        if(u != null) {
-        	success = false;
-        } else {
-        	emailAPI.sendMail(user);   	
-        	
-	        user.setPassword(encoder.encode(user.getPassword()));
-	        userDAO.save(user);
-	        
-	        success = true;
-        }
-        
-        return success;
+
+		if (u != null) {
+			success = false;
+		} else {
+			emailService.sendMail(user);
+
+			user.setPassword(encoder.encode(user.getPassword()));
+			userDAO.save(user);
+
+			success = true;
+		}
+
+		return success;
 	}
 
 	@Transactional
 	@Override
 	public User getUserByUsername(String username) {
-		
+
 		User u = userDAO.getByUsername(username);
-		
+
 		return u;
 	}
 
@@ -101,54 +98,54 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> listUsersToFriend(User user) {
 		List<User> listU = userDAO.list();
-		List<Friendship> listF = friendshipDAO.listAllFriendshipsByUser(user);
-		
+		List<Friendship> listF = friendshipService.listPossibleFriendshipByUser(user);
+
 		for (Iterator<User> iterator = listU.iterator(); iterator.hasNext();) {
-			User u = iterator.next();			
+			User u = iterator.next();
 			if (u.getId() == user.getId()) {
 				iterator.remove();
-			}				
+			}
 		}
-		
-		for (Friendship f :listF) {
+
+		for (Friendship f : listF) {
 			for (Iterator<User> iterator = listU.iterator(); iterator.hasNext();) {
-				User u = iterator.next();			
+				User u = iterator.next();
 				if (u.getId() == f.getUser1().getId() || u.getId() == f.getUser2().getId()) {
 					iterator.remove();
-				}				
+				}
 			}
 		}
 		return listU;
 	}
-	
+
 	@Transactional
 	@Override
 	public List<User> listUsersToChat(User user) {
 		List<User> listU = userDAO.list();
-		List<Chat> listCh = chatDAO.listByUser(user);
-		
+		List<Chat> listCh = chatService.listChatByUser(user);
+
 		for (Iterator<User> iterator = listU.iterator(); iterator.hasNext();) {
-			User u = iterator.next();			
+			User u = iterator.next();
 			if (u.getId() == user.getId()) {
 				iterator.remove();
-			}				
+			}
 		}
-		
-		for (Chat ch :listCh) {
+
+		for (Chat ch : listCh) {
 			for (Iterator<User> iterator = listU.iterator(); iterator.hasNext();) {
-				User u = iterator.next();			
+				User u = iterator.next();
 				if (u.getId() == ch.getUser1().getId() || u.getId() == ch.getUser2().getId()) {
 					iterator.remove();
-				}				
+				}
 			}
 		}
 		return listU;
 	}
-	
+
 	@Transactional
 	@Override
 	public void changeSettings(User user) {
-		userDAO.updateSettings(user);	
+		userDAO.updateSettings(user);
 	}
 
 	@Transactional

@@ -16,7 +16,7 @@ public class LikeServiceImpl implements LikeService {
 
 	@Autowired
 	private LikeDAO likeDAO;
-	
+
 	@Transactional
 	@Override
 	public void insertLike(Like like) {

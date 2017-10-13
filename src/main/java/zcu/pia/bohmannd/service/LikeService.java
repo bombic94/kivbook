@@ -10,13 +10,13 @@ public interface LikeService {
 
 	public void insertLike(Like like);
 
-    public List<Like> listLikes();
+	public List<Like> listLikes();
 
-    public Like getLike(Integer id);
-    
-    public void deleteLike(Like like);
-    
-    public List<Like> listLikesByStatus(Status status);
+	public Like getLike(Integer id);
+
+	public void deleteLike(Like like);
+
+	public List<Like> listLikesByStatus(Status status);
 
 	public Like isLiked(Like like);
 

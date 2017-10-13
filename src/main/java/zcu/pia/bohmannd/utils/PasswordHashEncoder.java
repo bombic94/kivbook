@@ -5,13 +5,6 @@ import java.security.spec.InvalidKeySpecException;
 
 import org.springframework.stereotype.Component;
 
-/**
- * Dummy encoder doing literally nothing.
- *
- * Date: 26.11.15
- *
- * @author Jakub Danek
- */
 @Component
 public class PasswordHashEncoder implements Encoder {
 

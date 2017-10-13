@@ -9,11 +9,11 @@ public interface StatusService {
 
 	public void insertStatus(Status status);
 
-    public List<Status> listStatuss();
+	public List<Status> listStatuss();
 
-    public Status getStatus(Integer id);
-    
-    public void deleteStatus(Status status);
+	public Status getStatus(Integer id);
+
+	public void deleteStatus(Status status);
 
 	List<Status> listStatusesForUser(User user);
 

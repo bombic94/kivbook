@@ -1,9 +1,7 @@
 package zcu.pia.bohmannd.utils;
 
 /**
- * Date: 26.11.15
- *
- * @author Jakub Danek
+ * Encoding and validating password
  */
 public interface Encoder {
 

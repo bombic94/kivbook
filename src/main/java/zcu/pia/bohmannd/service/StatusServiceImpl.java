@@ -9,9 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import zcu.pia.bohmannd.dao.CommentDAO;
-import zcu.pia.bohmannd.dao.FriendshipDAO;
-import zcu.pia.bohmannd.dao.LikeDAO;
 import zcu.pia.bohmannd.dao.StatusDAO;
 import zcu.pia.bohmannd.model.Friendship;
 import zcu.pia.bohmannd.model.Status;
@@ -22,16 +19,13 @@ public class StatusServiceImpl implements StatusService {
 
 	@Autowired
 	private StatusDAO statusDAO;
-	
 	@Autowired
-	private FriendshipDAO friendshipDAO;
-	
+	private FriendshipService friendshipService;
 	@Autowired
-	private LikeDAO likeDAO;
-	
+	private LikeService likeService;
 	@Autowired
-	private CommentDAO commentDAO;
-	
+	private CommentService commentService;
+
 	@Transactional
 	@Override
 	public void insertStatus(Status status) {
@@ -59,40 +53,40 @@ public class StatusServiceImpl implements StatusService {
 	@Override
 	public List<Status> listStatusesForUser(User user) {
 		List<Status> allStatuses = statusDAO.list();
-		List<Friendship> listF = friendshipDAO.listFriendshipsByUser(user);
-		
+		List<Friendship> listF = friendshipService.listFriendshipByUser(user);
+
 		List<Status> statuses = new ArrayList<Status>();
-						
+
 		for (Friendship f : listF) {
-			for (Iterator<Status> iterator = allStatuses.iterator(); iterator.hasNext();) {	
+			for (Iterator<Status> iterator = allStatuses.iterator(); iterator.hasNext();) {
 				Status s = iterator.next();
 				if (f.getUser1().getId() == s.getUser().getId() || f.getUser2().getId() == s.getUser().getId()) {
-					s.setLikes(likeDAO.listByStatus(s));
-					s.setComments(commentDAO.listByStatus(s));
+					s.setLikes(likeService.listLikesByStatus(s));
+					s.setComments(commentService.listCommentsByStatus(s));
 					statuses.add(s);
 					iterator.remove();
-				}				
+				}
 			}
 		}
 		Collections.reverse(statuses);
-		
+
 		return statuses;
 	}
 
 	@Override
 	public List<Status> getNstatuses(List<Status> allStatuses, Integer id) {
 		List<Status> result = new ArrayList<Status>();
-		
+
 		int start = ((id - 1) * 10);
 		int end = id * 10;
 		if (allStatuses.size() < end) {
 			end = allStatuses.size();
 		}
-		
+
 		for (int i = start; i < end; i++) {
 			result.add(allStatuses.get(i));
 		}
-		
+
 		return result;
 	}
 }
