@@ -7,10 +7,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -47,6 +50,10 @@ public class User extends AbstractObject {
 	@Column(name="photo")
 	private String photo;
 	
+	@OneToOne(targetEntity=Chat.class, fetch=FetchType.EAGER)
+	@JoinColumn(name="active_chat_id")
+    private Chat active_chat;
+	
 	@Column(name="created_at")
 	private Timestamp created_at;
 	
@@ -77,8 +84,16 @@ public class User extends AbstractObject {
     }
 	
 	@Transient
-    public boolean rememberMe;
+    private boolean rememberMe;
 
+	public Chat getActiveChat() {
+		return active_chat;
+	}
+
+	public void setActiveChat(Chat activeChat) {
+		this.active_chat = activeChat;
+	}
+	
 	public boolean isRememberMe() {
 		return rememberMe;
 	}

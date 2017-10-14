@@ -62,15 +62,19 @@ public class AjaxController {
 	
 	@RequestMapping(value = "/ajaxMessages", method = RequestMethod.GET)
 	@ResponseBody
-	public Integer chatUpdate(HttpSession session, HttpServletResponse response) {
-		Integer chatLineCount;
+	public List<Integer> chatUpdate(HttpSession session, HttpServletResponse response) {
+		List<Integer> chatCountList = new ArrayList<Integer>();
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {;
-			chatLineCount = 0;
+			chatCountList.add(0);
+			chatCountList.add(0);
 		} else {
-			chatLineCount = chat_lineService.listChat_LinesByChat(chatService.getActiveChat()).size();	
-			logger.info("Ajax messages - Messages count: " + chatLineCount);
+
+			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
+			chatCountList.add(chat_lineService.listChat_LinesByChat(userService.getActiveChat(user)).size());
+			chatCountList.add(chatService.listUnreadChatByUser(user).size());
+			logger.info("Ajax messages - Messages count: " + chatCountList);
 		}
-		return chatLineCount;
+		return chatCountList;
 	}
 	
 	@RequestMapping(value = "/ajaxFriends", method = RequestMethod.GET)
@@ -100,9 +104,10 @@ public class AjaxController {
 			timelineCountList.add(0);
 			timelineCountList.add(0);
 			timelineCountList.add(0);
+			timelineCountList.add(0);
 		} else {
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
-			timelineCountList.add(chatService.listChatByUser(user).size());
+			timelineCountList.add(chatService.listUnreadChatByUser(user).size());
 			timelineCountList.add(friendshipService.listPendingFriendshipByUser(user).size());
 			timelineCountList.add(userService.listUsersToFriend(user).size());
 			timelineCountList.add(statusService.listStatusesForUser(user).size());

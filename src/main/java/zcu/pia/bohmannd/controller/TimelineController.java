@@ -79,6 +79,7 @@ public class TimelineController {
 			mv.addObject("pages", pages);
 			mv.addObject("num", num);
 			mv.addObject("statusCount", allStatuses.size());
+			mv.addObject("unreadCount", chatService.listUnreadChatByUser(user).size());
 			if (id > pages) {
 				throw new KivbookException();
 			}

@@ -1,5 +1,6 @@
 package zcu.pia.bohmannd.dao;
 
+import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.User;
 
 public interface UserDAO extends AbstractDAO<User>{
@@ -11,4 +12,8 @@ public interface UserDAO extends AbstractDAO<User>{
 	void updatePhoto(User user);
 	
 	void updatePassword(User user);
+
+	void setActiveChat(User user, Chat chat);
+
+	Chat getActiveChat(User user);
 }

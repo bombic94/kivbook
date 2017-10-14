@@ -56,15 +56,16 @@ public class MessagesController {
 			mv.addObject("chats", chats);
 
 			if (chats.size() > 0) {
-				if (chatService.getActiveChat() == null) {
-					chatService.setActiveChat(chats.get(0));
-					logger.info("Active chat not selected, selecting most recent chat: " + chatService.getActiveChat());
+				if (userService.getActiveChat(user) == null) {
+					userService.setActiveChat(user, chats.get(0));
+					logger.info("Active chat not selected, selecting most recent chat: " + userService.getActiveChat(user));
 				} else {
-					logger.info("Active chat selected: " + chatService.getActiveChat().toString());
+					logger.info("Active chat selected: " + userService.getActiveChat(user).toString());
 				}
-				mv.addObject("activeChat", chat_lineService.listChat_LinesByChat(chatService.getActiveChat()));
-				mv.addObject("selectedChat", chatService.getActiveChat());
+				mv.addObject("activeChat", chat_lineService.listChat_LinesByChat(userService.getActiveChat(user)));
+				mv.addObject("selectedChat", userService.getActiveChat(user));
 			}
+			mv.addObject("unreadCount", chatService.listUnreadChatByUser(user).size());
 			mv.addObject("usersToChat", userService.listUsersToChat(user));
 			mv.addObject("chat_Line", new Chat_Line());
 
@@ -94,7 +95,7 @@ public class MessagesController {
 			logger.info("Trying to create new chat: " + chat.toString());
 			chatService.insertChat(chat);
 			logger.info("Chat created, setting active: " + chat.toString());
-			chatService.setActiveChat(chat);
+			user.setActiveChat(chat);
 
 			mv.setViewName("redirect:/messages");
 		}
@@ -119,7 +120,7 @@ public class MessagesController {
 			chat.setChat_Lines(chat_lineService.listChat_LinesByChat(chat));
 
 			logger.info("Setting active chat: " + chat.toString());
-			chatService.setActiveChat(chat);
+			userService.setActiveChat(user, chat);
 			chatService.readChat(chat, user);
 
 			mv.setViewName("redirect:/messages");
@@ -141,7 +142,7 @@ public class MessagesController {
 			mv = new ModelAndView("messages");
 
 			User user = userService.getUserByUsername(session.getAttribute("USER").toString());
-			chat_Line.setChat(chatService.getActiveChat());
+			chat_Line.setChat(userService.getActiveChat(user));
 			chat_Line.setSender(user);
 
 			logger.info("Saving new message: " + chat_Line.toString());

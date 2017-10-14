@@ -67,16 +67,6 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public Chat getActiveChat() {
-		return activeChat;
-	}
-
-	@Override
-	public void setActiveChat(Chat activeChat) {
-		this.activeChat = activeChat;
-	}
-
-	@Override
 	public List<Chat> listUnreadChatByUser(User user) {
 
 		List<Chat> listCh = chatDAO.listByUser(user);

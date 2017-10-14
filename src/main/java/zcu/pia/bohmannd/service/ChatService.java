@@ -54,18 +54,6 @@ public interface ChatService {
 	public void readChat(Chat chat, User user);
 
 	/**
-	 * Return active chat
-	 * @return Chat object
-	 */
-	Chat getActiveChat();
-
-	/**
-	 * Set active chat
-	 * @param activeChat chat
-	 */
-	void setActiveChat(Chat activeChat);
-
-	/**
 	 * Set chat unread, when adding new chat_line
 	 * @param chat object
 	 */

@@ -2,6 +2,7 @@ package zcu.pia.bohmannd.service;
 
 import java.util.List;
 
+import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.User;
 
 public interface UserService {
@@ -83,4 +84,18 @@ public interface UserService {
 	 * @return list of possible friends to chat
 	 */
 	List<User> listUsersToChat(User user);
+
+	/**
+	 * Set active chat for view
+	 * @param chat to be active
+	 * @param user to be updated
+	 */
+	public void setActiveChat(User user, Chat chat);
+
+	/**
+	 * Get active chat for view
+	 * @param chat to be active
+	 * @param user to be updated
+	 */
+	public Chat getActiveChat(User user);
 }

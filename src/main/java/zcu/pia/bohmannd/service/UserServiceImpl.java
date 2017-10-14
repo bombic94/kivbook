@@ -161,4 +161,16 @@ public class UserServiceImpl implements UserService {
 		userDAO.updatePassword(user);
 	}
 
+	@Transactional
+	@Override
+	public void setActiveChat(User user, Chat chat) {
+		userDAO.setActiveChat(user, chat);
+	}
+	
+	@Transactional
+	@Override
+	public Chat getActiveChat(User user) {
+		return userDAO.getActiveChat(user);
+	}
+
 }

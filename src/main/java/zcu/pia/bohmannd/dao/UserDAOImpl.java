@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
+import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.User;
 
 @Repository("userDAO")
@@ -102,6 +103,29 @@ public class UserDAOImpl implements UserDAO {
 					.setParameter("password", user.getPassword())
 					.setParameter("id", user.getId())
 					.executeUpdate();	
-	}	
+	}
+	
+	@Override
+	public void setActiveChat(User user, Chat chat) {
+		this.entityManager
+					.createQuery("UPDATE User u SET u.active_chat = :active_chat WHERE u.id = :id")
+					.setParameter("active_chat", chat)
+					.setParameter("id", user.getId())
+					.executeUpdate();	
+	}
+
+	@Override
+	public Chat getActiveChat(User user) {
+		Chat ch;
+		try {
+			ch = this.entityManager
+					.createQuery("SELECT u.active_chat FROM User u WHERE u.id = :id", Chat.class)
+					.setParameter("id", user.getId())
+					.getSingleResult();
+		} catch (NoResultException nre) {
+			ch = null;
+		}
+		return ch;
+	}
 
 }

@@ -171,7 +171,7 @@
 				            dataType : 'json',
 				            contentType: "application/json;charset=utf-8",
 				            success : function(data) {
-				            	if (data != "${fn:length(activeChat)}"){
+				            	if (data[0] != "${fn:length(activeChat)}" || data[1] != "${unreadCount}"){
 				            		window.location.reload(true); 
 				            	}
 				            }

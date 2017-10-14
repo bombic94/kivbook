@@ -307,7 +307,7 @@
 				            dataType : 'json',
 				            contentType: "application/json;charset=utf-8",
 				            success : function(data) {
-				            	if (data[0] != "${fn:length(chats)}" || data[1] != "${fn:length(pendingFriendships)}" || data[2] != "${fn:length(usersToFriend)}" || data[3] != "${statusCount}"){
+				            	if (data[0] != "${unreadCount}" || data[1] != "${fn:length(pendingFriendships)}" || data[2] != "${fn:length(usersToFriend)}" || data[3] != "${statusCount}"){
 				            		window.location.reload(true); 
 				            	}
 				            }
