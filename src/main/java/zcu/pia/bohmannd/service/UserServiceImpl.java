@@ -1,5 +1,6 @@
 package zcu.pia.bohmannd.service;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -115,6 +116,8 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 		}
+		
+		Collections.reverse(listU);
 		return listU;
 	}
 
@@ -139,6 +142,8 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 		}
+		
+		Collections.reverse(listU);
 		return listU;
 	}
 

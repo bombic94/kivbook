@@ -1,5 +1,6 @@
 package zcu.pia.bohmannd.service;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import zcu.pia.bohmannd.dao.ChatDAO;
 import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.Chat_Line;
 import zcu.pia.bohmannd.model.User;
+import zcu.pia.bohmannd.utils.MessageComparator;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -19,8 +21,6 @@ public class ChatServiceImpl implements ChatService {
 	private ChatDAO chatDAO;
 	@Autowired
 	private Chat_LineService chat_LineService;
-
-	private Chat activeChat;
 
 	@Transactional
 	@Override
@@ -53,7 +53,7 @@ public class ChatServiceImpl implements ChatService {
 		for (Chat ch : listCh) {
 			ch.setChat_Lines(chat_LineService.listChat_LinesByChat(ch));
 		}
-
+		Collections.sort(listCh, new MessageComparator());
 		return listCh;
 	}
 
@@ -61,7 +61,9 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public void readChat(Chat chat, User user) {
 		List<Chat_Line> chL = chat.getChat_Lines();
-		if (chL.get(chL.size() - 1).getSender().getId() != user.getId()) {
+		if (chL.size() == 0) {
+			chatDAO.accept(chat);
+		} else if (chL.get(chL.size() - 1).getSender().getId() != user.getId()) {
 			chatDAO.accept(chat);
 		}
 	}

@@ -13,6 +13,7 @@ import zcu.pia.bohmannd.dao.StatusDAO;
 import zcu.pia.bohmannd.model.Friendship;
 import zcu.pia.bohmannd.model.Status;
 import zcu.pia.bohmannd.model.User;
+import zcu.pia.bohmannd.utils.StatusComparator;
 
 @Service
 public class StatusServiceImpl implements StatusService {
@@ -68,7 +69,7 @@ public class StatusServiceImpl implements StatusService {
 				}
 			}
 		}
-		Collections.reverse(statuses);
+		Collections.sort(statuses, new StatusComparator());
 
 		return statuses;
 	}
