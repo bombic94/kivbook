@@ -203,7 +203,7 @@
                       <button type="submit" class="btn btn-primary">Send</button>
                       <script>
 		            	$('#message').change(function() {
-				    		$('#line_text').val($(this).val());
+				    		$('#line_text').val($(this).val().substring(0, 1997) + "...");
 						});
 			          </script>	
                     </form:form>

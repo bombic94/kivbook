@@ -202,7 +202,7 @@
                       <button type="submit" class="btn btn-primary">Post</button>
                       <script>
 		            	$('#status').change(function() {
-				    		$('#text').val($(this).val());
+				    		$('#text').val($(this).val().substring(0, 1997) + "...");
 						});
 			          </script>	
 			          <script>
@@ -212,7 +212,7 @@
 						    var div = document.getElementById('status-img-div');
 						    div.style.display = 'block'; 
 						  };
-					  </script>	
+					  </script>
                     </form> 
                   </div>  
                 </div>
@@ -289,7 +289,7 @@
                           </div> 
                           <script>
 			            	$('#commenttext${status.id}').change(function() {
-					    		$('#comment_text${status.id}').val($(this).val());
+					    		$('#comment_text${status.id}').val($(this).val().substring(0, 1997) + "...");
 							});
 				          </script>
                         </form>

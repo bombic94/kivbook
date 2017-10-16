@@ -21,7 +21,7 @@ public class ErrorController {
 
 	final Logger logger = Logger.getLogger(ErrorController.class);
 
-	@RequestMapping(value = "errors", method = RequestMethod.GET)
+	@RequestMapping(value = "errors", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView renderErrorPage(HttpServletRequest httpRequest, HttpSession session, ModelAndView mv) {
 
 		logger.info("Error Controller");
