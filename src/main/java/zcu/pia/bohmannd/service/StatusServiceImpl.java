@@ -56,17 +56,29 @@ public class StatusServiceImpl implements StatusService {
 		List<Status> allStatuses = statusDAO.list();
 		List<Friendship> listF = friendshipService.listFriendshipByUser(user);
 
-		List<Status> statuses = new ArrayList<Status>();
-
-		for (Friendship f : listF) {
-			for (Iterator<Status> iterator = allStatuses.iterator(); iterator.hasNext();) {
-				Status s = iterator.next();
-				if (f.getUser1().getId() == s.getUser().getId() || f.getUser2().getId() == s.getUser().getId()) {
+		List<Status> statuses = new ArrayList<Status>();//statusDAO.listByUser(user);
+		
+		for (Iterator<Status> iterator = allStatuses.iterator(); iterator.hasNext();) {
+			Status s = iterator.next();
+				if (s.getUser().getId() == user.getId()) {
+					
 					s.setLikes(likeService.listLikesByStatus(s));
 					s.setComments(commentService.listCommentsByStatus(s));
 					statuses.add(s);
 					iterator.remove();
 				}
+		}
+		
+		for (Friendship f : listF) {
+			for (Iterator<Status> iterator = allStatuses.iterator(); iterator.hasNext();) {
+				Status s = iterator.next();
+					if (f.getUser1().getId() == s.getUser().getId() || f.getUser2().getId() == s.getUser().getId()) {
+						
+						s.setLikes(likeService.listLikesByStatus(s));
+						s.setComments(commentService.listCommentsByStatus(s));
+						statuses.add(s);
+						iterator.remove();
+					}
 			}
 		}
 		Collections.sort(statuses, new StatusComparator());
