@@ -165,7 +165,7 @@ public class SettingsController {
 			logger.info("User deleted: " + user.toString());
 
 			redirectAttributes.addFlashAttribute("message", "User successfully deleted");
-			mv.setViewName("redirect:/homepage");
+			mv.setViewName("redirect:/homepage/logout");
 		}
 
 		return mv;

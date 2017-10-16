@@ -90,4 +90,10 @@ public class StatusServiceImpl implements StatusService {
 
 		return result;
 	}
+
+	@Transactional
+	@Override
+	public List<Status> listStatusesByUser(User user) {
+		return statusDAO.listByUser(user);
+	}
 }

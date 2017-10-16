@@ -49,4 +49,11 @@ public interface StatusService {
 	 * @return list of statuses for given page
 	 */
 	public List<Status> getNstatuses(List<Status> allStatuses, Integer id, Integer n);
+
+	/**
+	 * List statuses by given user. Finds out all statuses by user
+	 * @param user Object
+	 * @return list of statuses by user
+	 */
+	public List<Status> listStatusesByUser(User user);
 }

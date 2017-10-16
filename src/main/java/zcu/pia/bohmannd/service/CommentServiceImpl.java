@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import zcu.pia.bohmannd.dao.CommentDAO;
 import zcu.pia.bohmannd.model.Comment;
 import zcu.pia.bohmannd.model.Status;
+import zcu.pia.bohmannd.model.User;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -44,6 +45,12 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public List<Comment> listCommentsByStatus(Status status) {
 		return commentDAO.listByStatus(status);
+	}
+
+	@Transactional
+	@Override
+	public List<Comment> listCommentsByUser(User user) {
+		return commentDAO.listByUser(user);
 	}
 
 }

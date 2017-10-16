@@ -4,6 +4,7 @@ import java.util.List;
 
 import zcu.pia.bohmannd.model.Comment;
 import zcu.pia.bohmannd.model.Status;
+import zcu.pia.bohmannd.model.User;
 
 public interface CommentService {
 
@@ -39,4 +40,11 @@ public interface CommentService {
 	 * @return list of comments for status
 	 */
 	public List<Comment> listCommentsByStatus(Status status);
+
+	/**
+	 * List all comments for given user
+	 * @param user User object
+	 * @return list of comments for user
+	 */
+	public List<Comment> listCommentsByUser(User user);
 }

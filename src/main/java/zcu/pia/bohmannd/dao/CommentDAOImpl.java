@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import zcu.pia.bohmannd.model.Comment;
 import zcu.pia.bohmannd.model.Status;
+import zcu.pia.bohmannd.model.User;
 
 @Repository("commentDAO")
 public class CommentDAOImpl implements CommentDAO {
@@ -68,6 +69,20 @@ public class CommentDAOImpl implements CommentDAO {
 			list = this.entityManager
 					.createQuery("SELECT c FROM Comment c WHERE c.status = :status ORDER BY c.created_at", Comment.class)
 					.setParameter("status", status)
+					.getResultList();
+		} catch (NoResultException nre) {
+			list = Collections.emptyList();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Comment> listByUser(User user) {
+		List<Comment> list;
+		try {
+			list = this.entityManager
+					.createQuery("SELECT c FROM Comment c WHERE c.user = :user ORDER BY c.created_at", Comment.class)
+					.setParameter("user", user)
 					.getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();

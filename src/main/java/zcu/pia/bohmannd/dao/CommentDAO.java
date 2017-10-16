@@ -4,6 +4,7 @@ import java.util.List;
 
 import zcu.pia.bohmannd.model.Comment;
 import zcu.pia.bohmannd.model.Status;
+import zcu.pia.bohmannd.model.User;
 
 public interface CommentDAO extends AbstractDAO<Comment>{	
 	
@@ -13,5 +14,12 @@ public interface CommentDAO extends AbstractDAO<Comment>{
 	 * @return comments for status
 	 */
 	List<Comment> listByStatus(Status status);
+
+	/**
+	 * list comments for given user
+	 * @param user
+	 * @return comments for user
+	 */
+	List<Comment> listByUser(User user);
 	
 }
