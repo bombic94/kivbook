@@ -90,13 +90,13 @@
                   <div class="form-group">
                     <label for="login-username">Username</label>
                     <form:input path="username" type="text" class="form-control" id="login-username"
-                      placeholder="Please enter your username" required="required" data-error="Username is required"/>
+                      placeholder="Please enter your username" required="required" pattern="^[a-zA-Z0-9_@]+$" data-error="Username is required (only lowercase/uppercase letters, numbers, '_', '@')"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="login-password">Password</label>
                     <form:input path="password" type="password" class="form-control" id="login-password"
-                      placeholder="Please enter your password" required="required" data-minlength="6" data-error="Password is required (Minimum of 6 characters)"/>
+                      placeholder="Please enter your password" required="required" pattern="^[a-zA-Z0-9_@]+$" data-minlength="6" data-error="Password is required (Minimum of 6 characters, only lowercase/uppercase letters, numbers, '_', '@')"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="checkbox">
@@ -116,24 +116,24 @@
                   <div class="form-group">
                     <label for="name">First name *</label>
                     <form:input path="firstname" type="text" class="form-control" id="name"
-                      placeholder="Please enter your first name" required="required" data-error="First name is required"/>
+                      placeholder="Please enter your first name" required="required" pattern="^[a-zA-Z]+$" data-error="First name is required (only lowercase/uppercase letters)"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="surname">Last name *</label>
                     <form:input path="lastname" type="text" class="form-control" id="surname"
-                      placeholder="Please enter your last name" required="required" data-error="Last name is required"/>
+                      placeholder="Please enter your last name" required="required" pattern="^[a-zA-Z]+$" data-error="Last name is required (only lowercase/uppercase letters)"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="username">Username *</label>
                     <form:input path="username" type="text" class="form-control" id="username"
-                      placeholder="Please enter your username" required="required" data-error="Username is required"/>
+                      placeholder="Please enter your username" required="required" pattern="^[a-zA-Z0-9_@]+$" data-error="Username is required (only lowercase/uppercase letters, numbers, '_', '@')"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="datetimepicker">Date of birth</label>
-                    <input type="text" class="form-control" id='datetimepicker' placeholder="Please enter your date of birth"/>
+                    <input type="text" class="form-control" id='datetimepicker' onkeydown="return false" placeholder="Please enter your date of birth"/>
                     <script type="text/javascript">
                       $(function () {
                           $('#datetimepicker').datetimepicker({
@@ -168,13 +168,13 @@
                   <div class="form-group">
                     <label for="password">Password *</label>
                     <form:input path="password" type="password" class="form-control" id="password"
-                      placeholder="Please enter your password" required="required" data-minlength="6" data-error="Password is required (Minimum of 6 characters)"/>
+                      placeholder="Please enter your password" required="required" pattern="^[a-zA-Z0-9_@]+$" data-minlength="6" data-error="Password is required (Minimum of 6 characters, only lowercase/uppercase letters, numbers, '_', '@')"/>
                     <div class="help-block with-errors">Minimum of 6 characters</div>
                   </div>
                   <div class="form-group">
                     <label for="password2">Confirm password *</label>
                     <input type="password" class="form-control" id="password2"
-                      placeholder="Please confirm your password" required="required" data-match="#password" data-match-error="Password does not match">
+                      placeholder="Please confirm your password" required="required" pattern="^[a-zA-Z0-9_@]+$" data-match="#password" data-match-error="Password does not match">
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="g-recaptcha" data-callback="correctCaptcha" data-sitekey="6LcTzjEUAAAAAN5D7WuKyKYP6yf4t0GCGoP5edFr"></div>
