@@ -6,10 +6,11 @@ import zcu.pia.bohmannd.model.Like;
 import zcu.pia.bohmannd.model.Status;
 import zcu.pia.bohmannd.model.User;
 
-public interface LikeDAO extends AbstractDAO<Like>{
+public interface LikeDAO extends AbstractDAO<Like> {
 
 	/**
 	 * list likes for given status
+	 * 
 	 * @param status
 	 * @return likes for status
 	 */
@@ -17,6 +18,7 @@ public interface LikeDAO extends AbstractDAO<Like>{
 
 	/**
 	 * Checks if like already exists
+	 * 
 	 * @param like
 	 * @return existing like or null
 	 */
@@ -24,9 +26,10 @@ public interface LikeDAO extends AbstractDAO<Like>{
 
 	/**
 	 * list likes for given user
+	 * 
 	 * @param user
 	 * @return likes for user
 	 */
 	List<Like> listByUser(User user);
-	
+
 }

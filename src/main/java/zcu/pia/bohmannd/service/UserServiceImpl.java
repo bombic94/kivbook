@@ -66,9 +66,9 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	@Override
 	public void deleteUser(User user) {
-		
+
 		user = this.getUser(user.getId());
-		//find everything related to user
+		// find everything related to user
 		List<Chat> chats = chatService.listChatByUser(user);
 		List<Chat_Line> chat_Lines = new ArrayList<Chat_Line>();
 		for (Chat chat : chats) {
@@ -76,16 +76,16 @@ public class UserServiceImpl implements UserService {
 		}
 		List<Friendship> friendships = friendshipService.listFriendshipByUser(user);
 		List<Status> statuses = statusService.listStatusesByUser(user);
-		
+
 		List<Like> likes = likeService.listLikesByUser(user);
 		List<Comment> comments = commentService.listCommentsByUser(user);
-		
+
 		for (Status status : statuses) {
 			likes.addAll(likeService.listLikesByStatus(status));
 			comments.addAll(commentService.listCommentsByStatus(status));
 		}
-		
-		//delete everything from database
+
+		// delete everything from database
 		Chat ch = getActiveChat(user);
 		if (ch != null) {
 			ch.getUser1().setActiveChat(null);
@@ -94,10 +94,10 @@ public class UserServiceImpl implements UserService {
 		for (Chat_Line chat_Line : chat_Lines) {
 			chat_LineService.deleteChat_Line(chat_Line);
 		}
-		
+
 		for (Chat chat : chats) {
 			chatService.deleteChat(chat);
-		}			
+		}
 		for (Friendship friendship : friendships) {
 			friendshipService.deleteFriendship(friendship);
 		}
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
 		for (Status status : statuses) {
 			statusService.deleteStatus(status);
 		}
-		
+
 		userDAO.delete(user);
 	}
 
@@ -174,7 +174,7 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 		}
-		
+
 		Collections.reverse(listU);
 		return listU;
 	}
@@ -200,7 +200,7 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 		}
-		
+
 		Collections.reverse(listU);
 		return listU;
 	}
@@ -229,7 +229,7 @@ public class UserServiceImpl implements UserService {
 	public void setActiveChat(User user, Chat chat) {
 		userDAO.setActiveChat(user, chat);
 	}
-	
+
 	@Transactional
 	@Override
 	public Chat getActiveChat(User user) {

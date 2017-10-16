@@ -16,26 +16,24 @@ import zcu.pia.bohmannd.model.Chat_Line;
 public class Chat_LineDAOImpl implements Chat_LineDAO {
 
 	@PersistenceContext
-    private EntityManager entityManager;
-	
+	private EntityManager entityManager;
+
 	@Override
 	public Chat_Line save(Chat_Line ch) {
-		if(ch.isNew()) {
-            this.entityManager.persist(ch);
-            return ch;
-        } else {
-            this.entityManager.merge(ch);
-            return ch;
-        }
+		if (ch.isNew()) {
+			this.entityManager.persist(ch);
+			return ch;
+		} else {
+			this.entityManager.merge(ch);
+			return ch;
+		}
 	}
 
 	@Override
 	public List<Chat_Line> list() {
 		List<Chat_Line> list;
 		try {
-			list = this.entityManager
-					.createQuery("SELECT ch FROM Chat_Line ch", Chat_Line.class)
-					.getResultList();
+			list = this.entityManager.createQuery("SELECT ch FROM Chat_Line ch", Chat_Line.class).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}
@@ -46,10 +44,8 @@ public class Chat_LineDAOImpl implements Chat_LineDAO {
 	public Chat_Line getById(Integer id) {
 		Chat_Line ch;
 		try {
-			ch = this.entityManager
-					.createQuery("SELECT ch FROM Chat_Line ch WHERE ch.id = :id", Chat_Line.class)
-					.setParameter("id", id)
-					.getSingleResult();
+			ch = this.entityManager.createQuery("SELECT ch FROM Chat_Line ch WHERE ch.id = :id", Chat_Line.class)
+					.setParameter("id", id).getSingleResult();
 		} catch (NoResultException nre) {
 			ch = null;
 		}
@@ -66,9 +62,9 @@ public class Chat_LineDAOImpl implements Chat_LineDAO {
 		List<Chat_Line> list;
 		try {
 			list = this.entityManager
-					.createQuery("SELECT ch FROM Chat_Line ch WHERE ch.chat = :id ORDER BY ch.created_at", Chat_Line.class)
-					.setParameter("id", chat)
-					.getResultList();
+					.createQuery("SELECT ch FROM Chat_Line ch WHERE ch.chat = :id ORDER BY ch.created_at",
+							Chat_Line.class)
+					.setParameter("id", chat).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}

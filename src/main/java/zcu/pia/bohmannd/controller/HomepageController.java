@@ -36,7 +36,7 @@ public class HomepageController {
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			if (userCookie.equals("")) {
 				mv = new ModelAndView("homepage");
-				
+
 				String rootPath = System.getProperty("catalina.home");
 				File dir = new File(rootPath + File.separator + "img");
 				if (!dir.exists()) {
@@ -44,7 +44,7 @@ public class HomepageController {
 					dir.mkdirs();
 					ClassLoader classLoader = getClass().getClassLoader();
 					File img = new File(classLoader.getResource("default-profile-picture.png").getFile());
-					
+
 					File serverImg = new File(dir.getAbsolutePath() + File.separator + "default-profile-picture.png");
 					try {
 						FileUtils.copyFile(img, serverImg);
@@ -54,7 +54,7 @@ public class HomepageController {
 				} else {
 					logger.info("Default profile picture found");
 				}
-				
+
 				mv.addObject("user", new User());
 				int userCount = userService.listUsers().size();
 				mv.addObject("userCount", userCount);
@@ -76,7 +76,7 @@ public class HomepageController {
 		logger.info("Homepage - registration controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			if (userCookie.equals("")) {
-				
+
 				user.setPhoto("default-profile-picture.jpg");
 				logger.info("Trying to register: " + user.toString());
 

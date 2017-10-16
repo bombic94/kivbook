@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class KivbookExceptionHandler {
 
 	@ExceptionHandler(KivbookException.class)
-    public String defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
-		    // If the exception is annotated with @ResponseStatus rethrow it and let
-		    // the framework handle it - like the OrderNotFoundException example
-		    // at the start of this post.
-		    // AnnotationUtils is a Spring Framework utility class.
-		    if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null) {
-		    	throw e;
-		    }
-		    
-		    return "error";
-   }
+	public String defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
+		// If the exception is annotated with @ResponseStatus rethrow it and let
+		// the framework handle it - like the OrderNotFoundException example
+		// at the start of this post.
+		// AnnotationUtils is a Spring Framework utility class.
+		if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null) {
+			throw e;
+		}
+
+		return "error";
+	}
 }

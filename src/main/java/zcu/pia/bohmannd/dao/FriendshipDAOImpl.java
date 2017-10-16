@@ -16,26 +16,24 @@ import zcu.pia.bohmannd.model.User;
 public class FriendshipDAOImpl implements FriendshipDAO {
 
 	@PersistenceContext
-    private EntityManager entityManager;
-	
+	private EntityManager entityManager;
+
 	@Override
 	public Friendship save(Friendship f) {
-		if(f.isNew()) {
-            this.entityManager.persist(f);
-            return f;
-        } else {
-            this.entityManager.merge(f);
-            return f;
-        }
+		if (f.isNew()) {
+			this.entityManager.persist(f);
+			return f;
+		} else {
+			this.entityManager.merge(f);
+			return f;
+		}
 	}
 
 	@Override
 	public List<Friendship> list() {
 		List<Friendship> list;
 		try {
-			list = this.entityManager
-					.createQuery("SELECT f FROM Friendship f", Friendship.class)
-					.getResultList();
+			list = this.entityManager.createQuery("SELECT f FROM Friendship f", Friendship.class).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}
@@ -46,10 +44,8 @@ public class FriendshipDAOImpl implements FriendshipDAO {
 	public Friendship getById(Integer id) {
 		Friendship f;
 		try {
-			f = this.entityManager
-					.createQuery("SELECT f FROM Friendship f WHERE f.id = :id", Friendship.class)
-					.setParameter("id", id)
-					.getSingleResult();
+			f = this.entityManager.createQuery("SELECT f FROM Friendship f WHERE f.id = :id", Friendship.class)
+					.setParameter("id", id).getSingleResult();
 		} catch (NoResultException nre) {
 			f = null;
 		}
@@ -58,7 +54,7 @@ public class FriendshipDAOImpl implements FriendshipDAO {
 
 	@Override
 	public void delete(Friendship f) {
-		this.entityManager.remove(entityManager.contains(f) ? f : entityManager.merge(f));	
+		this.entityManager.remove(entityManager.contains(f) ? f : entityManager.merge(f));
 	}
 
 	@Override
@@ -66,9 +62,9 @@ public class FriendshipDAOImpl implements FriendshipDAO {
 		List<Friendship> list;
 		try {
 			list = this.entityManager
-					.createQuery("SELECT f FROM Friendship f WHERE (f.user1 = :id OR f.user2 = :id) AND f.accepted = 1", Friendship.class)
-					.setParameter("id", user)
-					.getResultList();
+					.createQuery("SELECT f FROM Friendship f WHERE (f.user1 = :id OR f.user2 = :id) AND f.accepted = 1",
+							Friendship.class)
+					.setParameter("id", user).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}
@@ -81,8 +77,7 @@ public class FriendshipDAOImpl implements FriendshipDAO {
 		try {
 			list = this.entityManager
 					.createQuery("SELECT f FROM Friendship f WHERE f.user2 = :id AND f.accepted = 0", Friendship.class)
-					.setParameter("id", user)
-					.getResultList();
+					.setParameter("id", user).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}
@@ -95,20 +90,17 @@ public class FriendshipDAOImpl implements FriendshipDAO {
 		try {
 			list = this.entityManager
 					.createQuery("SELECT f FROM Friendship f WHERE f.user1 = :id OR f.user2 = :id", Friendship.class)
-					.setParameter("id", user)
-					.getResultList();
+					.setParameter("id", user).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}
 		return list;
 	}
-	
+
 	@Override
 	public void accept(Friendship friendship) {
-		this.entityManager
-				.createQuery("UPDATE Friendship f SET f.accepted=1 WHERE f.id = :id")
-				.setParameter("id", friendship.getId())
-				.executeUpdate();
+		this.entityManager.createQuery("UPDATE Friendship f SET f.accepted=1 WHERE f.id = :id")
+				.setParameter("id", friendship.getId()).executeUpdate();
 	}
 
 }

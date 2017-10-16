@@ -16,26 +16,24 @@ import zcu.pia.bohmannd.model.User;
 public class ChatDAOImpl implements ChatDAO {
 
 	@PersistenceContext
-    private EntityManager entityManager;
-	
+	private EntityManager entityManager;
+
 	@Override
 	public Chat save(Chat ch) {
-		if(ch.isNew()) {
-            this.entityManager.persist(ch);
-            return ch;
-        } else {
-            this.entityManager.merge(ch);
-            return ch;
-        }
+		if (ch.isNew()) {
+			this.entityManager.persist(ch);
+			return ch;
+		} else {
+			this.entityManager.merge(ch);
+			return ch;
+		}
 	}
 
 	@Override
 	public List<Chat> list() {
 		List<Chat> list;
 		try {
-			list = this.entityManager
-					.createQuery("SELECT ch FROM Chat ch", Chat.class)
-					.getResultList();
+			list = this.entityManager.createQuery("SELECT ch FROM Chat ch", Chat.class).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}
@@ -46,10 +44,8 @@ public class ChatDAOImpl implements ChatDAO {
 	public Chat getById(Integer id) {
 		Chat ch;
 		try {
-			ch = this.entityManager
-					.createQuery("SELECT ch FROM Chat ch WHERE ch.id = :id", Chat.class)
-					.setParameter("id", id)
-					.getSingleResult();
+			ch = this.entityManager.createQuery("SELECT ch FROM Chat ch WHERE ch.id = :id", Chat.class)
+					.setParameter("id", id).getSingleResult();
 		} catch (NoResultException nre) {
 			ch = null;
 		}
@@ -65,10 +61,9 @@ public class ChatDAOImpl implements ChatDAO {
 	public List<Chat> listByUser(User user) {
 		List<Chat> list;
 		try {
-			list = this.entityManager
-					.createQuery("SELECT ch FROM Chat ch WHERE ch.user1 = :id OR ch.user2 = :id ORDER BY created_at desc", Chat.class)
-					.setParameter("id", user)
-					.getResultList();
+			list = this.entityManager.createQuery(
+					"SELECT ch FROM Chat ch WHERE ch.user1 = :id OR ch.user2 = :id ORDER BY created_at desc",
+					Chat.class).setParameter("id", user).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}
@@ -77,18 +72,14 @@ public class ChatDAOImpl implements ChatDAO {
 
 	@Override
 	public void accept(Chat chat) {
-		this.entityManager
-				.createQuery("UPDATE Chat ch SET ch.seen=1 WHERE ch.id = :id")
-				.setParameter("id", chat.getId())
-				.executeUpdate();
+		this.entityManager.createQuery("UPDATE Chat ch SET ch.seen=1 WHERE ch.id = :id")
+				.setParameter("id", chat.getId()).executeUpdate();
 	}
 
 	@Override
 	public void setUnread(Chat chat) {
-		this.entityManager
-				.createQuery("UPDATE Chat ch SET ch.seen=0 WHERE ch.id = :id")
-				.setParameter("id", chat.getId())
-				.executeUpdate();
+		this.entityManager.createQuery("UPDATE Chat ch SET ch.seen=0 WHERE ch.id = :id")
+				.setParameter("id", chat.getId()).executeUpdate();
 	}
 
 }

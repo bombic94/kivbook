@@ -17,26 +17,24 @@ import zcu.pia.bohmannd.model.User;
 public class CommentDAOImpl implements CommentDAO {
 
 	@PersistenceContext
-    private EntityManager entityManager;
-	
+	private EntityManager entityManager;
+
 	@Override
 	public Comment save(Comment c) {
-		if(c.isNew()) {
-            this.entityManager.persist(c);
-            return c;
-        } else {
-            this.entityManager.merge(c);
-            return c;
-        }
+		if (c.isNew()) {
+			this.entityManager.persist(c);
+			return c;
+		} else {
+			this.entityManager.merge(c);
+			return c;
+		}
 	}
 
 	@Override
 	public List<Comment> list() {
 		List<Comment> list;
 		try {
-			list = this.entityManager
-					.createQuery("SELECT c FROM Comment c", Comment.class)
-					.getResultList();
+			list = this.entityManager.createQuery("SELECT c FROM Comment c", Comment.class).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}
@@ -47,10 +45,8 @@ public class CommentDAOImpl implements CommentDAO {
 	public Comment getById(Integer id) {
 		Comment c;
 		try {
-			c = this.entityManager
-					.createQuery("SELECT c FROM Comment c WHERE c.id = :id", Comment.class)
-					.setParameter("id", id)
-					.getSingleResult();
+			c = this.entityManager.createQuery("SELECT c FROM Comment c WHERE c.id = :id", Comment.class)
+					.setParameter("id", id).getSingleResult();
 		} catch (NoResultException nre) {
 			c = null;
 		}
@@ -67,9 +63,9 @@ public class CommentDAOImpl implements CommentDAO {
 		List<Comment> list;
 		try {
 			list = this.entityManager
-					.createQuery("SELECT c FROM Comment c WHERE c.status = :status ORDER BY c.created_at", Comment.class)
-					.setParameter("status", status)
-					.getResultList();
+					.createQuery("SELECT c FROM Comment c WHERE c.status = :status ORDER BY c.created_at",
+							Comment.class)
+					.setParameter("status", status).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}
@@ -82,8 +78,7 @@ public class CommentDAOImpl implements CommentDAO {
 		try {
 			list = this.entityManager
 					.createQuery("SELECT c FROM Comment c WHERE c.user = :user ORDER BY c.created_at", Comment.class)
-					.setParameter("user", user)
-					.getResultList();
+					.setParameter("user", user).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}

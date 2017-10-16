@@ -207,7 +207,7 @@ public class TimelineController {
 
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/timeline/delete/{statusId}")
 	public ModelAndView deleteStatus(ModelAndView mv, HttpSession session, @PathVariable Integer statusId) {
 		logger.info("Timeline Controller - like");
@@ -218,7 +218,7 @@ public class TimelineController {
 			logger.info("Logged in: " + session.getAttribute("USER"));
 
 			mv = new ModelAndView("timeline");
-						
+
 			Status status = statusService.getStatus(statusId);
 			logger.info("Deleting status: " + status.toString());
 			statusService.deleteStatus(status);
@@ -228,7 +228,7 @@ public class TimelineController {
 
 		return mv;
 	}
-	
+
 	@RequestMapping(value = "/timeline/deleteComment/{commentId}")
 	public ModelAndView deleteComment(ModelAndView mv, HttpSession session, @PathVariable Integer commentId) {
 		logger.info("Timeline Controller - like");
@@ -239,7 +239,7 @@ public class TimelineController {
 			logger.info("Logged in: " + session.getAttribute("USER"));
 
 			mv = new ModelAndView("timeline");
-						
+
 			Comment comment = commentService.getComment(commentId);
 			logger.info("Deleting comment: " + comment.toString());
 			commentService.deleteComment(comment);

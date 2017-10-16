@@ -16,26 +16,24 @@ import zcu.pia.bohmannd.model.User;
 public class UserDAOImpl implements UserDAO {
 
 	@PersistenceContext
-    private EntityManager entityManager;
+	private EntityManager entityManager;
 
 	@Override
 	public User save(User u) {
-		if(u.isNew()) {
-            this.entityManager.persist(u);
-            return u;
-        } else {
-            this.entityManager.merge(u);
-            return u;
-        }
+		if (u.isNew()) {
+			this.entityManager.persist(u);
+			return u;
+		} else {
+			this.entityManager.merge(u);
+			return u;
+		}
 	}
 
 	@Override
 	public List<User> list() {
 		List<User> list;
 		try {
-			list = this.entityManager
-					.createQuery("SELECT u FROM User u", User.class)
-					.getResultList();
+			list = this.entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}
@@ -46,10 +44,8 @@ public class UserDAOImpl implements UserDAO {
 	public User getById(Integer id) {
 		User u;
 		try {
-			u = this.entityManager
-					.createQuery("SELECT u FROM User u WHERE u.id = :id", User.class)
-					.setParameter("id", id)
-					.getSingleResult();
+			u = this.entityManager.createQuery("SELECT u FROM User u WHERE u.id = :id", User.class)
+					.setParameter("id", id).getSingleResult();
 		} catch (NoResultException nre) {
 			u = null;
 		}
@@ -58,17 +54,15 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void delete(User u) {
-		this.entityManager.remove(entityManager.contains(u) ? u : entityManager.merge(u));		
+		this.entityManager.remove(entityManager.contains(u) ? u : entityManager.merge(u));
 	}
 
 	@Override
 	public User getByUsername(String username) {
 		User u;
 		try {
-			u = this.entityManager
-					.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
-					.setParameter("username", username)
-					.getSingleResult();
+			u = this.entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+					.setParameter("username", username).getSingleResult();
 		} catch (NoResultException nre) {
 			u = null;
 		}
@@ -77,51 +71,37 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void updateSettings(User user) {
-		this.entityManager
-					.createQuery("UPDATE User u SET u.firstname = :firstname, u.lastname = :lastname, u.dateofbirth = :dateofbirth, u.gender = :gender WHERE u.id = :id")
-					.setParameter("firstname", user.getFirstname())
-					.setParameter("lastname", user.getLastname())
-					.setParameter("dateofbirth", user.getDateofbirth())
-					.setParameter("gender", user.getGender())
-					.setParameter("id", user.getId())
-					.executeUpdate();	
+		this.entityManager.createQuery(
+				"UPDATE User u SET u.firstname = :firstname, u.lastname = :lastname, u.dateofbirth = :dateofbirth, u.gender = :gender WHERE u.id = :id")
+				.setParameter("firstname", user.getFirstname()).setParameter("lastname", user.getLastname())
+				.setParameter("dateofbirth", user.getDateofbirth()).setParameter("gender", user.getGender())
+				.setParameter("id", user.getId()).executeUpdate();
 	}
 
 	@Override
 	public void updatePhoto(User user) {
-		this.entityManager
-					.createQuery("UPDATE User u SET u.photo = :photo WHERE u.id = :id")
-					.setParameter("photo", user.getPhoto())
-					.setParameter("id", user.getId())
-					.executeUpdate();		
+		this.entityManager.createQuery("UPDATE User u SET u.photo = :photo WHERE u.id = :id")
+				.setParameter("photo", user.getPhoto()).setParameter("id", user.getId()).executeUpdate();
 	}
 
 	@Override
 	public void updatePassword(User user) {
-		this.entityManager
-					.createQuery("UPDATE User u SET u.password = :password WHERE u.id = :id")
-					.setParameter("password", user.getPassword())
-					.setParameter("id", user.getId())
-					.executeUpdate();	
+		this.entityManager.createQuery("UPDATE User u SET u.password = :password WHERE u.id = :id")
+				.setParameter("password", user.getPassword()).setParameter("id", user.getId()).executeUpdate();
 	}
-	
+
 	@Override
 	public void setActiveChat(User user, Chat chat) {
-		this.entityManager
-					.createQuery("UPDATE User u SET u.active_chat = :active_chat WHERE u.id = :id")
-					.setParameter("active_chat", chat)
-					.setParameter("id", user.getId())
-					.executeUpdate();	
+		this.entityManager.createQuery("UPDATE User u SET u.active_chat = :active_chat WHERE u.id = :id")
+				.setParameter("active_chat", chat).setParameter("id", user.getId()).executeUpdate();
 	}
 
 	@Override
 	public Chat getActiveChat(User user) {
 		Chat ch;
 		try {
-			ch = this.entityManager
-					.createQuery("SELECT u.active_chat FROM User u WHERE u.id = :id", Chat.class)
-					.setParameter("id", user.getId())
-					.getSingleResult();
+			ch = this.entityManager.createQuery("SELECT u.active_chat FROM User u WHERE u.id = :id", Chat.class)
+					.setParameter("id", user.getId()).getSingleResult();
 		} catch (NoResultException nre) {
 			ch = null;
 		}

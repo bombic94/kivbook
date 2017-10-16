@@ -17,26 +17,24 @@ import zcu.pia.bohmannd.model.User;
 public class LikeDAOImpl implements LikeDAO {
 
 	@PersistenceContext
-    private EntityManager entityManager;
-	
+	private EntityManager entityManager;
+
 	@Override
 	public Like save(Like l) {
-		if(l.isNew()) {
-            this.entityManager.persist(l);
-            return l;
-        } else {
-            this.entityManager.merge(l);
-            return l;
-        }
+		if (l.isNew()) {
+			this.entityManager.persist(l);
+			return l;
+		} else {
+			this.entityManager.merge(l);
+			return l;
+		}
 	}
 
 	@Override
 	public List<Like> list() {
 		List<Like> list;
 		try {
-			list = this.entityManager
-					.createQuery("SELECT l FROM Like l", Like.class)
-					.getResultList();
+			list = this.entityManager.createQuery("SELECT l FROM Like l", Like.class).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}
@@ -47,10 +45,8 @@ public class LikeDAOImpl implements LikeDAO {
 	public Like getById(Integer id) {
 		Like l;
 		try {
-			l = this.entityManager
-					.createQuery("SELECT l FROM Like l WHERE l.id = :id", Like.class)
-					.setParameter("id", id)
-					.getSingleResult();
+			l = this.entityManager.createQuery("SELECT l FROM Like l WHERE l.id = :id", Like.class)
+					.setParameter("id", id).getSingleResult();
 		} catch (NoResultException nre) {
 			l = null;
 		}
@@ -68,8 +64,7 @@ public class LikeDAOImpl implements LikeDAO {
 		try {
 			list = this.entityManager
 					.createQuery("SELECT l FROM Like l WHERE l.status = :status ORDER BY l.created_at", Like.class)
-					.setParameter("status", status)
-					.getResultList();
+					.setParameter("status", status).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}
@@ -82,9 +77,7 @@ public class LikeDAOImpl implements LikeDAO {
 		try {
 			l = this.entityManager
 					.createQuery("SELECT l FROM Like l WHERE l.status = :status AND l.user = :user", Like.class)
-					.setParameter("status", like.getStatus())
-					.setParameter("user", like.getUser())
-					.getSingleResult();
+					.setParameter("status", like.getStatus()).setParameter("user", like.getUser()).getSingleResult();
 		} catch (NoResultException nre) {
 			l = null;
 		}
@@ -97,8 +90,7 @@ public class LikeDAOImpl implements LikeDAO {
 		try {
 			list = this.entityManager
 					.createQuery("SELECT l FROM Like l WHERE l.user = :user ORDER BY l.created_at", Like.class)
-					.setParameter("user", user)
-					.getResultList();
+					.setParameter("user", user).getResultList();
 		} catch (NoResultException nre) {
 			list = Collections.emptyList();
 		}

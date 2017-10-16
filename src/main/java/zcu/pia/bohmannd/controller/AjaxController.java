@@ -34,10 +34,10 @@ public class AjaxController {
 
 	@Autowired
 	private Chat_LineService chat_lineService;
-	
+
 	@Autowired
 	private StatusService statusService;
-	
+
 	final Logger logger = Logger.getLogger(AjaxController.class);
 
 	@RequestMapping(value = "/ajaxNotif", method = RequestMethod.GET)
@@ -59,12 +59,12 @@ public class AjaxController {
 
 		return notif;
 	}
-	
+
 	@RequestMapping(value = "/ajaxMessages", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Integer> chatUpdate(HttpSession session, HttpServletResponse response) {
 		List<Integer> chatCountList = new ArrayList<Integer>();
-		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {;
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			chatCountList.add(0);
 			chatCountList.add(0);
 		} else {
@@ -76,12 +76,12 @@ public class AjaxController {
 		}
 		return chatCountList;
 	}
-	
+
 	@RequestMapping(value = "/ajaxFriends", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Integer> friendUpdate(HttpSession session, HttpServletResponse response) {
 		List<Integer> friendCountList = new ArrayList<Integer>();
-		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {;
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			friendCountList.add(0);
 			friendCountList.add(0);
 			friendCountList.add(0);
@@ -94,12 +94,12 @@ public class AjaxController {
 		}
 		return friendCountList;
 	}
-	
+
 	@RequestMapping(value = "/ajaxTimeline", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Integer> timelineUpdate(HttpSession session, HttpServletResponse response) {
 		List<Integer> timelineCountList = new ArrayList<Integer>();
-		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {;
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
 			timelineCountList.add(0);
 			timelineCountList.add(0);
 			timelineCountList.add(0);

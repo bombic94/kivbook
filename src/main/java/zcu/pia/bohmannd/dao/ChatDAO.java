@@ -5,23 +5,26 @@ import java.util.List;
 import zcu.pia.bohmannd.model.Chat;
 import zcu.pia.bohmannd.model.User;
 
-public interface ChatDAO extends AbstractDAO<Chat>{
-	
+public interface ChatDAO extends AbstractDAO<Chat> {
+
 	/**
 	 * List chats for given user
+	 * 
 	 * @param user
 	 * @return list of chats
 	 */
 	List<Chat> listByUser(User user);
-	
+
 	/**
 	 * accept chat (read)
+	 * 
 	 * @param chat
 	 */
 	void accept(Chat chat);
-	
+
 	/**
 	 * set chat unread
+	 * 
 	 * @param chat
 	 */
 	void setUnread(Chat chat);

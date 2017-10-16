@@ -50,17 +50,17 @@ public class StatusServiceImpl implements StatusService {
 	@Transactional
 	@Override
 	public void deleteStatus(Status status) {
-		
+
 		List<Like> likes = likeService.listLikesByStatus(status);
 		List<Comment> comments = commentService.listCommentsByStatus(status);
-		
+
 		for (Like like : likes) {
 			likeService.deleteLike(like);
 		}
 		for (Comment comment : comments) {
 			commentService.deleteComment(comment);
 		}
-		
+
 		statusDAO.delete(status);
 	}
 
@@ -69,29 +69,29 @@ public class StatusServiceImpl implements StatusService {
 		List<Status> allStatuses = statusDAO.list();
 		List<Friendship> listF = friendshipService.listFriendshipByUser(user);
 
-		List<Status> statuses = new ArrayList<Status>();//statusDAO.listByUser(user);
-		
+		List<Status> statuses = new ArrayList<Status>();// statusDAO.listByUser(user);
+
 		for (Iterator<Status> iterator = allStatuses.iterator(); iterator.hasNext();) {
 			Status s = iterator.next();
-				if (s.getUser().getId() == user.getId()) {
-					
+			if (s.getUser().getId() == user.getId()) {
+
+				s.setLikes(likeService.listLikesByStatus(s));
+				s.setComments(commentService.listCommentsByStatus(s));
+				statuses.add(s);
+				iterator.remove();
+			}
+		}
+
+		for (Friendship f : listF) {
+			for (Iterator<Status> iterator = allStatuses.iterator(); iterator.hasNext();) {
+				Status s = iterator.next();
+				if (f.getUser1().getId() == s.getUser().getId() || f.getUser2().getId() == s.getUser().getId()) {
+
 					s.setLikes(likeService.listLikesByStatus(s));
 					s.setComments(commentService.listCommentsByStatus(s));
 					statuses.add(s);
 					iterator.remove();
 				}
-		}
-		
-		for (Friendship f : listF) {
-			for (Iterator<Status> iterator = allStatuses.iterator(); iterator.hasNext();) {
-				Status s = iterator.next();
-					if (f.getUser1().getId() == s.getUser().getId() || f.getUser2().getId() == s.getUser().getId()) {
-						
-						s.setLikes(likeService.listLikesByStatus(s));
-						s.setComments(commentService.listCommentsByStatus(s));
-						statuses.add(s);
-						iterator.remove();
-					}
 			}
 		}
 		Collections.sort(statuses, new StatusComparator());

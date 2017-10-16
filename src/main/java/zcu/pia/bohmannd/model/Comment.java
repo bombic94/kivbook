@@ -12,64 +12,73 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="bohmannd_comment")
+@Table(name = "bohmannd_comment")
 public class Comment extends AbstractObject {
-	
+
 	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	@ManyToOne
-	@JoinColumn(name="status_id")
+	@JoinColumn(name = "status_id")
 	private Status status;
-	
+
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
-	
-	@Column(name="comment_text")
+
+	@Column(name = "comment_text")
 	private String comment_text;
-	
-	@Column(name="created_at")
+
+	@Column(name = "created_at")
 	private Timestamp created_at;
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public Status getStatus() {
 		return status;
 	}
+
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 	public String getComment_text() {
 		return comment_text;
 	}
+
 	public void setComment_text(String comment_text) {
 		this.comment_text = comment_text;
 	}
+
 	public Timestamp getCreated_at() {
 		return created_at;
 	}
+
 	public void setCreated_at(Timestamp created_at) {
 		this.created_at = created_at;
 	}
-	
+
 	@Override
-    public String toString() {      
-        StringBuilder sb = new StringBuilder();
-        
-        sb.append("Comment - ID: ").append(getId());		
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Comment - ID: ").append(getId());
 		sb.append(", Status: ");
 		if (getStatus() != null) {
 			sb.append(getStatus().toString());
@@ -89,8 +98,8 @@ public class Comment extends AbstractObject {
 		} else {
 			sb.append("null");
 		}
-		
+
 		return sb.toString();
-    }
+	}
 
 }

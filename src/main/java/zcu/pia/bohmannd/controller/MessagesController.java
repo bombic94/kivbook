@@ -55,7 +55,8 @@ public class MessagesController {
 			if (chats.size() > 0) {
 				if (userService.getActiveChat(user) == null) {
 					userService.setActiveChat(user, chats.get(0));
-					logger.info("Active chat not selected, selecting most recent chat: " + userService.getActiveChat(user));
+					logger.info(
+							"Active chat not selected, selecting most recent chat: " + userService.getActiveChat(user));
 				} else {
 					logger.info("Active chat selected: " + userService.getActiveChat(user).toString());
 				}

@@ -10,46 +10,59 @@ public interface LikeService {
 
 	/**
 	 * Insert new like
-	 * @param like Object to insert
+	 * 
+	 * @param like
+	 *            Object to insert
 	 */
 	public void insertLike(Like like);
 
 	/**
 	 * List all likes
+	 * 
 	 * @return list of all likes
 	 */
 	public List<Like> listLikes();
 
 	/**
 	 * Retrieve like by given id
-	 * @param id ID of like
+	 * 
+	 * @param id
+	 *            ID of like
 	 * @return Like object
 	 */
 	public Like getLike(Integer id);
 
 	/**
 	 * Delete given like
-	 * @param like Object to delete
+	 * 
+	 * @param like
+	 *            Object to delete
 	 */
 	public void deleteLike(Like like);
 
 	/**
 	 * List all likes for given status
-	 * @param status Status object
+	 * 
+	 * @param status
+	 *            Status object
 	 * @return list of likes for status
 	 */
 	public List<Like> listLikesByStatus(Status status);
 
 	/**
 	 * Return like with information if like was already given
-	 * @param like Object to find out
+	 * 
+	 * @param like
+	 *            Object to find out
 	 * @return like Object with information about like
 	 */
 	public Like isLiked(Like like);
 
 	/**
 	 * List all likes for given user
-	 * @param user User object
+	 * 
+	 * @param user
+	 *            User object
 	 * @return list of likes for user
 	 */
 	public List<Like> listLikesByUser(User user);
