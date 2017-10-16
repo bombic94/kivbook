@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -50,32 +52,32 @@ public class User extends AbstractObject {
 	@Column(name="photo")
 	private String photo;
 	
-	@OneToOne(targetEntity=Chat.class, fetch=FetchType.EAGER)
+	@ManyToOne(targetEntity=Chat.class, fetch=FetchType.EAGER, cascade=CascadeType.REMOVE, optional=true)
 	@JoinColumn(name="active_chat_id")
     private Chat active_chat;
 	
 	@Column(name="created_at")
 	private Timestamp created_at;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade=CascadeType.REMOVE)
 	private List<Like> likes = new ArrayList<Like>();
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade=CascadeType.REMOVE)
 	private List<Comment> comments = new ArrayList<Comment>();
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade=CascadeType.REMOVE)
 	private List<Status> statuses = new ArrayList<Status>();
 	
-	@OneToMany(mappedBy = "user1")
+	@OneToMany(mappedBy = "user1", cascade=CascadeType.REMOVE)
 	private List<Friendship> friendships1 = new ArrayList<Friendship>();
 
-	@OneToMany(mappedBy = "user2")
+	@OneToMany(mappedBy = "user2", cascade=CascadeType.REMOVE)
 	private List<Friendship> friendships2 = new ArrayList<Friendship>();
 	
-	@OneToMany(mappedBy = "user1")
+	@OneToMany(mappedBy = "user1", cascade=CascadeType.REMOVE)
 	private List<Chat> chats1 = new ArrayList<Chat>();
 	
-	@OneToMany(mappedBy = "user2")
+	@OneToMany(mappedBy = "user2", cascade=CascadeType.REMOVE)
 	private List<Chat> chats2 = new ArrayList<Chat>();
 	
 	@Transient

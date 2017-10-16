@@ -1,5 +1,6 @@
 package zcu.pia.bohmannd.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -11,7 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import zcu.pia.bohmannd.dao.UserDAO;
 import zcu.pia.bohmannd.model.Chat;
+import zcu.pia.bohmannd.model.Chat_Line;
+import zcu.pia.bohmannd.model.Comment;
 import zcu.pia.bohmannd.model.Friendship;
+import zcu.pia.bohmannd.model.Like;
+import zcu.pia.bohmannd.model.Status;
 import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.utils.EmailService;
 import zcu.pia.bohmannd.utils.Encoder;
@@ -26,7 +31,15 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private ChatService chatService;
 	@Autowired
+	private Chat_LineService chat_LineService;
+	@Autowired
 	private FriendshipService friendshipService;
+	@Autowired
+	private StatusService statusService;
+	@Autowired
+	private CommentService commentService;
+	@Autowired
+	private LikeService likeService;
 	@Autowired
 	private Encoder encoder;
 	@Autowired
@@ -53,6 +66,49 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	@Override
 	public void deleteUser(User user) {
+		
+		user = this.getUser(user.getId());
+		//find everything related to user
+		List<Chat> chats = chatService.listChatByUser(user);
+		List<Chat_Line> chat_Lines = new ArrayList<Chat_Line>();
+		for (Chat chat : chats) {
+			chat_Lines.addAll(chat_LineService.listChat_LinesByChat(chat));
+		}
+		List<Friendship> friendships = friendshipService.listFriendshipByUser(user);
+		List<Status> statuses = statusService.listStatusesByUser(user);
+		
+		List<Like> likes = likeService.listLikesByUser(user);
+		List<Comment> comments = commentService.listCommentsByUser(user);
+		
+		for (Status status : statuses) {
+			likes.addAll(likeService.listLikesByStatus(status));
+			comments.addAll(commentService.listCommentsByStatus(status));
+		}
+		System.out.println("1");
+		//delete everything from database
+		Chat ch = getActiveChat(user);
+		ch.getUser1().setActiveChat(null);
+		ch.getUser2().setActiveChat(null);
+		for (Chat_Line chat_Line : chat_Lines) {
+			chat_LineService.deleteChat_Line(chat_Line);
+		}
+		System.out.println("2");
+		for (Chat chat : chats) {
+			chatService.deleteChat(chat);
+		}			
+		for (Friendship friendship : friendships) {
+			friendshipService.deleteFriendship(friendship);
+		}
+		for (Like like : likes) {
+			likeService.deleteLike(like);
+		}
+		for (Comment comment : comments) {
+			commentService.deleteComment(comment);
+		}
+		for (Status status : statuses) {
+			statusService.deleteStatus(status);
+		}
+		System.out.println("3");
 		userDAO.delete(user);
 	}
 
