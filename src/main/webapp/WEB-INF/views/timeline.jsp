@@ -202,8 +202,13 @@
                       <button type="submit" class="btn btn-primary">Post</button>
                       <script>
 		            	$('#status').change(function() {
-				    		$('#text').val($(this).val().substring(0, 1997) + "...");
+				    		if ($(this).val().length > 2000) {
+					    		$('#text').val($(this).val().substring(0, 1997) + "...");
+					    	} else {
+					    		$('#text').val($(this).val());
+					    	}
 						});
+						
 			          </script>	
 			          <script>
 						  var loadFile = function(event) {
@@ -267,6 +272,15 @@
 	                          <h5 class="media-heading"><a href="profile/${comment.user.id}">${comment.user.firstname}</a> <small><i><fmt:formatDate value="${comment.created_at}" pattern="yyyy/MM/dd HH:mm"/></i></small></h5>
 	                          <h6 class="black">${comment.comment_text}</h6>
 	                        </div>
+	                        <c:if  test="${comment.user.id eq loggedUser.id}">
+			                  <div class="media-right">
+			                    <form method="POST" action="timeline/deleteComment/${comment.id}">                 	  
+			                   	  <button type="submit" class="btn btn-default invisible-button">
+			                        <span class="glyphicon glyphicon-remove"></span>
+			                      </button>
+			                    </form>    
+			                  </div> 
+			                </c:if>
 	                      </div>
                       </c:forEach>
                       <div class="media">
@@ -289,7 +303,11 @@
                           </div> 
                           <script>
 			            	$('#commenttext${status.id}').change(function() {
-					    		$('#comment_text${status.id}').val($(this).val().substring(0, 1997) + "...");
+			            		if ($(this).val().length > 2000) {
+					    			$('#comment_text${status.id}').val($(this).val().substring(0, 1997) + "...");
+					    		} else {
+					    			$('#comment_text${status.id}').val($(this).val());
+					    		}
 							});
 				          </script>
                         </form>
@@ -297,6 +315,15 @@
                     </div>
                   </div>
                 </div>
+                <c:if  test="${status.user.id eq loggedUser.id}">
+                  <div class="media-right">
+                    <form method="POST" action="timeline/delete/${status.id}">                 	  
+                   	  <button type="submit" class="btn btn-default invisible-button">
+                        <span class="glyphicon glyphicon-remove"></span>
+                      </button>
+                    </form>    
+                  </div> 
+                </c:if>
               </div>
             </div>
             </c:forEach>

@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
 			likes.addAll(likeService.listLikesByStatus(status));
 			comments.addAll(commentService.listCommentsByStatus(status));
 		}
-		System.out.println("1");
+		
 		//delete everything from database
 		Chat ch = getActiveChat(user);
 		if (ch != null) {
@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
 		for (Chat_Line chat_Line : chat_Lines) {
 			chat_LineService.deleteChat_Line(chat_Line);
 		}
-		System.out.println("2");
+		
 		for (Chat chat : chats) {
 			chatService.deleteChat(chat);
 		}			
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
 		for (Status status : statuses) {
 			statusService.deleteStatus(status);
 		}
-		System.out.println("3");
+		
 		userDAO.delete(user);
 	}
 

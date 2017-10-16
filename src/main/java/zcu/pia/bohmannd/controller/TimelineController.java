@@ -207,4 +207,46 @@ public class TimelineController {
 
 		return mv;
 	}
+	
+	@RequestMapping(value = "/timeline/delete/{statusId}")
+	public ModelAndView deleteStatus(ModelAndView mv, HttpSession session, @PathVariable Integer statusId) {
+		logger.info("Timeline Controller - like");
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
+			logger.info("Not logged in");
+			mv.setViewName("redirect:/homepage");
+		} else {
+			logger.info("Logged in: " + session.getAttribute("USER"));
+
+			mv = new ModelAndView("timeline");
+						
+			Status status = statusService.getStatus(statusId);
+			logger.info("Deleting status: " + status.toString());
+			statusService.deleteStatus(status);
+
+			mv.setViewName("redirect:/timeline");
+		}
+
+		return mv;
+	}
+	
+	@RequestMapping(value = "/timeline/deleteComment/{commentId}")
+	public ModelAndView deleteComment(ModelAndView mv, HttpSession session, @PathVariable Integer commentId) {
+		logger.info("Timeline Controller - like");
+		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
+			logger.info("Not logged in");
+			mv.setViewName("redirect:/homepage");
+		} else {
+			logger.info("Logged in: " + session.getAttribute("USER"));
+
+			mv = new ModelAndView("timeline");
+						
+			Comment comment = commentService.getComment(commentId);
+			logger.info("Deleting comment: " + comment.toString());
+			commentService.deleteComment(comment);
+
+			mv.setViewName("redirect:/timeline");
+		}
+
+		return mv;
+	}
 }

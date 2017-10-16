@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import zcu.pia.bohmannd.dao.StatusDAO;
+import zcu.pia.bohmannd.model.Comment;
 import zcu.pia.bohmannd.model.Friendship;
+import zcu.pia.bohmannd.model.Like;
 import zcu.pia.bohmannd.model.Status;
 import zcu.pia.bohmannd.model.User;
 import zcu.pia.bohmannd.utils.StatusComparator;
@@ -48,6 +50,17 @@ public class StatusServiceImpl implements StatusService {
 	@Transactional
 	@Override
 	public void deleteStatus(Status status) {
+		
+		List<Like> likes = likeService.listLikesByStatus(status);
+		List<Comment> comments = commentService.listCommentsByStatus(status);
+		
+		for (Like like : likes) {
+			likeService.deleteLike(like);
+		}
+		for (Comment comment : comments) {
+			commentService.deleteComment(comment);
+		}
+		
 		statusDAO.delete(status);
 	}
 

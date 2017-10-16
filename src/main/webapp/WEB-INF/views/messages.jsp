@@ -203,7 +203,11 @@
                       <button type="submit" class="btn btn-primary">Send</button>
                       <script>
 		            	$('#message').change(function() {
-				    		$('#line_text').val($(this).val().substring(0, 1997) + "...");
+		            		if ($(this).val().length > 2000) {
+					    		$('#line_text').val($(this).val().substring(0, 1997) + "...");
+					    	} else {
+					    		$('#line_text').val($(this).val());
+					    	}
 						});
 			          </script>	
                     </form:form>
