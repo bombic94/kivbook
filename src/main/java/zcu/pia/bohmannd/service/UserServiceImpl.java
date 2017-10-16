@@ -87,8 +87,10 @@ public class UserServiceImpl implements UserService {
 		System.out.println("1");
 		//delete everything from database
 		Chat ch = getActiveChat(user);
-		ch.getUser1().setActiveChat(null);
-		ch.getUser2().setActiveChat(null);
+		if (ch != null) {
+			ch.getUser1().setActiveChat(null);
+			ch.getUser2().setActiveChat(null);
+		}
 		for (Chat_Line chat_Line : chat_Lines) {
 			chat_LineService.deleteChat_Line(chat_Line);
 		}

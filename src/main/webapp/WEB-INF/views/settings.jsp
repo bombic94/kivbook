@@ -137,18 +137,18 @@
             <div class="form-group">
               <label for="name">First name</label>
               <form:input path="firstname" type="text" class="form-control" id="name" value="${loggedUser.firstname}"
-                placeholder="Please enter your first name" required="required" data-error="First name is required"/>
+                placeholder="Please enter your first name" required="required" pattern="^[ěščřžýáíéóúůďťňäöüĚŠČŘŽÝÁÍÉÓÚŮĎŤŇÄÖÜa-zA-Z]+$" data-error="First name is required"/>
               <div class="help-block with-errors"></div>
             </div>
             <div class="form-group">
               <label for="surname">Last name</label>
               <form:input path="lastname" type="text" class="form-control" id="surname" value="${loggedUser.lastname}"
-                placeholder="Please enter your last name" required="required" data-error="Last name is required"/>
+                placeholder="Please enter your last name" required="required" pattern="^[ěščřžýáíéóúůďťňäöüĚŠČŘŽÝÁÍÉÓÚŮĎŤŇÄÖÜa-zA-Z]+$" data-error="Last name is required"/>
               <div class="help-block with-errors"></div>
             </div>
             <div class="form-group">
               <label for="datetimepicker">Date of birth</label>
-              <input type='text' class="form-control" id='datetimepicker' placeholder="Please enter your date of birth"/>
+              <input type='text' class="form-control" id='datetimepicker' onkeydown="return false" placeholder="Please enter your date of birth"/>
               <script type="text/javascript">
                 $(function () {
                     $('#datetimepicker').datetimepicker({
@@ -196,13 +196,13 @@
             <div class="form-group">
               <label for="password">New Password</label>
               <input type="password" class="form-control" id="password"
-                placeholder="Please enter your new password" required="required" data-minlength="6" data-error="Password is required (Minimum of 6 characters)">
+                placeholder="Please enter your new password" required="required" pattern="^[\S]+$" data-minlength="6" data-error="Password is required (Minimum of 6 characters)">
               <div class="help-block with-errors">Minimum of 6 characters</div>
             </div>
             <div class="form-group">
               <label for="password2">Confirm password</label>
               <input type="password" class="form-control" id="password2"
-                placeholder="Please confirm your new password" required="required" data-match="#password" data-match-error="Password does not match">
+                placeholder="Please confirm your new password" required="required" pattern="^[\S]+$" data-match="#password" data-match-error="Password does not match">
               <div class="help-block with-errors"></div>
             </div>
             <button type="submit" class="btn btn-primary">Change password</button>
