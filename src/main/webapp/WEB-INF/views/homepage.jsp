@@ -86,7 +86,7 @@
             <div class="tab-content">
               <div id="login" class="tab-pane fade in active">
                 <h3>Login</h3>
-                <form:form data-toggle="validator" modelAttribute="user" method="post" action="homepage/login">
+                <form:form data-toggle="validator" modelAttribute="user1" method="post" action="homepage/login">
                   <div class="form-group">
                     <label for="login-username">Username</label>
                     <form:input path="username" type="text" class="form-control" id="login-username" maxlength="255"
@@ -112,7 +112,7 @@
               </div>
               <div id="signup" class="tab-pane fade">
                 <h3>Sign up</h3>
-                 <form:form data-toggle="validator" modelAttribute="user" method="post" action="homepage/register">
+                 <form:form data-toggle="validator" modelAttribute="user2" method="post" action="homepage/register">
                   <div class="form-group">
                     <label for="name">First name *</label>
                     <form:input path="firstname" type="text" class="form-control" id="name" maxlength="255"

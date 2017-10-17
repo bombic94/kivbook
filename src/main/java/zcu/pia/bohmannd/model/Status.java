@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Class representing Status entity
+ */
 @Entity
 @Table(name = "bohmannd_status")
 public class Status extends AbstractObject {

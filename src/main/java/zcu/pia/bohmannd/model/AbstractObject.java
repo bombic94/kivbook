@@ -3,6 +3,9 @@ package zcu.pia.bohmannd.model;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+/**
+ * Class representing Abstract entity
+ */
 public class AbstractObject {
 
 	@Id

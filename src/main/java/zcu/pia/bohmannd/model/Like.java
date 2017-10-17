@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Class representing Like entity
+ */
 @Entity
 @Table(name = "bohmannd_like")
 public class Like extends AbstractObject {

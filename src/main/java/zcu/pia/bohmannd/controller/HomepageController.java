@@ -11,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,7 @@ public class HomepageController {
 	final Logger logger = Logger.getLogger(HomepageController.class);
 
 	@RequestMapping(value = "/homepage")
-	public ModelAndView addItems(ModelAndView mv, HttpSession session,
+	public ModelAndView addItems(ModelAndView mv, HttpSession session, Model model,
 			@CookieValue(value = "user", defaultValue = "") String userCookie) {
 		logger.info("Homepage Controller");
 		if (session.getAttribute("USER") == null || session.getAttribute("USER").equals("")) {
@@ -55,7 +56,17 @@ public class HomepageController {
 					logger.info("Default profile picture found");
 				}
 
-				mv.addObject("user", new User());
+				User user1 = (User) model.asMap().get("user1");
+				if (user1 == null) {
+					user1 = new User();
+				}
+				User user2 = (User) model.asMap().get("user2");
+				if (user2 == null) {
+					user2 = new User();
+				}
+				
+				mv.addObject("user1", user1);
+				mv.addObject("user2", user2);
 				int userCount = userService.listUsers().size();
 				mv.addObject("userCount", userCount);
 			} else {
@@ -88,8 +99,10 @@ public class HomepageController {
 					redirectAttributes.addFlashAttribute("message", "Registration successfull, now you can log in");
 					mv.setViewName("redirect:/homepage");
 				} else {
-					logger.info("User registered: " + user.toString());
+					logger.info("User not registered: " + user.toString());
 					mv = new ModelAndView("homepage");
+					user.setPassword("");
+					redirectAttributes.addFlashAttribute("user2", user);
 					redirectAttributes.addFlashAttribute("message", "User already registered, use different username");
 					mv.setViewName("redirect:/homepage");
 				}
@@ -131,6 +144,8 @@ public class HomepageController {
 				} else {
 					logger.info("User NOT validated: " + user.toString());
 					mv = new ModelAndView("homepage");
+					user.setPassword("");
+					redirectAttributes.addFlashAttribute("user1", user);
 					redirectAttributes.addFlashAttribute("message", "Wrong name or password");
 					mv.setViewName("redirect:/homepage");
 				}

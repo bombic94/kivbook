@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Class representing Chat entity
+ */
 @Entity
 @Table(name = "bohmannd_chat")
 public class Chat extends AbstractObject {

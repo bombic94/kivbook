@@ -18,6 +18,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+/**
+ * Class representing User entity
+ */
 @Entity
 @Table(name = "bohmannd_user")
 public class User extends AbstractObject {

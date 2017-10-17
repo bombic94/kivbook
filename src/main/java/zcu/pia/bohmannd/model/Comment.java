@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Class representing Comment entity
+ */
 @Entity
 @Table(name = "bohmannd_comment")
 public class Comment extends AbstractObject {

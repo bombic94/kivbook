@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * Class representing Chat_Line entity
+ */
 @Entity
 @Table(name = "bohmannd_chat_line")
 public class Chat_Line extends AbstractObject {
