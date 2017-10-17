@@ -89,13 +89,13 @@
                 <form:form data-toggle="validator" modelAttribute="user" method="post" action="homepage/login">
                   <div class="form-group">
                     <label for="login-username">Username</label>
-                    <form:input path="username" type="text" class="form-control" id="login-username"
+                    <form:input path="username" type="text" class="form-control" id="login-username" maxlength="255"
                       placeholder="Please enter your username" required="required" pattern="^[ěščřžýáíéóúůďťňäöüĚŠČŘŽÝÁÍÉÓÚŮĎŤŇÄÖÜa-zA-Z0-9_@.\-]+$" data-error="Username is required (only lowercase/uppercase letters, numbers, and '_', '@', '.', '-')"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="login-password">Password</label>
-                    <form:input path="password" type="password" class="form-control" id="login-password"
+                    <form:input path="password" type="password" class="form-control" id="login-password" maxlength="255"
                       placeholder="Please enter your password" required="required" pattern="^[\S]+$" data-minlength="6" data-error="Password is required (Minimum of 6 characters, no whitespaces)"/>
                     <div class="help-block with-errors"></div>
                   </div>
@@ -115,19 +115,19 @@
                  <form:form data-toggle="validator" modelAttribute="user" method="post" action="homepage/register">
                   <div class="form-group">
                     <label for="name">First name *</label>
-                    <form:input path="firstname" type="text" class="form-control" id="name"
+                    <form:input path="firstname" type="text" class="form-control" id="name" maxlength="255"
                       placeholder="Please enter your first name" required="required" pattern="^[ěščřžýáíéóúůďťňäöüĚŠČŘŽÝÁÍÉÓÚŮĎŤŇÄÖÜa-zA-Z]+$" data-error="First name is required (only lowercase/uppercase letters)"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="surname">Last name *</label>
-                    <form:input path="lastname" type="text" class="form-control" id="surname"
+                    <form:input path="lastname" type="text" class="form-control" id="surname" maxlength="255"
                       placeholder="Please enter your last name" required="required" pattern="^[ěščřžýáíéóúůďťňäöüĚŠČŘŽÝÁÍÉÓÚŮĎŤŇÄÖÜa-zA-Z]+$" data-error="Last name is required (only lowercase/uppercase letters)"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="username">Username *</label>
-                    <form:input path="username" type="text" class="form-control" id="username"
+                    <form:input path="username" type="text" class="form-control" id="username" maxlength="255"
                       placeholder="Please enter your username" required="required" pattern="^[ěščřžýáíéóúůďťňäöüĚŠČŘŽÝÁÍÉÓÚŮĎŤŇÄÖÜa-zA-Z0-9_@.\-]+$" data-error="Username is required (only lowercase/uppercase letters, numbers, and '_', '@', '.', '-')"/>
                     <div class="help-block with-errors"></div>
                   </div>
@@ -161,19 +161,19 @@
                   </div>
                   <div class="form-group">
                     <label for="email">Email address *</label>
-                    <form:input path="email" type="email" class="form-control" id="email"
+                    <form:input path="email" type="email" class="form-control" id="email" maxlength="255"
                       placeholder="Please enter your email" required="required" data-error="Valid email is required"/>
                     <div class="help-block with-errors"></div>
                   </div>
                   <div class="form-group">
                     <label for="password">Password *</label>
-                    <form:input path="password" type="password" class="form-control" id="password"
+                    <form:input path="password" type="password" class="form-control" id="password" maxlength="255"
                       placeholder="Please enter your password" required="required" pattern="^[\S]+$" data-minlength="6" data-error="Password is required (Minimum of 6 characters, no whitespaces)"/>
                     <div class="help-block with-errors">Minimum of 6 characters</div>
                   </div>
                   <div class="form-group">
                     <label for="password2">Confirm password *</label>
-                    <input type="password" class="form-control" id="password2"
+                    <input type="password" class="form-control" id="password2" maxlength="255"
                       placeholder="Please confirm your password" required="required" pattern="^[\S]+$" data-match="#password" data-match-error="Password does not match">
                     <div class="help-block with-errors"></div>
                   </div>

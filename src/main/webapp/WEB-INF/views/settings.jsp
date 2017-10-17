@@ -136,13 +136,13 @@
             </div>
             <div class="form-group">
               <label for="name">First name</label>
-              <form:input path="firstname" type="text" class="form-control" id="name" value="${loggedUser.firstname}"
+              <form:input path="firstname" type="text" class="form-control" id="name" value="${loggedUser.firstname}" maxlength="255"
                 placeholder="Please enter your first name" required="required" pattern="^[ěščřžýáíéóúůďťňäöüĚŠČŘŽÝÁÍÉÓÚŮĎŤŇÄÖÜa-zA-Z]+$" data-error="First name is required"/>
               <div class="help-block with-errors"></div>
             </div>
             <div class="form-group">
               <label for="surname">Last name</label>
-              <form:input path="lastname" type="text" class="form-control" id="surname" value="${loggedUser.lastname}"
+              <form:input path="lastname" type="text" class="form-control" id="surname" value="${loggedUser.lastname}" maxlength="255"
                 placeholder="Please enter your last name" required="required" pattern="^[ěščřžýáíéóúůďťňäöüĚŠČŘŽÝÁÍÉÓÚŮĎŤŇÄÖÜa-zA-Z]+$" data-error="Last name is required"/>
               <div class="help-block with-errors"></div>
             </div>
@@ -195,13 +195,13 @@
             </div>
             <div class="form-group">
               <label for="password">New Password</label>
-              <input type="password" class="form-control" id="password"
+              <input type="password" class="form-control" id="password" maxlength="255"
                 placeholder="Please enter your new password" required="required" pattern="^[\S]+$" data-minlength="6" data-error="Password is required (Minimum of 6 characters)">
               <div class="help-block with-errors">Minimum of 6 characters</div>
             </div>
             <div class="form-group">
               <label for="password2">Confirm password</label>
-              <input type="password" class="form-control" id="password2"
+              <input type="password" class="form-control" id="password2" maxlength="255"
                 placeholder="Please confirm your new password" required="required" pattern="^[\S]+$" data-match="#password" data-match-error="Password does not match">
               <div class="help-block with-errors"></div>
             </div>
