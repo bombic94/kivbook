@@ -105,7 +105,9 @@
                   <button type="submit" class="btn btn-default" id="loginBtn" data-loading-text="Logging in...">Log in</button>
                   <script>
 					  $('#loginBtn').on('click', function () {
-					    var $btn = $(this).button('loading')
+					  		if ($('#loginBtn').hasClass("disabled") == false) {
+					  			var $btn = $(this).button('loading')
+					  		}
 					  })
 				  </script> 
                 </form:form>
@@ -196,7 +198,9 @@
                   <button type="submit" class="btn btn-default" id="signupBtn" data-loading-text="Signing up...">Sign up</button>
                   <script>
 					  $('#signupBtn').on('click', function () {
-					    var $btn = $(this).button('loading')
+					    if ($('#signupBtn').hasClass("disabled") == false) {
+					  			var $btn = $(this).button('loading')
+					  		}
 					  })
 				  </script>
                   <div class="row">
