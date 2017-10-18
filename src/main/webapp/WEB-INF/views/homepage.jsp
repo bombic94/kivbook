@@ -39,7 +39,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>                        
           </button>
-          <a class="navbar-brand" href="#">Kivbook</a>
+          <span class="navbar-brand">Kivbook</span>
         </div>
       </div>
     </nav>
