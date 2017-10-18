@@ -8,8 +8,8 @@ public interface Encoder {
 	/**
 	 * Returns hash of the passed text.
 	 * 
-	 * @param text
-	 * @return
+	 * @param text String to encode
+	 * @return encoded string
 	 */
 	String encode(String text);
 

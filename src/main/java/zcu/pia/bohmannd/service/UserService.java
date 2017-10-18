@@ -121,10 +121,9 @@ public interface UserService {
 	/**
 	 * Get active chat for view
 	 * 
-	 * @param chat
-	 *            to be active
 	 * @param user
 	 *            to be updated
+	 * @return active chat for user
 	 */
 	public Chat getActiveChat(User user);
 }

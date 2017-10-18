@@ -10,7 +10,7 @@ public interface ChatDAO extends AbstractDAO<Chat> {
 	/**
 	 * List chats for given user
 	 * 
-	 * @param user
+	 * @param user User object
 	 * @return list of chats
 	 */
 	List<Chat> listByUser(User user);
@@ -18,14 +18,14 @@ public interface ChatDAO extends AbstractDAO<Chat> {
 	/**
 	 * accept chat (read)
 	 * 
-	 * @param chat
+	 * @param chat Chat object
 	 */
 	void accept(Chat chat);
 
 	/**
 	 * set chat unread
 	 * 
-	 * @param chat
+	 * @param chat Chat object
 	 */
 	void setUnread(Chat chat);
 }

@@ -11,7 +11,7 @@ public interface CommentDAO extends AbstractDAO<Comment> {
 	/**
 	 * list comments for given status
 	 * 
-	 * @param status
+	 * @param status Status object
 	 * @return comments for status
 	 */
 	List<Comment> listByStatus(Status status);
@@ -19,7 +19,7 @@ public interface CommentDAO extends AbstractDAO<Comment> {
 	/**
 	 * list comments for given user
 	 * 
-	 * @param user
+	 * @param user User object
 	 * @return comments for user
 	 */
 	List<Comment> listByUser(User user);

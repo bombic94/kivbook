@@ -10,7 +10,7 @@ public interface FriendshipDAO extends AbstractDAO<Friendship> {
 	/**
 	 * List friendships for given user
 	 * 
-	 * @param user
+	 * @param user User object
 	 * @return list of friendships
 	 */
 	List<Friendship> listFriendshipsByUser(User user);
@@ -18,7 +18,7 @@ public interface FriendshipDAO extends AbstractDAO<Friendship> {
 	/**
 	 * List pending friendships for given user
 	 * 
-	 * @param user
+	 * @param user User object
 	 * @return list of friendships
 	 */
 	List<Friendship> listPendingFriendshipsByUser(User user);
@@ -26,7 +26,7 @@ public interface FriendshipDAO extends AbstractDAO<Friendship> {
 	/**
 	 * List possible friendships for given user
 	 * 
-	 * @param user
+	 * @param user User object
 	 * @return list of friendships
 	 */
 	List<Friendship> listAllFriendshipsByUser(User user);
@@ -34,7 +34,7 @@ public interface FriendshipDAO extends AbstractDAO<Friendship> {
 	/**
 	 * accept friendship
 	 * 
-	 * @param friendship
+	 * @param friendship Friendship object
 	 */
 	void accept(Friendship friendship);
 
