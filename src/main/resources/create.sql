@@ -9,6 +9,7 @@ CREATE TABLE `bohmannd_user` (
   `firstname` varchar(255) NOT NULL COLLATE utf8_czech_ci,
   `lastname` varchar(255) NOT NULL COLLATE utf8_czech_ci,
   `photo` varchar(255) COLLATE utf8_czech_ci DEFAULT NULL,
+  `active_chat_id` int(11) DEFAULT NULL,
   `created_at` timestamp(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
@@ -73,11 +74,4 @@ CREATE TABLE `bohmannd_like` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
--------------------------------------------------------------------------------------------------------
-
---dotazy
-
---count
-select count(*) from bohmannd_user;
-
---
+-------------------------------------------------------------------------------
